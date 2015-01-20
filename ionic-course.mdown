@@ -8,9 +8,10 @@ For three years now, hybrid apps have been mocked and jeered by native app devel
 Without further ado, we'd like to welcome you to the future of mobile app development freed from the shackles of native languages & frameworks. Lets learn what the new mobile stack consists of and how it works.
 
 ## The new technologies powering modern hybrid apps
+To compete with the native frameworks provided by iOS and Android, one would need a great Javascript framework that has lots of mobile UI components for us to use. Luckily for us, there are two technologies that now cover these requirements: AngularJS, the insanely popular Javascript framework from Google, and Ionic, which gives Angular developers access to tons of common mobile UI widgets & layouts.
 
+http://ionicframework.com/blog/what-is-cordova-phonegap/
 
-The Ionic Framework, which runs on top of AngularJS, has pioneered full.
 
 Building great hybrid apps requires two types of technologies: performant Javascript & HTML5 frameworks/libraries that you can build your app functionality with, and a mobile development platform that allows you to access native functionality via Javascript APIs as well as package, deploy and emulate your app.
 
