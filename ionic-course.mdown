@@ -1,0 +1,87 @@
+# Introduction
+Web development technologies have evolved at an incredible clip over the past few years. We've gone from rudimentary DOM manipulation with libraries like jQuery to supercharged web applications organized & powered by elegant MVC based frameworks like AngularJS. Pair this with significant increases in browser rendering speeds, and it is now easier than ever before to build production quality applications on top of Javascript, HTML5 and CSS3.
+
+While these advances have been incredible, they are only just starting to affect the clear platform of the future: mobile. For years, mobile rendering speeds were atrocious and the MVC frameworks & UI libraries provided by iOS and Android were far superior to writing mobile apps using web technologies. There were also some very public failures -- Facebook famously wrote their first iOS app in 2011 using HTML5, but ended up scrapping it due to terrible performance.
+
+For three years now, hybrid apps have been mocked and jeered by native app developers for being clunky and ugly, subpar performance, and having no advantages over native apps. While these may have been valid reasons in 2011, they are now virtually baseless, thanks to a collection of new technologies that have emerged over the past two years. With these technologies, you can design, build and deploy robust mobile apps faster than you could with native technologies while incurring little to no app performance penalties, with thanks in large part to super fast mobile browser rendering speeds. This course is designed to teach you how to effectively use these new technologies to build insanely great mobile apps.
+
+Without further ado, we'd like to welcome you to the future of mobile app development freed from the shackles of native languages & frameworks. Lets learn what the new mobile stack consists of and how it works.
+
+## The new technologies powering modern hybrid apps
+
+
+The Ionic Framework, which runs on top of AngularJS, has pioneered full.
+
+Building great hybrid apps requires two types of technologies: performant Javascript & HTML5 frameworks/libraries that you can build your app functionality with, and a mobile development platform that allows you to access native functionality via Javascript APIs as well as package, deploy and emulate your app.
+
+Lets start with our Javascript and HTML5 needs. The most robust solution is the combination of two frameworks: AngularJS and Ionic. 
+
+What is AngularJS?
+
+What is Ionic?
+
+In summary, you can think about how these two frameworks interact like this: AngularJS is the core of how our app is structured and built, and Ionic is layered on top to provide common mobile UI paradigms.
+
+Cordova
+
+## What we're going to build
+We will be building an app called Songhop -- a "Tinder for music" app that allows you to listen to 30 second song samples and favorite the ones you like. This is based on a real Ionic/Cordova powered app we built that exists on the iOS App Store -- feel free to download it to get a feeling for what you're about to build (and rate it 5 stars :). It's also worth noting that it only took us a month to build the Songhop app that's on the App Store, so that should give you an idea of how fast you can build & iterate using Ionic / Cordova.
+
+We'll be covering a wide variety of topics in this course: scaffolding a new application, testing it in the emulator, installing native plugins for manipulating audio & more, swipe gestures for our main interface, installing the app on your own device, deploying to the iOS & Android app stores, and so much more.
+
+
+## Prerequisites
+
+[javascript-prereq] __Basic programming / JavaScript knowledge.__ If you don't know JavaScript, this guide is a good place to start.
+
+[angular-prereq] __Familiarity with AngularJS.__ We will be using AngularJS for much of our app logic. If you aren't familiar with AngularJS, we highly recommend going through the course "A Better Way to Learn AngularJS".
+
+In addition, you should be comfortable with basic web application concepts including REST and CRUD.
+
+It's best to have either a Linux based OS or Mac to complete this tutorial. While it's certainly possible to develop on Windows, we won't be covering the specifics of running, debugging and troubleshooting Cordova on Windows. If you need to use Windows, we recommend reading this article which will help.
+
+// Maybe look into phonegap build as an option here?
+
+[install-node]  __Install Node.js__. Since you will need to install various packages for Node.js, we recommend that you follow these installation instructions which use npm.
+
+
+## Recommendations for completing this course
+Throughout this course, links to additional concepts and information will be included. You can use these links as supplementary material which can help you gain insight into the stack and its various components. As always, if you have any questions Google and Stackoverflow are your best bet. If you're unsure about something specific to this tutorial, feel free to drop me a line at eric@thinkster.io
+
+We're firm believers in actually writing code while learning a new language or framework. Therefore, we strongly encourage you to type out all the code instead of copy+pasting it.
+
+
+# Starting our project
+Install ionic via npm
+Start blank project
+Manually scaffolding routing, etc
+
+# Building out our interface
+Create discover and favorites page
+Set up discovering page
+Set up favorites page
+
+# Wiring it up to a server
+Create service to ask for songs
+Save songs (favorite) locally in memory using a service
+
+# Cordova: Your bridge to native functionality
+Everything you need to know about Cordova.
+	- We recommend using native plugins whenever possible for performance/reliability
+Install media plugin
+Install file plugin (or some sort of local storage)
+
+# Creating and persisting user data
+Create login/signup splash
+Create service for managing/creating user sessions
+Retrieve user data from server on boot
+Save songs to server
+
+# Deploying Songhop into production
+Get the app running on your own device
+Deploying to the iOS app store
+Deploying to the Android app store
+
+# Where to go next
+Open in Spotify, iTunes, etc links
+Functionality to share songs via SMS, FB, etc
