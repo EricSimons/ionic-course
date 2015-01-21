@@ -12,7 +12,7 @@ Building robust applications of any type typically requires a well designed, ext
 
 Before, building hybrid apps was a chore -- not because it was hard to build web pages, but because it was hard to build fully fledged web applications. As a result, AngularJS became the core innovation that made hybrid apps possible. The bright folks at Drifty were some of the first to realize this, and subsequently created the Ionic Framework to bridge the gap between AngularJS web apps and mobile apps. Since launching a little over a year ago, the Ionic Framework has [quickly grown in popularity amongst developers](http://www.google.com/trends/explore?hl=en-US&q=ionic+framework&cmpt=q&tz&tz&content=1) and their [main Github repo](https://github.com/driftyco/ionic) has over 13K stars as of this writing.
 
-[where-ionic-fits] For a more in depth view of where Ionic fits into our hybrid app stack, [read this blog post from one of Ionic's core developers.](http://ionicframework.com/blog/where-does-the-ionic-framework-fit-in/)
+[where-ionic-fits] For a more in depth view of where Ionic fits into our hybrid app stack, [read this blog post](http://ionicframework.com/blog/where-does-the-ionic-framework-fit-in/) from one of Ionic's core developers and [read the "Overview" section](http://ionicframework.com/docs/overview/) on their about page.
 
 With our frontend technologies taken care of, we'll now need a way to package our app and run it on mobile devices. For this, Cordova is a fantastic solution. For those unfamiliar with Cordova, Adobe describes it like this: Cordova is to PhoneGap as Blink is to Chrome. Basically, PhoneGap is Cordova plus a whole bunch of other Adobe stuff.
 
