@@ -3,9 +3,7 @@ angular.module('songhop.controllers', ['ionic', 'songhop.services'])
 .controller('DiscoverCtrl', function($scope, $ionicLoading, Recommendations) {
 
   // set loading to true first time
-  $ionicLoading.show({
-    template: 'Loading song recommendations...'
-  });
+  $ionicLoading.show();
 
   // first we'll need to initialize the Rec service, get our first ones, etc
   Recommendations.init()
@@ -29,9 +27,7 @@ angular.module('songhop.controllers', ['ionic', 'songhop.services'])
   $scope.sendFeedback = function (bool) {
 
     // set loading to true
-    $ionicLoading.show({
-      template: 'Getting next song...'
-    });
+    $ionicLoading.show();
 
     Recommendations.playNextSong()
       .then(function(){

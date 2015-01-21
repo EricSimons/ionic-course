@@ -1,6 +1,6 @@
 angular.module('songhop.services', [])
 
-.factory('Recommendations', function($q, $http) {
+.factory('Recommendations', function($q, $http, $timeout) {
   
   var o = {
     queue: []
@@ -42,7 +42,21 @@ angular.module('songhop.services', [])
   }
 
   o.playCurrentSong = function() {
-    
+    var defer = $q.defer();
+
+    // this is where the loading block will go for cordova media plugin
+    $timeout(function() {
+      return defer.resolve();
+    }, 200);
+
+    return defer.promise;
+  }
+
+  o.playNextSong = function() {
+    // pop the index 0 off
+    o.queue.shift();
+
+    return o.playCurrentSong();
   }
 
 
