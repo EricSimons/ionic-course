@@ -2,23 +2,23 @@
   <ion-content scroll="false">
 
 
-    <div class="list card">
+    <div class="list card" ng-show="currentSong">
 
       <div class="item item-image">
-        <img src="http://hiphop-n-more.com/wp-content/uploads/2014/10/iggy-reclassified_1.jpg">
+        <img ng-src="{{ currentSong.image_large }}">
       </div>
 
       <div class="item">
-        <h2>Pretty Hate Machine</h2>
-        <p>Nine Inch Nails</p>
+        <h2>{{ currentSong.title }}</h2>
+        <p>{{ currentSong.artist }}</p>
       </div>
 
       <div class="item tabs tabs-secondary tabs-icon-left">
-        <a class="tab-item" href="#">
+        <a class="tab-item" ng-click="sendFeedback(false)">
           <i class="icon ion-close"></i>
           Skip
         </a>
-        <a class="tab-item assertive" href="#">
+        <a class="tab-item" ng-click="sendFeedback(true)">
           <i class="icon ion-heart"></i>
           Favorite
         </a>

@@ -1,28 +1,36 @@
 0 info it worked if it ends with ok
-1 verbose cli [ '/usr/local/Cellar/node/0.10.25/bin/node',
-1 verbose cli   '/usr/local/bin/npm',
-1 verbose cli   'start' ]
-2 info using npm@1.3.24
-3 info using node@v0.10.25
-4 verbose run-script [ 'prestart', 'start', 'poststart' ]
-5 info prestart ionicserver@0.0.0
-6 info start ionicserver@0.0.0
-7 verbose unsafe-perm in lifecycle true
-8 info ionicserver@0.0.0 Failed to exec start script
-9 error ionicserver@0.0.0 start: `node ./bin/www`
-9 error Exit status 8
-10 error Failed at the ionicserver@0.0.0 start script.
-10 error This is most likely a problem with the ionicserver package,
-10 error not with npm itself.
-10 error Tell the author that this fails on your system:
-10 error     node ./bin/www
-10 error You can get their info via:
-10 error     npm owner ls ionicserver
-10 error There is likely additional logging output above.
-11 error System Darwin 13.3.0
-12 error command "/usr/local/Cellar/node/0.10.25/bin/node" "/usr/local/bin/npm" "start"
-13 error cwd /Users/admin/Dev/ionicserver
-14 error node -v v0.10.25
-15 error npm -v 1.3.24
-16 error code ELIFECYCLE
-17 verbose exit [ 1, true ]
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'start' ]
+2 info using npm@2.1.18
+3 info using node@v0.10.32
+4 verbose node symlink /usr/local/bin/node
+5 verbose run-script [ 'prestart', 'start', 'poststart' ]
+6 info prestart ionicserver@0.0.0
+7 info start ionicserver@0.0.0
+8 verbose unsafe-perm in lifecycle true
+9 info ionicserver@0.0.0 Failed to exec start script
+10 verbose stack Error: ionicserver@0.0.0 start: `node ./bin/www`
+10 verbose stack Exit status 8
+10 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:212:16)
+10 verbose stack     at EventEmitter.emit (events.js:98:17)
+10 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/spawn.js:14:12)
+10 verbose stack     at ChildProcess.emit (events.js:98:17)
+10 verbose stack     at maybeClose (child_process.js:756:16)
+10 verbose stack     at Process.ChildProcess._handle.onexit (child_process.js:823:5)
+11 verbose pkgid ionicserver@0.0.0
+12 verbose cwd /Users/admin/Dev/ionic-course/code/server
+13 error Darwin 13.3.0
+14 error argv "node" "/usr/local/bin/npm" "start"
+15 error node v0.10.32
+16 error npm  v2.1.18
+17 error code ELIFECYCLE
+18 error ionicserver@0.0.0 start: `node ./bin/www`
+18 error Exit status 8
+19 error Failed at the ionicserver@0.0.0 start script 'node ./bin/www'.
+19 error This is most likely a problem with the ionicserver package,
+19 error not with npm itself.
+19 error Tell the author that this fails on your system:
+19 error     node ./bin/www
+19 error You can get their info via:
+19 error     npm owner ls ionicserver
+19 error There is likely additional logging output above.
+20 verbose exit [ 1, true ]
