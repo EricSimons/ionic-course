@@ -8,12 +8,20 @@ For three years now, hybrid apps have been mocked and jeered by native app devel
 Without further ado, we'd like to welcome you to the future of mobile app development freed from the shackles of native languages & frameworks. Lets learn what the new mobile stack consists of and how it works.
 
 ## The new technologies powering modern hybrid apps
-To compete with the native frameworks provided by iOS and Android, one would need a great Javascript framework that has lots of mobile UI components for us to use. Luckily for us, there are two technologies that now cover these requirements: AngularJS, the insanely popular Javascript framework from Google, and Ionic, which gives Angular developers access to tons of common mobile UI widgets & layouts.
+Building robust applications of any type typically requires a well designed, extensible and stable framework. For Ruby there is Rails, for Python there is Django, and now for the first time ever, Javascript has found its mate: AngularJS. While there are many Javascript frameworks available to developers today, few have such widely applauded design decisions and [none have captured the interest of developers to the degree Angular has](http://www.google.com/trends/explore?hl=en-US&q=angularjs,+backbone.js,+ember.js,+react.js&cmpt=q&tz&tz&content=1).
+
+Before, building hybrid apps was a chore -- not because it was hard to build web pages, but because it was hard to build fully fledged web applications. As a result, AngularJS became the core innovation that made hybrid apps possible. The bright folks at Drifty were some of the first to realize this, and subsequently created the Ionic Framework to bridge the gap between AngularJS web apps and mobile apps. Since launching a little over a year ago, the Ionic Framework has [quickly grown in popularity amongst developers](http://www.google.com/trends/explore?hl=en-US&q=ionic+framework&cmpt=q&tz&tz&content=1) and their [main Github repo](https://github.com/driftyco/ionic) has over 13K stars as of this writing.
+
+For a more in depth view of where Ionic fits into our hybrid app stack, [read this blog post from one of Ionic's core developers.](http://ionicframework.com/blog/where-does-the-ionic-framework-fit-in/)
+
+
 
 http://ionicframework.com/blog/what-is-cordova-phonegap/
 
+Lots of frameworks that failed to gain traction
+Why? Not built on a great underlying MVC structure
+Ionic is an incredible html5 framework built on top of AngularJS, the most popular JS framework to date.
 
-Building great hybrid apps requires two types of technologies: performant Javascript & HTML5 frameworks/libraries that you can build your app functionality with, and a mobile development platform that allows you to access native functionality via Javascript APIs as well as package, deploy and emulate your app.
 
 Lets start with our Javascript and HTML5 needs. The most robust solution is the combination of two frameworks: AngularJS and Ionic. 
 
