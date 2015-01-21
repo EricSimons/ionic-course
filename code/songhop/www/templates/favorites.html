@@ -1,6 +1,21 @@
-<ion-view view-title="Favorites">
+<ion-view view-title="Favorites" class="favorites-page">
   <ion-content>
 
+    <ion-list>
+      <ion-item ng-repeat="item in items" class="item-avatar">
+        <img src="http://hiphop-n-more.com/wp-content/uploads/2014/10/iggy-reclassified_1.jpg">
+        <h2>Pretty Hate Machine</h2>
+        <p>Nine Inch Nails</p>
+
+        <ion-delete-button class="ion-minus-circled"
+                       ng-click="items.splice($index, 1)">
+        </ion-delete-button>
+        <ion-option-button class="button-assertive"
+                       ng-click="edit(item)">
+          <i class="ion-minus-circled"></i>
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
     
 
   </ion-content>

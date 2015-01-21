@@ -1,1 +1,36 @@
 /* Empty. Add your own CSS if you like */
+.discover-page {
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.discover-page .action-buttons {
+  position:fixed;
+  bottom:150px;
+  text-align:center;
+  width:100%;
+}
+
+.discover-page .action-buttons .button {
+  font-size:32px;
+  padding:30px 40px;
+  border-radius:100px;
+}
+
+.discover-page .action-buttons .like-button {
+  margin-left:40px;
+}
+
+.discover-page .skip-button {
+
+}

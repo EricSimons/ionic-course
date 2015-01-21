@@ -14,7 +14,7 @@ Before, building hybrid apps was a chore -- not because it was hard to build web
 
 [where-ionic-fits] For a more in depth view of where Ionic fits into our hybrid app stack, [read this blog post](http://ionicframework.com/blog/where-does-the-ionic-framework-fit-in/) from one of Ionic's core developers and [read the "Overview" section](http://ionicframework.com/docs/overview/) on their about page.
 
-With our frontend technologies taken care of, we'll now need a way to package our app and run it on mobile devices. For this, Cordova is a fantastic solution. For those unfamiliar with Cordova, Adobe describes it like this: Cordova is to PhoneGap as Blink is to Chrome. Basically, PhoneGap is Cordova plus a whole bunch of other Adobe stuff.
+With our frontend technologies taken care of, we'll now need a way to package our app and run it on mobile devices. For this, Cordova is a fantastic solution. For those unfamiliar with Cordova, Adobe describes it via analogy: Cordova is to PhoneGap as Blink is to Chrome. Basically, PhoneGap is Cordova plus a whole bunch of other Adobe stuff.
 
 [cordova-vs-phonegap] [Read this post for a more in depth understanding of the differences between Cordova and PhoneGap](http://ionicframework.com/blog/what-is-cordova-phonegap/)
 
