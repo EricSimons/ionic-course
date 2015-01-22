@@ -7,7 +7,7 @@ angular.module('songhop.services', [])
   };
 
   // placeholder for the media player
-  var media = false;
+  var media = document.createElement("audio");
 
 
   o.init = function() {
@@ -49,11 +49,9 @@ angular.module('songhop.services', [])
     var defer = $q.defer();
 
     // play the current song's preview
-    if (!media) {
-      media = new Audio(o.queue[0].preview_url);
-    } else {
-      media.setAttribute('src',o.queue[0].preview_url);
-    }
+    media.setAttribute('src',o.queue[0].preview_url);
+    media.load();
+
 
     media.addEventListener("loadeddata", function() {
       console.log('song resolved');
@@ -87,7 +85,6 @@ angular.module('songhop.services', [])
   // used when switching to favorites tab
   o.haltAudio = function() {
     media.pause();
-    media = false;
   }
 
 

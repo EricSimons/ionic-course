@@ -2,7 +2,7 @@
   <ion-content>
 
     <ion-list>
-      <ion-item ng-repeat="song in favorites" class="item-avatar">
+      <ion-item ng-repeat="song in favorites" class="item-avatar" ng-click="openSong(song)">
         <img ng-src="{{ song.image_small }}">
         <h2>{{ song.title }}</h2>
         <p>{{ song.artist }}</p>
