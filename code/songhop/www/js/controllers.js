@@ -59,5 +59,17 @@ angular.module('songhop.controllers', ['ionic', 'songhop.services'])
       });
   }
 
+})
 
+
+.controller('FavoritesCtrl', function($scope) {
+  
 });
+
+
+
+
+
+
+
+

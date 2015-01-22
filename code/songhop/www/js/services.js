@@ -78,10 +78,11 @@ angular.module('songhop.services', [])
 /**
  * A simple example service that returns some data.
  */
-.factory('Friends', function() {
+.factory('User', function() {
   
   var o = {
-
+    username: 'eric',
+    favorites: []
   }
 
   return o;
