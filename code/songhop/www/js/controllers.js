@@ -73,6 +73,11 @@ Controller for the discover page
 
   }
 
+
+  $scope.nextAlbumImg = function() {
+    return Recommendations.queue[1].image_large;
+  }
+
 })
 
 
