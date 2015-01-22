@@ -1,10 +1,13 @@
 angular.module('songhop.services', [])
 
-.factory('Recommendations', function($q, $http, $timeout) {
+.factory('Recommendations', function($q, $http) {
   
   var o = {
     queue: []
   };
+
+  // placeholder for the media player
+  var media;
 
 
   o.init = function() {
@@ -42,26 +45,45 @@ angular.module('songhop.services', [])
   }
 
   o.playCurrentSong = function() {
+    console.log('play current song called');
     var defer = $q.defer();
 
-    // this is where the loading block will go for cordova media plugin
-    $timeout(function() {
-      return defer.resolve();
-    }, 200);
+    // play the current song's preview
+    if (!media) {
+      media = new Audio(o.queue[0].preview_url);
+    } else {
+      media.setAttribute('src',o.queue[0].preview_url);
+    }
+
+    media.addEventListener("loadeddata", function() {
+      console.log('song resolved');
+     return defer.resolve();
+    });
+    //media = new Media(o.queue[0].preview_url, function() {});
+
+    media.play();
+
 
     return defer.promise;
   }
 
-  o.playNextSong = function() {
+  o.nextSong = function() {
+
     // pop the index 0 off
     o.queue.shift();
+
+    // stop the song and release
+    media.pause();
+
+    media = null;
+    
 
     // low on the queue? lets fill it up
     if (o.queue.length <= 3) {
       o.getNextSongs();
     }
 
-    return o.playCurrentSong();
+    return true;
   }
 
 

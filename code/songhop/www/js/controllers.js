@@ -4,7 +4,7 @@ angular.module('songhop.controllers', ['ionic', 'songhop.services'])
 /*
 Controller for the discover page
 */
-.controller('DiscoverCtrl', function($scope, $ionicLoading, Recommendations, User) {
+.controller('DiscoverCtrl', function($scope, $ionicLoading, $timeout, Recommendations, User) {
 
 
   // helper functions for loading
@@ -51,19 +51,27 @@ Controller for the discover page
     $scope.currentSong.rated = bool;
     $scope.currentSong.hide = true;
 
-    //$scope.showLoading();
+
+    Recommendations.nextSong();
+
+    // update current song in scope, timeout to allow animation to complete
+    $timeout(function() {
+      $scope.currentSong = Recommendations.queue[0];
+
+      // show loading here
+      //$scope.showLoading();
+
+    }, 200);
 
 
-    Recommendations.playNextSong()
+    Recommendations.playCurrentSong()
       .then(function(){
 
-        // turn loading off
         $scope.hideLoading();
 
-        // update current song in scope
-        $scope.currentSong = Recommendations.queue[0];
-
       });
+
+
   }
 
 })
@@ -93,7 +101,7 @@ Controller for our tab bar
   $scope.resetFavoriteCount = function() {
     User.newFavorites = 0;
   }
-  
+
 });
 
 

@@ -32,7 +32,17 @@ angular.module('songhop', ['ionic', 'songhop.controllers'])
     url: "/tab",
     abstract: true,
     templateUrl: "templates/tabs.html",
-    controller: 'TabsCtrl'
+    controller: 'TabsCtrl',
+    resolve: {
+      // this resolve was added to ensure that the media plugin loaded properly
+      cordova: function($q, $ionicPlatform) {
+          var deferred = $q.defer();
+          $ionicPlatform.ready(function() {
+              deferred.resolve();
+          });
+          return deferred.promise;
+      }
+    }
   })
 
   // Each tab has its own nav history stack:
