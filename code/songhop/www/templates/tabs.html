@@ -13,7 +13,7 @@ navigation history that also transitions its views in and out.
 
 
   <!-- Chats Tab -->
-  <ion-tab title="Favorites" icon-off="ion-music-note" icon-on="ion-music-note" badge="favCount()" badge-style="badge-assertive" on-select="resetFavoriteCount()" href="#/tab/favorites">
+  <ion-tab title="Favorites" icon-off="ion-music-note" icon-on="ion-music-note" badge="favCount()" badge-style="badge-assertive" on-select="enteringFavorites()" on-deselect="leavingFavorites()" href="#/tab/favorites">
     <ion-nav-view name="tab-favorites"></ion-nav-view>
   </ion-tab>
 

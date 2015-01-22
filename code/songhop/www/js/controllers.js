@@ -10,7 +10,7 @@ Controller for the discover page
   // helper functions for loading
   $scope.showLoading = function() {
     $ionicLoading.show({
-      template: '<i class="ion-load-c"></i>',
+      template: '<i class="ion-loading-c"></i>',
       noBackdrop: true
     });
   }
@@ -37,6 +37,7 @@ Controller for the discover page
     .then(function(){
       // turn loading off
       $scope.hideLoading();
+      $scope.currentSong.loaded = true;
     });
 
 
@@ -48,28 +49,26 @@ Controller for the discover page
     // first, add to favorites if they favorited
     if (bool) User.addSongToFavorites($scope.currentSong);
 
+    // set variable for the correct animation sequence
     $scope.currentSong.rated = bool;
     $scope.currentSong.hide = true;
 
-
+    // prepare the next song
     Recommendations.nextSong();
 
     // update current song in scope, timeout to allow animation to complete
     $timeout(function() {
       $scope.currentSong = Recommendations.queue[0];
-
-      // show loading here
-      //$scope.showLoading();
-
-    }, 200);
+      $scope.currentSong.loaded = false;
 
 
-    Recommendations.playCurrentSong()
-      .then(function(){
+    }, 250);
 
-        $scope.hideLoading();
 
-      });
+    Recommendations.playCurrentSong().then(function() {
+      $scope.currentSong.loaded = true;
+
+    });
 
 
   }
@@ -93,14 +92,21 @@ Controller for the favorites page
 /*
 Controller for our tab bar
 */
-.controller('TabsCtrl', function($scope, User) {
+.controller('TabsCtrl', function($scope, User, Recommendations) {
   // expose the number of new favorites to the scope
   $scope.favCount = User.favoriteCount;
 
   // method to reset new favorites to 0 when we click the fav tab
-  $scope.resetFavoriteCount = function() {
+  $scope.enteringFavorites = function() {
     User.newFavorites = 0;
+    Recommendations.haltAudio();
   }
+
+  $scope.leavingFavorites = function() {
+    Recommendations.playCurrentSong();
+  }
+
+  
 
 });
 

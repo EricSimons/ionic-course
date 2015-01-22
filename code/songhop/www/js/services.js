@@ -7,7 +7,7 @@ angular.module('songhop.services', [])
   };
 
   // placeholder for the media player
-  var media;
+  var media = false;
 
 
   o.init = function() {
@@ -45,7 +45,7 @@ angular.module('songhop.services', [])
   }
 
   o.playCurrentSong = function() {
-    console.log('play current song called');
+
     var defer = $q.defer();
 
     // play the current song's preview
@@ -72,10 +72,8 @@ angular.module('songhop.services', [])
     // pop the index 0 off
     o.queue.shift();
 
-    // stop the song and release
-    media.pause();
-
-    media = null;
+    // end the song
+    o.haltAudio();
     
 
     // low on the queue? lets fill it up
@@ -84,6 +82,12 @@ angular.module('songhop.services', [])
     }
 
     return true;
+  }
+
+  // used when switching to favorites tab
+  o.haltAudio = function() {
+    media.pause();
+    media = false;
   }
 
 
