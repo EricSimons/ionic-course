@@ -82,7 +82,23 @@ angular.module('songhop.services', [])
   
   var o = {
     username: 'eric',
-    favorites: []
+    favorites: [],
+    newFavorites: 0
+  }
+
+  o.addSongToFavorites = function(song) {
+    // make sure there's a song to add
+    if (!song) return false;
+
+    // add to favorites array
+    o.favorites.unshift(song);
+    o.newFavorites++;
+
+    return true;
+  }
+
+  o.favoriteCount = function() {
+    return o.newFavorites;
   }
 
   return o;

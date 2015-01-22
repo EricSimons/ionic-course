@@ -2,10 +2,10 @@
   <ion-content>
 
     <ion-list>
-      <ion-item ng-repeat="item in items" class="item-avatar">
-        <img src="http://hiphop-n-more.com/wp-content/uploads/2014/10/iggy-reclassified_1.jpg">
-        <h2>Pretty Hate Machine</h2>
-        <p>Nine Inch Nails</p>
+      <ion-item ng-repeat="song in favorites" class="item-avatar">
+        <img ng-src="{{ song.image_small }}">
+        <h2>{{ song.title }}</h2>
+        <p>{{ song.artist }}</p>
 
         <ion-delete-button class="ion-minus-circled"
                        ng-click="items.splice($index, 1)">

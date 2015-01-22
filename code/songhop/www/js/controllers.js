@@ -1,6 +1,10 @@
 angular.module('songhop.controllers', ['ionic', 'songhop.services'])
 
-.controller('DiscoverCtrl', function($scope, $ionicLoading, Recommendations) {
+
+/*
+Controller for the discover page
+*/
+.controller('DiscoverCtrl', function($scope, $ionicLoading, Recommendations, User) {
 
 
   // helper functions for loading
@@ -41,6 +45,9 @@ angular.module('songhop.controllers', ['ionic', 'songhop.services'])
   // initialized, now need wrappers for fav and skip
   $scope.sendFeedback = function (bool) {
 
+    // first, add to favorites if they favorited
+    if (bool) User.addSongToFavorites($scope.currentSong);
+
     $scope.currentSong.rated = bool;
     $scope.currentSong.hide = true;
 
@@ -62,7 +69,30 @@ angular.module('songhop.controllers', ['ionic', 'songhop.services'])
 })
 
 
-.controller('FavoritesCtrl', function($scope) {
+
+
+
+/*
+Controller for the favorites page
+*/
+.controller('FavoritesCtrl', function($scope, User) {
+  // get the list of our favorites from the user service
+  $scope.favorites = User.favorites;
+
+})
+
+
+/*
+Controller for our tab bar
+*/
+.controller('TabsCtrl', function($scope, User) {
+  // expose the number of new favorites to the scope
+  $scope.favCount = User.favoriteCount;
+
+  // method to reset new favorites to 0 when we click the fav tab
+  $scope.resetFavoriteCount = function() {
+    User.newFavorites = 0;
+  }
   
 });
 
