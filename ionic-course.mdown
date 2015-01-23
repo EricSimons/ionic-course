@@ -61,17 +61,18 @@ Set up favorites page
 Create service to ask for songs
 Save songs (favorite) locally in memory using a service
 
-# Cordova: Your bridge to native functionality
-Everything you need to know about Cordova.
-	- We recommend using native plugins whenever possible for performance/reliability
-Install media plugin
-Install file plugin (or some sort of local storage)
-
 # Creating and persisting user data
 Create login/signup splash
 Create service for managing/creating user sessions
 Retrieve user data from server on boot
 Save songs to server
+
+# Cordova: Your bridge to native functionality
+Everything you need to know about Cordova.
+	- We recommend using native plugins whenever possible for performance/reliability
+Switch from html5 audio tag to cordova media/file
+	-Install media plugin
+	-Install file plugin
 
 # Deploying Songhop into production
 Get the app running on your own device
