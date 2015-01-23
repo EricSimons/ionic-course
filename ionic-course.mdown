@@ -23,7 +23,7 @@ The folks at Ionic have done a fantastic job of making Cordova super easy to use
 ## What we're going to build
 We will be building an app called Songhop -- a "Tinder for music" app that allows you to listen to 30 second song samples and favorite the ones you like. This is based on a real Ionic/Cordova powered app we built that exists on the iOS App Store -- feel free to download it to get a feeling for what you're about to build (and rate it 5 stars :). It's also worth noting that it only took us a month to build the Songhop app that's on the App Store, so that should give you an idea of how fast you can build & iterate using Ionic / Cordova.
 
-We'll be covering a wide variety of topics in this course: scaffolding a new application, testing it in the emulator, installing native plugins for manipulating audio & more, swipe gestures for our main interface, installing the app on your own device, deploying to the iOS & Android app stores, and so much more.
+We'll be covering a wide variety of topics in this course: scaffolding a new application, testing it in the emulator, installing native plugins for manipulating audio & more, swipe gestures for our interface, installing the app on your own device, deploying to the iOS & Android app stores, and so much more.
 
 
 ## Prerequisites
@@ -80,5 +80,4 @@ Deploying to the iOS app store
 Deploying to the Android app store
 
 # Where to go next
-Open in Spotify, iTunes, etc links
-Functionality to share songs via SMS, FB, etc
+Tinder-for-x
