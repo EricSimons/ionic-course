@@ -118,6 +118,16 @@ Controller for our tab bar
 
   
 
+})
+
+
+/*
+Controller for the splash page
+*/
+.controller('SplashCtrl', function($scope, User) {
+  // get the list of our favorites from the user service
+
+
 });
 
 
