@@ -1,4 +1,9 @@
-<ion-view view-title="Favorites" class="favorites-page">
+<ion-view view-title="Favorites | {{ username }}" class="favorites-page">
+  <ion-nav-buttons side="right">
+    <button class="button" ng-click="logout()">
+      Log out
+    </button>
+  </ion-nav-buttons>
   <ion-content>
 
     <ion-list>

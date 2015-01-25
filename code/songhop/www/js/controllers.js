@@ -21,15 +21,14 @@ Controller for the discover page
 
 
 
-  // set loading to true first time
+  // set loading to true first time while we retrieve songs from server.
   $scope.showLoading();
 
-  // first we'll need to initialize the Rec service, get our first ones, etc
+  // first we'll need to initialize the Rec service, get our first songs, etc
   Recommendations.init()
     .then(function(){
 
       $scope.currentSong = Recommendations.queue[0];
-      console.log($scope.currentSong);
 
       return Recommendations.playCurrentSong();
 
@@ -43,7 +42,7 @@ Controller for the discover page
 
 
 
-  // initialized, now need wrappers for fav and skip
+  // fired when we favorite / skip a song.
   $scope.sendFeedback = function (bool) {
 
     // first, add to favorites if they favorited
@@ -74,6 +73,8 @@ Controller for the discover page
   }
 
 
+  // used for retrieving the next album image.
+  // if there isn't an album image available next, return empty string.
   $scope.nextAlbumImg = function() {
     if (Recommendations.queue.length > 1) {
       return Recommendations.queue[1].image_large;
@@ -94,6 +95,7 @@ Controller for the favorites page
 .controller('FavoritesCtrl', function($scope, User) {
   // get the list of our favorites from the user service
   $scope.favorites = User.favorites;
+  $scope.username = User.username;
 
   $scope.removeSong = function(song, index) {
     User.removeSongFromFavorites(song, index);
@@ -126,6 +128,11 @@ Controller for our tab bar
 
   $scope.leavingFavorites = function() {
     Recommendations.init();
+  }
+
+  $scope.logout = function() {
+    User.destroySession();
+    $state.go('splash');
   }
 
   

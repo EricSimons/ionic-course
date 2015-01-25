@@ -156,6 +156,14 @@ angular.module('songhop.services', ['ionic.utils'])
     $localstorage.setObject('user', { username: username, session_id: session_id });
   }
 
+  // wipe out our session data
+  o.destroySession = function() {
+    $localstorage.setObject('user', {});
+    o.username = false;
+    o.session_id = false;
+    o.favorites = 0;
+  }
+
   // log this user in
   o.auth = function(username, signingUp) {
     var defer = $q.defer();
@@ -241,7 +249,7 @@ angular.module('songhop.services', ['ionic.utils'])
           session_id: o.session_id,
           song_id:song.song_id
         }
-        
+
     }).success(function(data){
         // nailed it!
 
