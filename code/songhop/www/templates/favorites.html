@@ -7,11 +7,8 @@
         <h2>{{ song.title }}</h2>
         <p>{{ song.artist }}</p>
 
-        <ion-delete-button class="ion-minus-circled"
-                       ng-click="items.splice($index, 1)">
-        </ion-delete-button>
         <ion-option-button class="button-assertive"
-                       ng-click="edit(item)">
+                       ng-click="removeSong(song, $index)">
           <i class="ion-minus-circled"></i>
         </ion-option-button>
       </ion-item>

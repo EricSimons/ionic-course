@@ -49,8 +49,8 @@ router.post('/favorites', function(req, res, next) {
 router.delete('/favorites', function(req, res, next) {
 
   User.findByIdAndUpdate(
-    req.body.session_id,
-    {$pull: {"favorites": req.body.song_id }},
+    req.query.session_id,
+    {$pull: {"favorites": req.query.song_id }},
     {safe: true, upsert: true},
     function(err, model) {
       if(err){ return next(new Error("Something went wrong removing that song.")); }

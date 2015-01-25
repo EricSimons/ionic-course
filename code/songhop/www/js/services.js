@@ -59,7 +59,6 @@ angular.module('songhop.services', ['ionic.utils'])
 
 
     media.addEventListener("loadeddata", function() {
-      console.log('song resolved');
       defer.resolve();
     });
     //media = new Media(o.queue[0].preview_url, function() {});
@@ -189,12 +188,12 @@ angular.module('songhop.services', ['ionic.utils'])
 
     $http({
       method: 'GET',
-      url: SERVER.url + '/favorites?session_id=' + o.session_id
+      url: SERVER.url + '/favorites',
+      params: { session_id: o.session_id }
     }).success(function(data){
 
       // merge data into the queue
       o.favorites = data;
-      console.log(o.favorites);
       defer.resolve();
 
     }).error(function(err){
@@ -212,11 +211,38 @@ angular.module('songhop.services', ['ionic.utils'])
     o.favorites.unshift(song);
     o.newFavorites++;
 
-    console.log(o.session_id + ' ' + song.song_id);
-
     // persist this to the server
     $http.post(SERVER.url + '/favorites', {session_id: o.session_id, song_id:song.song_id })
       .success(function(data){
+        // nailed it!
+
+      }).error(function(err, status){
+        // something went wrong, let the user know.
+        alert(err);
+
+      });
+
+    return true;
+  }
+
+    o.removeSongFromFavorites = function(song, index) {
+    // make sure there's a song to add
+    if (!song) return false;
+
+    // add to favorites array
+    o.favorites.splice(index, 1);
+
+    // persist this to the server
+    $http({
+      method: 'DELETE',
+      url: SERVER.url + '/favorites',
+      params: 
+        {
+          session_id: o.session_id,
+          song_id:song.song_id
+        }
+        
+    }).success(function(data){
         // nailed it!
 
       }).error(function(err, status){

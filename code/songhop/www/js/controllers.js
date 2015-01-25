@@ -95,6 +95,10 @@ Controller for the favorites page
   // get the list of our favorites from the user service
   $scope.favorites = User.favorites;
 
+  $scope.removeSong = function(song, index) {
+    User.removeSongFromFavorites(song, index);
+  }
+
   $scope.openSong = function(song) {
     console.log(song.open_url);
     window.open(song.open_url, "_system");
