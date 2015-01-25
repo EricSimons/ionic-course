@@ -10,21 +10,21 @@
       <div class="card">
         <div class="list">
           <label class="item item-input">
-            <input type="text" placeholder="Enter your {{ signingUp ? 'desired' : 'songhop' }} username">
+            <input type="text" ng-model="form.username" placeholder="Enter your {{ form.signingUp ? 'desired' : 'songhop' }} username">
           </label>
         </div>
       </div>
 
       <div class="padding-left padding-right">
-        <button class="button button-block action-button" ng-class="{'button-positive': !signingUp, 'button-balanced': signingUp}" ng-click="goToApp()">
-          Sign <span ng-show="!signingUp">in</span><span ng-show="signingUp">up</span>
+        <button class="button button-block action-button" ng-class="{'button-positive': !form.signingUp, 'button-balanced': form.signingUp}" ng-click="submitForm(form.username, form.signingUp)">
+          {{ form.signingUp ? 'Sign up' : 'Sign in' }}
         </button>
       </div>
     </div>
 
 
-    <div class="padding signup-opt" ng-click="signingUp = !signingUp">
-      Need an account? Sign up!
+    <div class="padding signup-opt" ng-click="form.signingUp = !form.signingUp">
+      {{ form.signingUp ? 'Have an account? Sign in!' : 'Need an account? Sign up!' }}
     </div>
 
   </ion-content>

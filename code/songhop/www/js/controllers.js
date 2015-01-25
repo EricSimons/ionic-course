@@ -75,7 +75,11 @@ Controller for the discover page
 
 
   $scope.nextAlbumImg = function() {
-    return Recommendations.queue[1].image_large;
+    if (Recommendations.queue.length > 1) {
+      return Recommendations.queue[1].image_large;
+    }
+
+    return '';
   }
 
 })
@@ -125,11 +129,24 @@ Controller for our tab bar
 Controller for the splash page
 */
 .controller('SplashCtrl', function($scope, $state, User) {
+
+  // Detect if there's an existing session in localstorage
+  if (User.detectPreviousSession()) {
+    // If there is, redirect to the main discover page
+    $state.go('tab.discover');
+  }
+
   // get the list of our favorites from the user service
-  $scope.goToApp = function() {
-    User.detectPreviousSession();
-    //User.login('eric');
-    //$state.go('tab.discover');
+  $scope.submitForm = function(username, signingUp) {
+    User.auth(username, signingUp).then(function(){
+      // session is now set, so lets redirect to discover page
+      $state.go('tab.discover');
+
+    }, function(err, status) {
+      // error handling here
+      alert(err);
+
+    });
   }
 
 });

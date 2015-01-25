@@ -15,10 +15,10 @@ angular.module('songhop.services', ['ionic.utils'])
 
     o.getNextSongs().then(
       function(){
-        return defer.resolve();
+        defer.resolve();
       },
       function () {
-        return defer.reject();
+        defer.reject();
       });
 
 
@@ -35,17 +35,16 @@ angular.module('songhop.services', ['ionic.utils'])
 
       // merge data into the queue
       o.queue = o.queue.concat(data);
-      return defer.resolve();
+      defer.resolve();
 
     }).error(function(err){
-      return defer.reject();
+      defer.reject();
     });
 
     return defer.promise;
   }
 
   o.playCurrentSong = function() {
-
     var defer = $q.defer();
 
     // play the current song's preview
@@ -55,7 +54,7 @@ angular.module('songhop.services', ['ionic.utils'])
 
     media.addEventListener("loadeddata", function() {
       console.log('song resolved');
-     return defer.resolve();
+      defer.resolve();
     });
     //media = new Media(o.queue[0].preview_url, function() {});
 
@@ -122,18 +121,26 @@ angular.module('songhop.services', ['ionic.utils'])
     return false;
   }
 
-  // used for hitting server
-  o.login = function(username) {
+  // log this user in
+  o.auth = function(username, signingUp) {
     var defer = $q.defer();
 
+    var authRoute;
 
-    $http.post(SERVER.url + '/login', {username: username})
+    if (signingUp) {
+      authRoute = 'signup';
+    } else {
+      authRoute = 'login'
+    }
+
+    $http.post(SERVER.url + '/' + authRoute, {username: username})
       .success(function(data){
-        console.log('success: ' + JSON.stringify(data));
+        $localstorage.setObject('user', data);
+        defer.resolve();
 
-        return defer.resolve();
       }).error(function(err, status){
         defer.reject(err, status);
+
       });
 
 
@@ -142,7 +149,7 @@ angular.module('songhop.services', ['ionic.utils'])
 
   // gets the entire list of this user's favs from server
   o.populateFavorites = function() {
-    
+
   }
 
   o.addSongToFavorites = function(song) {
