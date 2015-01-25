@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
 
 var UserSchema = new mongoose.Schema({
-  username: { type : String , unique : true, required : true, dropDups: true }
+  username: { type : String , unique : true, required : true, dropDups: true },
+  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Song' }]
 });
 
 UserSchema.set('toJSON', {
@@ -10,6 +11,6 @@ UserSchema.set('toJSON', {
      delete ret._id;
      delete ret.__v;
   }
-}); 
+});
 
 mongoose.model('User', UserSchema);

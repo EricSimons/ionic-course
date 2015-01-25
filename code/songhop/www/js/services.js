@@ -7,7 +7,7 @@ angular.module('songhop.services', ['ionic.utils'])
   };
 
   // placeholder for the media player
-  var media = document.createElement("audio");
+  var media;
 
 
   o.init = function() {
@@ -48,8 +48,7 @@ angular.module('songhop.services', ['ionic.utils'])
     var defer = $q.defer();
 
     // play the current song's preview
-    media.setAttribute('src',o.queue[0].preview_url);
-    media.load();
+    media = new Audio(o.queue[0].preview_url);
 
 
     media.addEventListener("loadeddata", function() {

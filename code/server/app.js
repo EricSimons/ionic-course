@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/ioniccourse');
+require('./models/Song');
 require('./models/User');
 
 var routes = require('./routes/index');
