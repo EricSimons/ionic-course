@@ -114,11 +114,12 @@ angular.module('songhop.services', ['ionic.utils'])
 
   // check if there's a user session present
   o.detectPreviousSession = function() {
-    var post = $localstorage.getObject('post');
-    if (post.username) {
-      console.log('yup');
+    var user = $localstorage.getObject('user');
+    if (user.username) {
+      return true;
     }
     
+    return false;
   }
 
   // used for hitting server
@@ -129,6 +130,7 @@ angular.module('songhop.services', ['ionic.utils'])
     $http.post(SERVER.url + '/login', {username: username})
       .success(function(data){
         console.log('success: ' + JSON.stringify(data));
+
         return defer.resolve();
       }).error(function(err, status){
         defer.reject(err, status);
@@ -136,6 +138,11 @@ angular.module('songhop.services', ['ionic.utils'])
 
 
     return defer.promise;
+  }
+
+  // gets the entire list of this user's favs from server
+  o.populateFavorites = function() {
+    
   }
 
   o.addSongToFavorites = function(song) {
