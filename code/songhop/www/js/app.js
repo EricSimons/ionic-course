@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('songhop', ['ionic', 'songhop.controllers'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $rootScope, $state, User) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -15,6 +15,8 @@ angular.module('songhop', ['ionic', 'songhop.controllers'])
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+    
+
   });
 })
 
@@ -43,12 +45,21 @@ angular.module('songhop', ['ionic', 'songhop.controllers'])
     controller: 'TabsCtrl',
     resolve: {
       // this resolve was added to ensure that the media plugin loaded properly
-      cordova: function($q, $ionicPlatform) {
-          var deferred = $q.defer();
-          $ionicPlatform.ready(function() {
-              deferred.resolve();
-          });
-          return deferred.promise;
+      // cordova: function($q, $ionicPlatform) {
+      //     var deferred = $q.defer();
+      //     $ionicPlatform.ready(function() {
+      //         deferred.resolve();
+      //     });
+      //     return deferred.promise;
+      // }
+      hasSession: function($q, User) {
+        var defer = $q.defer();
+        
+        User.checkSession().then(function(hasSession) {
+          defer.resolve(hasSession);
+        });
+
+        return defer.promise;
       }
     }
   })

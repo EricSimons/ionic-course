@@ -13,13 +13,20 @@ angular.module('songhop.services', ['ionic.utils'])
   o.init = function() {
     var defer = $q.defer();
 
-    o.getNextSongs().then(
-      function(){
-        defer.resolve();
-      },
-      function () {
-        defer.reject();
-      });
+    // if there's nothing in the queue, fill it.
+    if (o.queue == 0) {
+      o.getNextSongs().then(
+        function(){
+          defer.resolve();
+        },
+        function () {
+          defer.reject();
+        });
+
+    // otherwise, play the current song
+    } else {
+      o.playCurrentSong();
+    }
 
 
     return defer.promise;
@@ -82,7 +89,7 @@ angular.module('songhop.services', ['ionic.utils'])
 
   // used when switching to favorites tab
   o.haltAudio = function() {
-    media.pause();
+    if (media) media.pause();
   }
 
 
@@ -102,8 +109,8 @@ angular.module('songhop.services', ['ionic.utils'])
 .factory('User', function($q, $http, $localstorage, SERVER) {
   
   var o = {
-    username: '',
-    token: '',
+    username: false,
+    session_id: false,
     favorites: [],
     newFavorites: 0
   }
@@ -111,13 +118,43 @@ angular.module('songhop.services', ['ionic.utils'])
 
 
   // check if there's a user session present
-  o.detectPreviousSession = function() {
-    var user = $localstorage.getObject('user');
-    if (user.username) {
-      return true;
+  o.checkSession = function() {
+    var defer = $q.defer();
+
+    // if this session is already initialized in the service
+    if (o.session_id) {
+      defer.resolve(true);
+
+    // detect if there's a session in localstorage
+    // if it is, pull into our service
+    } else {
+
+      var user = $localstorage.getObject('user');
+      // if there's a user, lets grab their favorites from the server
+      if (user.username) {
+        o.setSession(user.username, user.session_id);
+        o.populateFavorites().then(function() {
+          defer.resolve(true);
+        });
+
+      } else {
+        defer.resolve(false);
+      }
+
     }
-    
-    return false;
+
+    return defer.promise;
+  }
+
+
+  // set session data
+  o.setSession = function(username, session_id, favorites) {
+    if (username) o.username = username;
+    if (session_id) o.session_id = session_id;
+    if (favorites) o.favorites = favorites;
+
+    // set localstorage object
+    $localstorage.setObject('user', { username: username, session_id: session_id });
   }
 
   // log this user in
@@ -134,7 +171,7 @@ angular.module('songhop.services', ['ionic.utils'])
 
     $http.post(SERVER.url + '/' + authRoute, {username: username})
       .success(function(data){
-        $localstorage.setObject('user', data);
+        o.setSession(data.username, data.session_id, data.favorites);
         defer.resolve();
 
       }).error(function(err, status){
@@ -148,7 +185,23 @@ angular.module('songhop.services', ['ionic.utils'])
 
   // gets the entire list of this user's favs from server
   o.populateFavorites = function() {
+    var defer = $q.defer();
 
+    $http({
+      method: 'GET',
+      url: SERVER.url + '/favorites?session_id=' + o.session_id
+    }).success(function(data){
+
+      // merge data into the queue
+      o.favorites = data;
+      console.log(o.favorites);
+      defer.resolve();
+
+    }).error(function(err){
+      defer.reject();
+    });
+
+    return defer.promise;
   }
 
   o.addSongToFavorites = function(song) {
@@ -158,6 +211,19 @@ angular.module('songhop.services', ['ionic.utils'])
     // add to favorites array
     o.favorites.unshift(song);
     o.newFavorites++;
+
+    console.log(o.session_id + ' ' + song.song_id);
+
+    // persist this to the server
+    $http.post(SERVER.url + '/favorites', {session_id: o.session_id, song_id:song.song_id })
+      .success(function(data){
+        // nailed it!
+
+      }).error(function(err, status){
+        // something went wrong, let the user know.
+        alert(err);
+
+      });
 
     return true;
   }

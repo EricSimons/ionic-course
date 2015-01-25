@@ -106,7 +106,11 @@ Controller for the favorites page
 /*
 Controller for our tab bar
 */
-.controller('TabsCtrl', function($scope, User, Recommendations) {
+.controller('TabsCtrl', function($scope, $state, User, Recommendations, hasSession) {
+  // need to make sure this user is logged in. otherwise, send to splash
+  if (!hasSession) $state.go('splash');
+
+
   // expose the number of new favorites to the scope
   $scope.favCount = User.favoriteCount;
 
@@ -117,7 +121,7 @@ Controller for our tab bar
   }
 
   $scope.leavingFavorites = function() {
-    Recommendations.playCurrentSong();
+    Recommendations.init();
   }
 
   
@@ -131,10 +135,10 @@ Controller for the splash page
 .controller('SplashCtrl', function($scope, $state, User) {
 
   // Detect if there's an existing session in localstorage
-  if (User.detectPreviousSession()) {
-    // If there is, redirect to the main discover page
-    $state.go('tab.discover');
-  }
+  User.checkSession().then(function(signedIn) {
+    if (signedIn) $state.go('tab.discover');
+  });
+
 
   // get the list of our favorites from the user service
   $scope.submitForm = function(username, signingUp) {

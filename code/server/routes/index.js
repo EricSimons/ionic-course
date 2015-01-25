@@ -20,11 +20,14 @@ router.get('/recommendations', function(req, res) {
 });
 
 router.get('/favorites', function(req, res) {
-  User.findById(req.query.session_id, function(err, user) {
+  User.findById(req.query.session_id)
+  .populate('favorites')
+  .exec(function(err, user) {
     if (err) { return next(err); }
     if (!user) { return next(new Error("Can't find that user!")); }
 
-    res.json(user);
+    user.favorites.reverse();
+    res.json(user.favorites);
   });
 });
 
@@ -77,6 +80,7 @@ router.post('/login', function(req, res, next) {
     if (err) { return next(err); }
     if (!user) { return next(new Error("Can't find that user!")); }
 
+    user.favorites.reverse();
     res.json(user);
   });
   //var user = new User(req.body);
