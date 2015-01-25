@@ -6,6 +6,12 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Song = mongoose.model('Song');
 
+// used for shuffling songs array
+function shuffle(o){
+  for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+  return o;
+};
+
 /* GET home page. */
 router.get('/', function(req, res) {
   res.render('index', { title: 'Express' });
@@ -15,6 +21,7 @@ router.get('/recommendations', function(req, res) {
   Song.find(function(err, songs) {
     if (err) { return next(err); }
 
+    songs = shuffle(songs.splice(0,10));
     res.json(songs);
   })
 });
