@@ -75,6 +75,12 @@ angular.module('songhop', ['ionic', 'songhop.controllers'])
       }
     })
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/discover');
+  $urlRouterProvider.otherwise('/');
 
+})
+
+
+.constant('SERVER', {
+  url: 'http://localhost:3000'
+  //url: ''
 });

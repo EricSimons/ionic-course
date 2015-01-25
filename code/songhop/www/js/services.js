@@ -1,6 +1,6 @@
-angular.module('songhop.services', [])
+angular.module('songhop.services', ['ionic.utils'])
 
-.factory('Recommendations', function($q, $http) {
+.factory('Recommendations', function($q, $http, SERVER) {
   
   var o = {
     queue: []
@@ -30,7 +30,7 @@ angular.module('songhop.services', [])
 
     $http({
       method: 'GET',
-      url: 'http://localhost:3000/recommendations'
+      url: SERVER.url + '/recommendations'
     }).success(function(data){
 
       // merge data into the queue
@@ -101,12 +101,41 @@ angular.module('songhop.services', [])
 /**
  * A simple example service that returns some data.
  */
-.factory('User', function() {
+.factory('User', function($q, $http, $localstorage, SERVER) {
   
   var o = {
-    username: 'eric',
+    username: '',
+    token: '',
     favorites: [],
     newFavorites: 0
+  }
+
+
+
+  // check if there's a user session present
+  o.detectPreviousSession = function() {
+    var post = $localstorage.getObject('post');
+    if (post.username) {
+      console.log('yup');
+    }
+    
+  }
+
+  // used for hitting server
+  o.login = function(username) {
+    var defer = $q.defer();
+
+
+    $http.post(SERVER.url + '/login', {username: username})
+      .success(function(data){
+        console.log('success: ' + JSON.stringify(data));
+        return defer.resolve();
+      }).error(function(err, status){
+        defer.reject(err, status);
+      });
+
+
+    return defer.promise;
   }
 
   o.addSongToFavorites = function(song) {

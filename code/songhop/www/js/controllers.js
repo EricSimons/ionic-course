@@ -124,9 +124,13 @@ Controller for our tab bar
 /*
 Controller for the splash page
 */
-.controller('SplashCtrl', function($scope, User) {
+.controller('SplashCtrl', function($scope, $state, User) {
   // get the list of our favorites from the user service
-
+  $scope.goToApp = function() {
+    User.detectPreviousSession();
+    //User.login('eric');
+    //$state.go('tab.discover');
+  }
 
 });
 
