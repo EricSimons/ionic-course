@@ -65,6 +65,11 @@ Now that we have the songhop project downloaded to our computer, lets get it run
 If all went well, you should be seeing this in your browser window (be sure to resize your browser to be about the size of a phone):
 ![The boilerplate songhop template](images/0.png)
 
+## Exploring our app's structure
+
+[ionic-app-structure] Lets take a peek at how our Ionic application is structured - [read this post](/ionic-app-structure) explaining the base files that were scaffolded for us.
+
+
 
 
 
