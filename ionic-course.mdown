@@ -50,12 +50,23 @@ We're firm believers in actually writing code while learning a new language or f
 
 
 # Starting our project
-Fork base project from my github. Comes w/ ionic utility.
-Will need to install ionic via npm
-## Building out our interface
-Create discover and favorites pages, routes, controllers
-Lay out discover page HTML/CSS
-Lay out favorites page HTML/CSS
+Before we begin, we'll need to ensure that the [Ionic CLI](http://ionicframework.com/docs/cli/) is installed on our computer. We'll use it to develop and test our app in a web browser, and later for packaging our app into native binaries for mobile devices.
+
+[install-ionic-cli] [Install the Ionic CLI](http://ionicframework.com/docs/cli/install.html) through npm by running `npm install -g ionic`
+
+When you want to [start a new Ionic project](http://ionicframework.com/docs/cli/start.html), typically all you need to do is run `ionic start myApp blank' and it will scaffold a new application for you. However, for simplicity's sake, we've created a starter project specifically for this course that includes all the base HTML/CSS/JS files we'll be using.
+
+[fork-app-from-gh] Clone [the ionic-songhop-app repo](https://github.com/EricSimons/ionic-songhop-app) and then run the command `git checkout -f checkpoint-0`. This will reset your workspace to the very beginning of the application. You can also [view the source code](https://github.com/EricSimons/ionic-songhop-app/tree/checkpoint-0) or [download a zip/tarball](https://github.com/EricSimons/ionic-songhop-app/archive/checkpoint-0.zip) on Github.
+
+Now that we have the songhop project downloaded to our computer, lets get it running in our browser! To do this, we will use the Ionic CLI's command 'serve'. This command starts a local web server with live reload enabled, and then opens your browser directly to your application. As you develop your app, it will automatically refresh your web browser every time you save a file. _You can learn more about how the ionic serve command works & various configuration options available [here](http://ionicframework.com/docs/cli/test.html)._
+
+[run-ionic-serve] In your terminal, head into the ionic-songhop-app folder and run `ionic serve`
+
+If all went well, you should be seeing this in your browser window (be sure to resize your browser to be about the size of a phone):
+![The boilerplate songhop template](images/0.png)
+
+
+
 
 # Wiring it up to a server
 Either use our server, or run your own locally
