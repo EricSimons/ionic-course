@@ -42,6 +42,8 @@ It's best to have either a Linux based OS or Mac to complete this tutorial. Whil
 
 [install-node]  __Install Node.js__. Since you will need to install various packages for Node.js, we recommend that you follow these installation instructions which use npm.
 
+[install-ionic-cli]  __Install the [Ionic CLI](http://ionicframework.com/docs/cli/install.html)__ through npm by running `npm install -g ionic`. We'll be using it to develop and test our app in a web browser, and later for packaging our app into native binaries for mobile devices.
+
 
 ## Recommendations for completing this course
 Throughout this course, links to additional concepts and information will be included. You can use these links as supplementary material which can help you gain insight into the stack and its various components. As always, if you have any questions Google and Stackoverflow are your best bet. If you're unsure about something specific to this tutorial, feel free to drop me a line at eric@thinkster.io
@@ -50,10 +52,6 @@ We're firm believers in actually writing code while learning a new language or f
 
 
 # Starting our project
-Before we begin, we'll need to ensure that the [Ionic CLI](http://ionicframework.com/docs/cli/) is installed on our computer. We'll use it to develop and test our app in a web browser, and later for packaging our app into native binaries for mobile devices.
-
-[install-ionic-cli] [Install the Ionic CLI](http://ionicframework.com/docs/cli/install.html) through npm by running `npm install -g ionic`
-
 When you want to [start a new Ionic project](http://ionicframework.com/docs/cli/start.html), typically all you need to do is run `ionic start myApp blank' and it will scaffold a new application for you. However, for simplicity's sake, we've created a starter project specifically for this course that includes all the base HTML/CSS/JS files we'll be using.
 
 [fork-app-from-gh] Clone [the ionic-songhop-app repo](https://github.com/EricSimons/ionic-songhop-app) and then run the command `git checkout -f checkpoint-0`. This will reset your workspace to the very beginning of the application. You can also [view the source code](https://github.com/EricSimons/ionic-songhop-app/tree/checkpoint-0) or [download a zip/tarball](https://github.com/EricSimons/ionic-songhop-app/archive/checkpoint-0.zip) on Github.
@@ -65,10 +63,52 @@ Now that we have the songhop project downloaded to our computer, lets get it run
 If all went well, you should be seeing this in your browser window (be sure to resize your browser to be about the size of a phone):
 ![The boilerplate songhop template](images/0.png)
 
-## Exploring our app's structure
+## The guts of an Ionic application
+When you scaffold a new application using the Ionic CLI, it automatically creates a handful of files to be used as the baseboard for your hybrid app development. [This post](/ionic-app-structure) walks through all of these files and what purpose they serve. The www folder is where you'll be spending most of your time, as that's where you will be writing your JavaScript, HTML and CSS for the Songhop app. Lets explore the different files in /www and see how they're connected to each other.
 
-[ionic-app-structure] Lets take a peek at how our Ionic application is structured - [read this post](/ionic-app-structure) explaining the base files that were scaffolded for us.
+The www/index.html file is where your application starts: it loads the JavaScript & CSS files you write (from www/js and www/css), the JavaScript & CSS files that your application depends on, and sets up HTML elements for your AngularJS app to bind to.
 
+Open up app/index.html in your code editor and look over its structure. Notice that we're attaching our AngularJS application to the body element <body ng-app="songhop"> and all of our views are being rendered in an [ion-nav-view](http://ionicframework.com/docs/api/directive/ionNavView/)  (and notice the [ion-nav-back-button](http://ionicframework.com/docs/api/directive/ionNavBackButton/) too):
+
+```html
+  <body ng-app="songhop">
+    <!--
+      The nav bar that will be updated as we navigate between views.
+    -->
+    <ion-nav-bar class="bar-stable">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+    </ion-nav-bar>
+    <!--
+      The views will be rendered in the <ion-nav-view> directive below
+      Templates are in the /templates folder (but you could also
+      have templates inline in this html file if you'd like).
+    -->
+    <ion-nav-view></ion-nav-view>
+  </body>
+```
+
+As we navigate through our app, Ionic uses the [AngularUI Router](https://github.com/angular-ui/ui-router) to populate ion-nav-view's with necessary templates and controllers. At this point you might be wondering, how do we tell an ion-nav-view which templates to display? If you open up /www/js/app.js, in the config block it defines the states of our application. There are three states currently defined for our app: an [abstract state](https://github.com/angular-ui/ui-router/wiki/Nested-States-%26-Nested-Views#abstract-states) called 'tab' that displays templates/tabs.html, and two tab states ('tab.discover', 'tab.favorites') for our Discover and Favorites pages respectively.
+
+You may have noticed that our tab.discover and tab.favorites states specify views to be displayed in (in this case, tab.discover is asking to be display in the view titled 'tab-discover'):
+
+```javascript
+...
+  .state('tab.discover', {
+    url: '/discover',
+    views: {
+      'tab-discover': {
+        templateUrl: 'templates/discover.html',
+        controller: 'DiscoverCtrl'
+      }
+    }
+  })
+ ..
+```
+
+If you open up templates/tabs.html, you'll see that there are two ion-nav-view elements wrapped inside their respective [ion-tab](http://ionicframework.com/docs/api/directive/ionTabs/). This allows us to programmatically display our templates into a specified tab, with the added benefit of each tab having its own navigation history.
+
+Finally, lets take a look at the templates of our Discover and Favorites pages. 
 
 
 
