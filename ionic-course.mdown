@@ -56,15 +56,15 @@ When you want to [start a new Ionic project](http://ionicframework.com/docs/cli/
 
 [fork-app-from-gh] Clone [the ionic-songhop-app repo](https://github.com/EricSimons/ionic-songhop-app) and then run the command `git checkout -f checkpoint-0`. This will reset your workspace to the very beginning of the application. You can also [view the source code](https://github.com/EricSimons/ionic-songhop-app/tree/checkpoint-0) or [download a zip/tarball](https://github.com/EricSimons/ionic-songhop-app/archive/checkpoint-0.zip) on Github.
 
-Now that we have the songhop project downloaded to our computer, lets get it running in our browser! To do this, we will use the Ionic CLI's command 'serve'. This command starts a local web server with live reload enabled, and then opens your browser directly to your application. As you develop your app, it will automatically refresh your web browser every time you save a file. _You can learn more about how the ionic serve command works & various configuration options available [here](http://ionicframework.com/docs/cli/test.html)._
+Now that we have the Songhop project downloaded to our computer, lets get it running in our browser! To do this, we will use the Ionic CLI's command 'serve'. This command starts a local web server with live reload enabled, and then opens your browser directly to your application. As you develop your app, it will automatically refresh your web browser every time you save a file. _You can learn more about how the ionic serve command works & various configuration options available [here](http://ionicframework.com/docs/cli/test.html)._
 
 [run-ionic-serve] In your terminal, head into the ionic-songhop-app folder and run `ionic serve`
 
-If all went well, you should be seeing this in your browser window (be sure to resize your browser to be about the size of a phone):
+If all went well, you should be seeing this in your browser window (be sure to resize your browser to be about the size of a phone, or use your browser's phone emulation tools):
 ![The boilerplate songhop template](images/0.png)
 
 ## The guts of an Ionic application
-When you scaffold a new application using the Ionic CLI, it automatically creates a handful of files to be used as the baseboard for your hybrid app development. [This post](/ionic-app-structure) walks through all of these files and what purpose they serve. The www folder is where you'll be spending most of your time, as that's where you will be writing your JavaScript, HTML and CSS for the Songhop app. Lets explore the different files in /www and see how they're connected to each other.
+When you scaffold a new application using the Ionic CLI, it automatically creates a handful of files to be used as the baseboard for your hybrid app development. [This post](/ionic-app-structure) walks through all of these files and what purposes they serve. The www folder is where you'll be spending most of your time, as that's where you will be writing your JavaScript, HTML and CSS for the Songhop app. Lets explore the different files in /www and see how they're connected to each other.
 
 The www/index.html file is where your application starts: it loads the JavaScript & CSS files you write (from www/js and www/css), the JavaScript & CSS files that your application depends on, and sets up HTML elements for your AngularJS app to bind to.
 
@@ -90,7 +90,7 @@ Open up app/index.html in your code editor and look over its structure. Notice t
 
 As we navigate through our app, Ionic uses the [AngularUI Router](https://github.com/angular-ui/ui-router) to populate ion-nav-view's with necessary templates and controllers. At this point you might be wondering, how do we tell an ion-nav-view which templates to display? If you open up /www/js/app.js, in the config block it defines the states of our application. There are three states currently defined for our app: an [abstract state](https://github.com/angular-ui/ui-router/wiki/Nested-States-%26-Nested-Views#abstract-states) called 'tab' that displays templates/tabs.html, and two tab states ('tab.discover', 'tab.favorites') for our Discover and Favorites pages respectively.
 
-You may have noticed that our tab.discover and tab.favorites states specify views to be displayed in (in this case, tab.discover is asking to be display in the view titled 'tab-discover'):
+You may have noticed that our tab.discover and tab.favorites states specify views to be displayed in (in this case, tab.discover is asking to be displayed in a view titled 'tab-discover'):
 
 ```javascript
 ...
