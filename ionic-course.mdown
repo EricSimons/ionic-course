@@ -137,8 +137,8 @@ Everything you need to know about Cordova.
 Switch from html5 audio tag to cordova media/file
 	-Install media plugin
 	-Install file plugin
-
-# Deploying Songhop into production
+Emulating iOS/Android
+## Deploying Songhop into production
 Get the app running on your own device
 Deploying to the iOS app store
 Deploying to the Android app store
