@@ -1,7 +1,7 @@
 # Introduction
 Web development technologies have evolved at an incredible clip over the past few years. We've gone from rudimentary DOM manipulation with libraries like jQuery to supercharged web applications organized & powered by elegant MV* based frameworks like AngularJS. Pair this with significant increases in browser rendering speeds, and it is now easier than ever before to build production quality applications on top of Javascript, HTML5 and CSS3.
 
-While these advances have been incredible, they are only just starting to affect the clear platform of the future: mobile. For years, mobile rendering speeds were atrocious and the MVC frameworks & UI libraries provided by iOS and Android were far superior to writing mobile apps using web technologies. There were also some very public failures -- Facebook famously wrote their first iOS app in 2011 using HTML5, but ended up scrapping it due to terrible performance.
+While these advances have been incredible, they are only just starting to affect the clear platform of the future: mobile. For years, mobile rendering speeds were atrocious and the MVC frameworks & UI libraries provided by iOS and Android were far superior to writing mobile apps using web technologies. There were also some very public failures -- Facebook famously wrote their first iOS app in 2011 using HTML5, but ended up scrapping it due to terrible performance. (mention react native here perhaps)
 
 For years now, hybrid apps have been mocked and jeered by native app developers for being clunky and ugly, subpar performance, and having no advantages over native apps. While these may have been valid reasons in 2011, they are now virtually baseless thanks to a collection of new technologies that have emerged over the past two years. With these technologies, you can design, build and deploy robust mobile apps faster than you could with native technologies while incurring little to no app performance penalties, with thanks in large part to super fast mobile browser rendering speeds. This course is designed to teach you how to effectively use these new technologies to build insanely great mobile apps.
 
@@ -110,15 +110,19 @@ If you open up templates/tabs.html, you'll see that there are two ion-nav-view e
 
 Finally, lets take a look at the templates of our Discover and Favorites pages. Our templates/discover.html file contains an Ionic [Card Image](http://ionicframework.com/docs/components/#card-showcase) containing the song information along with favorite/skip buttons, and templates/favorites.html contains an [ion-list](http://ionicframework.com/docs/api/directive/ionList/) of our favorite songs. You'll notice that both pages are wrapped in an [ion-view](http://ionicframework.com/docs/api/directive/ionView/) for navigation and header bar purposes, and then an [ion-content](http://ionicframework.com/docs/api/directive/ionContent/) where we place all of our content.
 
-We've already used a couple of Ionic's [CSS Components](http://ionicframework.com/docs/components/) and [AngularJS Extensions](http://ionicframework.com/docs/api/) in this base application, and we strongly recommend checking the other cool things that Ionic can do out of the box. Knowing what Ionic can do for you will allow you to build applications quickly, as you can lean on Ionic's pre-built components & extensions instead of writing your own.
+You'll also notice that we've used a couple of Ionic's [CSS Components](http://ionicframework.com/docs/components/) and [AngularJS Extensions](http://ionicframework.com/docs/api/) in this base application, and we strongly recommend checking the other cool things that Ionic can do out of the box. Knowing what Ionic can do for you will allow you to build applications quickly, as you can lean on Ionic's pre-built components & extensions instead of writing your own.
 
-Now that we've explored our base application structure and how everything is wired together, lets start actually building out the functionality our application!
+Now that we've explored our base application structure and how everything is wired together, lets start building out the functionality our application!
+
+# Building interface functionality
+Create discover controller for fav/skip, feed some dummy data
+Create super basic user service to add favorites to
+Have favorites page pull down our favorites into the ion list
 
 # Wiring it up to a server
 Either use our server, or run your own locally
 Create Recommendations service to ask for songs
 Wire up to discover controller
-Save songs (favorite) locally in memory using User service
 
 # Creating and persisting user data
 Create login/signup splash
