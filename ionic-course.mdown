@@ -115,11 +115,12 @@ You'll also notice that we've used a couple of Ionic's [CSS Components](http://i
 Now that we've explored our base application structure and how everything is wired together, lets start building out the functionality our application!
 
 # Building interface functionality
-DONE: Create discover controller for fav/skip, feed some dummy data (MINUS ADDING TO FAVORITES)
-First we'll need songs. Add some mock data to your discover controller:
+Lets start with our main interface, "Discover", where the user will be presented with songs to "favorite" or "skip". In a few chapters we will retrieve these songs from a server, but for now lets add some mock data to the discover controller to prototype with.
+
+[add-mock-data] Add the `$scope.songs` array to your discover controller (feel free to copy and paste)
 
 ```javascript
-.controller('DiscoverCtrl', function($scope, $timeout, User) {
+.controller('DiscoverCtrl', function($scope) {
   // our first three songs
   $scope.songs = [
      {
@@ -143,14 +144,17 @@ First we'll need songs. Add some mock data to your discover controller:
   ];
 ```
 
-At any given time we'll need a song that's currently playing. When our app initializes, lets just set it to the first song:
+When a user is on the discover page, at any given time there will be a song that's currently playing. Since we'll need to display the song's metadata in the template (song name, artist, etc), lets create a scope variable called currentSong that will hold all of the current song's information.
+
+[create-scope.currentSong] When we first initialize the discover controller, lets set currentSong to the first song in our songs array:
 ```javascript
   // initialize the current song
   $scope.currentSong = angular.copy($scope.songs[0]);
 ```
-Using angular.copy because...
+You'll notice that we used [angular.copy](https://docs.angularjs.org/api/ng/function/angular.copy), which makes a deep copy of the object instead of creating a reference to the object in our songs array. If you're unfamiliar with how angular.copy works, you can learn more by [watching this video](https://thinkster.io/egghead/angular-copy).
 
-Change template to show the new song (discover.html)
+Now that the current song is being exposed to the scope, we can now wire up our template to the currentSong object.
+[show-song-metadata] Update our discover.html template to show the current song:
 ```html
       <div class="item item-image">
         <img ng-src="{{ currentSong.image_large }}">
@@ -162,7 +166,11 @@ Change template to show the new song (discover.html)
       </div>
 ```
 
-Now lets wire up the buttons for favoriting and skipping. first lets create the JS function. Randomly pull one of the three songs
+At this point you should be seeing the album art, artist name and title of the first song: "Stealing Cinderella" by Chuck Wicks. If you're feeling unmotivated right now, go listen to this song on Spotify, because it totally sucks and you'll want to hit the skip button out of sheer spite. So for everyone's sanity, lets make that skip button work (as well as the favorite button).
+
+In our discover controller, lets create a scope method called sendFeedback that is fired when the skip and favorite buttons are pressed. This method will accept one argument: a boolean where true = the song was favorited, and false = the song was skipped.
+
+[create-sendfeedback-method] Create the sendFeedback method, which (for now) just changes the currentSong to a random song in our `songs` array. (For those wondering about the unused `bool` argument, don't worry - we'll be using it very soon).
 ```javascript
   // fired when we favorite / skip a song.
   $scope.sendFeedback = function (bool) {
@@ -177,7 +185,7 @@ Now lets wire up the buttons for favoriting and skipping. first lets create the 
 ```
 
 
-Then lets wire up the buttons to fire the function
+[wireup-feedback-btns] Now wire up the skip & feedback buttons to fire the `sendFeedback` method, with `false` and `true` as the argument respectively:
 ```html
       <div class="item tabs tabs-secondary tabs-icon-left">
         <a class="tab-item" ng-click="sendFeedback(false)">
@@ -326,6 +334,20 @@ Now lets start wiring our app up to an actual server.
 
 # Wiring it up to a server
 Either use our server, or run your own locally
+[need to get this running on heroku]
+[also need to implement pai's new dataset into db seed]
+
+You'll notice in app.'s that we've defined a constant called "SERVER' that has a url attribute:
+```javascript
+.constant('SERVER', {
+  url: 'http://localhost:3000'
+  //url: ''
+});
+```
+You'll want to update the url attribute with either your local server (is usually http://localhost:3000) or the hosted version we're providing for you over at [INSERT HEROKU URL].
+
+
+
 Create Recommendations service to ask for songs
 Wire up to discover controller
 Show # of new favorites in tab bar
