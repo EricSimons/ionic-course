@@ -110,21 +110,227 @@ If you open up templates/tabs.html, you'll see that there are two ion-nav-view e
 
 Finally, lets take a look at the templates of our Discover and Favorites pages. Our templates/discover.html file contains an Ionic [Card Image](http://ionicframework.com/docs/components/#card-showcase) containing the song information along with favorite/skip buttons, and templates/favorites.html contains an [ion-list](http://ionicframework.com/docs/api/directive/ionList/) of our favorite songs. You'll notice that both pages are wrapped in an [ion-view](http://ionicframework.com/docs/api/directive/ionView/) for navigation and header bar purposes, and then an [ion-content](http://ionicframework.com/docs/api/directive/ionContent/) where we place all of our content.
 
-You'll also notice that we've used a couple of Ionic's [CSS Components](http://ionicframework.com/docs/components/) and [AngularJS Extensions](http://ionicframework.com/docs/api/) in this base application, and we strongly recommend checking the other cool things that Ionic can do out of the box. Knowing what Ionic can do for you will allow you to build applications quickly, as you can lean on Ionic's pre-built components & extensions instead of writing your own.
+You'll also notice that we've used a couple of Ionic's [CSS Components](http://ionicframework.com/docs/components/) and [AngularJS Extensions](http://ionicframework.com/docs/api/) in this base application, and we strongly recommend checking out other components and extensions that Ionic can do out of the box. Knowing what Ionic can do for you will allow you to build applications quickly, as you can lean on Ionic's pre-built components & extensions instead of writing your own hand-rolled solutions.
 
 Now that we've explored our base application structure and how everything is wired together, lets start building out the functionality our application!
 
 # Building interface functionality
-Create discover controller for fav/skip, feed some dummy data
-Create super basic user service to add favorites to
-Have favorites page pull down our favorites into the ion list
+DONE: Create discover controller for fav/skip, feed some dummy data (MINUS ADDING TO FAVORITES)
+First we'll need songs. Add some mock data to your discover controller:
+
+```javascript
+.controller('DiscoverCtrl', function($scope, $timeout, User) {
+  // our first three songs
+  $scope.songs = [
+     {
+        "title":"Stealing Cinderella",
+        "artist":"Chuck Wicks",
+        "image_small":"https://i.scdn.co/image/d1f58701179fe768cff26a77a46c56f291343d68",
+        "image_large":"https://i.scdn.co/image/9ce5ea93acd3048312978d1eb5f6d297ff93375d"
+     },
+     {
+        "title":"Venom - Original Mix",
+        "artist":"Ziggy",
+        "image_small":"https://i.scdn.co/image/1a4ba26961c4606c316e10d5d3d20b736e3e7d27",
+        "image_large":"https://i.scdn.co/image/91a396948e8fc2cf170c781c93dd08b866812f3a"
+     },
+     {
+        "title":"Do It",
+        "artist":"Rootkit",
+        "image_small":"https://i.scdn.co/image/398df9a33a6019c0e95e3be05fbaf19be0e91138",
+        "image_large":"https://i.scdn.co/image/4e47ee3f6214fabbbed2092a21e62ee2a830058a"
+     }
+  ];
+```
+
+At any given time we'll need a song that's currently playing. When our app initializes, lets just set it to the first song:
+```javascript
+  // initialize the current song
+  $scope.currentSong = angular.copy($scope.songs[0]);
+```
+Using angular.copy because...
+
+Change template to show the new song (discover.html)
+```html
+      <div class="item item-image">
+        <img ng-src="{{ currentSong.image_large }}">
+      </div>
+
+      <div class="item">
+        <h2>{{ currentSong.title }}</h2>
+        <p>{{ currentSong.artist }}</p>
+      </div>
+```
+
+Now lets wire up the buttons for favoriting and skipping. first lets create the JS function. Randomly pull one of the three songs
+```javascript
+  // fired when we favorite / skip a song.
+  $scope.sendFeedback = function (bool) {
+
+    // set the current song to one of our three songs
+    var randomSong = Math.round(Math.random() * ($scope.songs.length - 1));
+
+    // update current song in scope
+    $scope.currentSong = angular.copy($scope.songs[randomSong]);
+
+  }
+```
+
+
+Then lets wire up the buttons to fire the function
+```html
+      <div class="item tabs tabs-secondary tabs-icon-left">
+        <a class="tab-item" ng-click="sendFeedback(false)">
+          <i class="icon ion-close"></i>
+          Skip
+        </a>
+        <a class="tab-item" ng-click="sendFeedback(true)">
+          <i class="icon ion-heart"></i>
+          Favorite
+        </a>
+      </div>
+```
+You can now proceed through the songs! but what if we want an animation? Using angular animations, we'll add a favorite or skip class along with an ng-hide animation. First lets update our sendFeedback method to enable animations. currentSong.rated will tell the scope whether current song was favorited (true) or skipped (false). We will also tell the current card to hide itself with currentSong.hide.
+
+```javascript
+  $scope.sendFeedback = function (bool) {
+
+    // set variable for the correct animation sequence
+    $scope.currentSong.rated = bool;
+    $scope.currentSong.hide = true;
+
+    $timeout(function() {
+      // $timeout to allow animation to complete
+      // set the current song to one of our three songs
+      var randomSong = Math.round(Math.random() * ($scope.songs.length - 1));
+
+      // update current song in scope
+      $scope.currentSong = angular.copy($scope.songs[randomSong]);
+
+    }, 250);
+  }
+```
+
+Since we're using $timeout, we'll to inject it into our discover controller
+```javascript
+.controller('DiscoverCtrl', function($scope, $timeout) {
+```
+
+Now open up discover.html and lets wire these two variables up to our CSS animation classes.
+
+```html
+    <div class="list card current-song"
+          ng-class="{skipped: currentSong.rated == false,
+                     favorited: currentSong.rated == true}"
+          ng-show="currentSong && !currentSong.hide">
+```
+
+Now our sexy skip and favorite animations should work!
+
+Right now, nothing happens when we favorite a song. What we want to happen is for it to appear in our favorites tab. To do that, we need to create a service that will add, remove and retrieve the songs we've favorited.
+
+Lets create a User service in services.js where we'll store an array of our favorite songs:
+
+```javascript
+angular.module('songhop.services', [])
+.factory('User', function() {
+  
+  var o = {
+    favorites: []
+  }
+
+  return o;
+});
+```
+
+Now lets create a method for adding songs to our favorites array
+
+```javascript
+  o.addSongToFavorites = function(song) {
+    // make sure there's a song to add
+    if (!song) return false;
+
+    // add to favorites array
+    o.favorites.unshift(song);
+  }
+```
+
+We need to be able to display this on our favorites page, so first crack open our favorites controller. We'll want to drag down our list of favorites into scope:
+```javascript
+.controller('FavoritesCtrl', function($scope, User) {
+  // get the list of our favorites from the user service
+  $scope.favorites = User.favorites;
+})
+```
+
+Now open up discover.html and have our ion-list repeat through out list of favorites
+```html
+      <ion-item ng-repeat="song in favorites" class="item-avatar" ng-click="openSong(song)">
+        <img ng-src="{{ song.image_small }}">
+        <h2>{{ song.title }}</h2>
+        <p>{{ song.artist }}</p>
+      </ion-item>
+```
+
+Finally, lets add songs to our favorites when the user hits the favorite button. In our discover controller, inject User as a dependency:
+```javascript
+.controller('DiscoverCtrl', function($scope, $timeout, User) {
+```
+
+And then add the current song to our favorites at the beginning line of our sendFeedback method:
+```javascript
+    // first, add to favorites if they favorited
+    if (bool) User.addSongToFavorites($scope.currentSong);
+```
+
+Go ahead and favorite a couple of songs, and then go to the favorites page -- all of our songs now show up!
+
+But what if we want to remove a song from our favorites? Lets add a method in our User service to do that.
+```javascript
+  o.removeSongFromFavorites = function(song, index) {
+    // make sure there's a song to add
+    if (!song) return false;
+
+    // add to favorites array
+    o.favorites.splice(index, 1);
+  }
+```
+
+In our favorites controller, lets expose a method that will fire the removeSongFromFavorites User method:
+```javascript
+  $scope.removeSong = function(song, index) {
+    User.removeSongFromFavorites(song, index);
+  }
+```
+(mention that you could do $scope.removeSong = User.removeSongFromFavorites, but if we ever want to have a success message or any other scope related activities, we'd need to do it this way)
+
+Finally, lets add an ion-option-button for deleting this song to our ion-item ng-repeat:
+```html
+    <ion-list>
+      <ion-item ng-repeat="song in favorites" class="item-avatar" ng-click="openSong(song)">
+        <img ng-src="{{ song.image_small }}">
+        <h2>{{ song.title }}</h2>
+        <p>{{ song.artist }}</p>
+
+        <ion-option-button class="button-assertive"
+                       ng-click="removeSong(song, $index)">
+          <i class="ion-minus-circled"></i>
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
+```
+
+Now you can swipe a song to the right, hit the delete button and it will disappear.
+
+Now lets start wiring our app up to an actual server.
 
 # Wiring it up to a server
 Either use our server, or run your own locally
 Create Recommendations service to ask for songs
 Wire up to discover controller
+Show # of new favorites in tab bar
 
-# Creating and persisting user data
+## Creating and persisting user data
 Create login/signup splash
 Create User service for managing/creating user sessions
 Create $localstorage plugin
