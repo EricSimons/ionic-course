@@ -351,7 +351,7 @@ You'll notice in app.'s that we've defined a constant called "SERVER' that has a
   //url: ''
 });
 ```
-You'll want to update the url attribute with either your local server (is usually http://localhost:3000) or the hosted version we're providing for you over at [INSERT HEROKU URL].
+You'll want to update the url attribute with either your local server (usually http://localhost:3000) or the hosted version we're providing for you over at [INSERT HEROKU URL].
 
 The first thing we'll wire up is actual song recommendations instead of using the mock data. To do this, lets create a "Recommendations" service that will handle retrieving, storing and manipulating our queue of song recommendations.
 
@@ -367,9 +367,9 @@ The first thing we'll wire up is actual song recommendations instead of using th
 })
 ```
 
-Our recommendations queue will be perpetually empty until we retrieve songs from our server. The server route we need to hit to retrieve new song recommendations is a GET request to http://SERVER-URL/recommendations. It will return an array of ten random songs, which you can see in action here: [HEROKU URL]/recommendations.
+Our recommendations queue will be empty until we retrieve songs from our server. The server route we need to hit to retrieve new song recommendations is a GET request to http://SERVER-URL/recommendations. It will return an array of ten random songs, which you can see in action here: [HEROKU URL]/recommendations.
 
-[create-getNextSongs] Create the `getNextSongs` method that returns an $http GET request to /recommendations. The success function will add the new songs to our `queue` array:
+[create-getnextsongs] Create the `getNextSongs` method that returns an [$http](https://docs.angularjs.org/api/ng/service/$http) GET request to /recommendations. The success function will add the new songs to our `queue` array:
 
 ```javascript
   o.getNextSongs = function() {
@@ -383,13 +383,84 @@ Our recommendations queue will be perpetually empty until we retrieve songs from
   }
 ```
 
+When our app first loads up, we'll want to have a method that's fired to initialize our first set of songs. In our DiscoverCtrl, we can just fire `Recommendations.getNextSongs()`. When it returns successfully, we'll set the current song to be the first one in our queue (aka `Recommendations.queue[0]`). The song at index 0 of `Recommendations.queue` should always be the current song.
+
+[getnextsongs-discoverctrl] Inject Recommendations into DiscoverCtrl, remove $scope.songs and $scope.currentSong, and replace with getNextSongs w/ callback
+
+```javascript
+.controller('DiscoverCtrl', function($scope, $timeout, User, Recommendations) {
+  // get our first songs
+  Recommendations.getNextSongs()
+    .then(function(){
+      $scope.currentSong = Recommendations.queue[0];
+    });
+```
+
+Our favorite and skip buttons no longer work, as our sendFeedback method isn't wired up to our Recommendations service. We need to create a method in our Recommendations service that allows us to remove the current song from the queue and proceed to the next one.
+
+[rec-nxtsong] Create a `nextSong` method that pops the first array element off of our `queue`:
+
+```javascript
+  o.nextSong = function() {
+    // pop the index 0 off
+    o.queue.shift();
+  }
+```
+
+In the `sendFeedback` method, fire `Recommendations.nextSong()` and update `$scope.currentSong` accordingly:
+
+```javascript
+    // prepare the next song
+    Recommendations.nextSong();
+
+    $timeout(function() {
+      // $timeout to allow animation to complete
+      $scope.currentSong = Recommendations.queue[0];
+    }, 250);
+```
+
+Cool, now favoriting and skipping works again. Skip a few songs quickly though and you might notice that the images are taking a long time to load, especially if you're on a slow internet connection (which is often the case on mobile). The way to solve this is by caching the image for the next song in the queue - but what's the best way of doing that in a hybrid app?
+
+When we were building the original Songhop app, we originally planned to download the next image to the device and then provide a link to the local file in cache. This would've required us to use native plugins and would've added a good amount of code to our app. This would also be the only solution to use if you were developing this app in a native language, like Swift/Obj-C or Java. However, we have a killer advantage over native apps: we can lean on the web browser for common tasks, like caching. Just by creating `<img src="hello.jpg" />`, we can place an image in the web browser's cache.
+
+Now imagine if we had an image tag with an [ng-src](https://docs.angularjs.org/api/ng/directive/ngSrc) always pointed at the image url for `Recommendations.queue[1]` (aka the next song in the queue). We can make this image nearly invisible with CSS: 1px tall and 1px wide, with an opacity of 0.01 - yet the browser will still download it and place it in cache. Perfect!
+
+[nextalbumimg-method] In our controller, create a method called `nextAlbumImg` that will return the next album's image:
+
+```javascript
+  // used for retrieving the next album image.
+  // if there isn't an album image available next, return empty string.
+  $scope.nextAlbumImg = function() {
+    if (Recommendations.queue.length > 1) {
+      return Recommendations.queue[1].image_large;
+    }
+
+    return '';
+  }
+```
+
+[nextimg-tag] Then in our discover.html template, add the img-lookahead div with the image tag inside it:
+```html
+    <div class="img-lookahead">
+      <img ng-src="{{ nextAlbumImg() }}" />
+    </div>
+```
+
+Even if you skip songs as fast as you can, the images are almost always preloaded into the image tag in our img-lookahead div - with no extra code to download them and keep track of their location in cache. This is a great example of how building hybrid apps can often be easier than building native apps.
+
+[dont-be-afraid] Remember - don't be afraid to use the unique features web browsers provide to your advantage! With great power comes great responsibility, and your responsibility when building hybrid apps is to create code that native app developers would drool over.
 
 
 
 
 
-Create Recommendations service to ask for songs
-Wire up to discover controller
+
+
+
+
+
+
+
 Add media playback to svc/ctrl
 Pause/play when going between tabs
 Show # of new favorites in tab bar
