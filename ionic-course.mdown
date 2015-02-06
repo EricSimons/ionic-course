@@ -318,7 +318,7 @@ But what if we want to remove a song from our favorites?
     User.removeSongFromFavorites(song, index);
   }
 ```
-You could just write $scope.removeSong = User.removeSongFromFavorites, but if we ever want to have a success message or any other scope related activities when a song is removed, we need to do it this way.
+You could just write $scope.removeSong = User.removeSongFromFavorites, but if we ever want to have a success message or any perform other scope related activities when a song is removed, we need to do it this way.
 
 [add-ion-option-btn] Finally, lets add an [ion-option-button](http://ionicframework.com/docs/api/directive/ionOptionButton/) for deleting this song to our [ion-item](http://ionicframework.com/docs/api/directive/ionItem/) ng-repeat:
 ```html
@@ -338,12 +338,11 @@ You could just write $scope.removeSong = User.removeSongFromFavorites, but if we
 
 Now you can swipe a song to the right, hit the delete button, and the song will disappear - pretty neat!
 
-Our base interface functionality is complete! In the next section, we'll start wiring our app up to data retrieved from a server.
+Our base interface functionality is complete. In the next section, we'll start wiring our app up to data retrieved from a server.
 
 # Wiring it up to a server
 Either use our server, or run your own locally
 [need to get this running on heroku]
-[also need to implement pai's new dataset into db seed]
 
 You'll notice in app.'s that we've defined a constant called "SERVER' that has a url attribute:
 ```javascript
@@ -354,13 +353,48 @@ You'll notice in app.'s that we've defined a constant called "SERVER' that has a
 ```
 You'll want to update the url attribute with either your local server (is usually http://localhost:3000) or the hosted version we're providing for you over at [INSERT HEROKU URL].
 
+The first thing we'll wire up is actual song recommendations instead of using the mock data. To do this, lets create a "Recommendations" service that will handle retrieving, storing and manipulating our queue of song recommendations.
+
+[create-rec-svc] In services.js, create a new factory called 'Recommendations' that returns a object containing an array (named `queue`) of our current recommendations. Since this factory will be interacting with our server, be sure to inject `$http` and our `SERVER` constant:
+
+```javascript
+.factory('Recommendations', function($http, SERVER) {
+  var o = {
+    queue: []
+  };
+
+  return o;
+})
+```
+
+Our recommendations queue will be perpetually empty until we retrieve songs from our server. The server route we need to hit to retrieve new song recommendations is a GET request to http://SERVER-URL/recommendations. It will return an array of ten random songs, which you can see in action here: [HEROKU URL]/recommendations.
+
+[create-getNextSongs] Create the `getNextSongs` method that returns an $http GET request to /recommendations. The success function will add the new songs to our `queue` array:
+
+```javascript
+  o.getNextSongs = function() {
+    return $http({
+      method: 'GET',
+      url: SERVER.url + '/recommendations'
+    }).success(function(data){
+      // merge data into the queue
+      o.queue = o.queue.concat(data);
+    });
+  }
+```
+
+
+
+
 
 
 Create Recommendations service to ask for songs
 Wire up to discover controller
+Add media playback to svc/ctrl
+Pause/play when going between tabs
 Show # of new favorites in tab bar
 
-## Creating and persisting user data
+# Creating and persisting user data
 Create login/signup splash
 Create User service for managing/creating user sessions
 Create $localstorage plugin
