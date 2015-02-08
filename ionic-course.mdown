@@ -275,7 +275,7 @@ angular.module('songhop.services', [])
 
 [ngrepeat-favs] Now open up discover.html and have our ion-list repeat through our list of favorites:
 ```html
-      <ion-item ng-repeat="song in favorites" class="item-avatar" ng-click="openSong(song)">
+      <ion-item ng-repeat="song in favorites" class="item-avatar">
         <img ng-src="{{ song.image_small }}">
         <h2>{{ song.title }}</h2>
         <p>{{ song.artist }}</p>
@@ -321,7 +321,7 @@ You could just write $scope.removeSong = User.removeSongFromFavorites, but if we
 [add-ion-option-btn] Finally, lets add an [ion-option-button](http://ionicframework.com/docs/api/directive/ionOptionButton/) for deleting this song to our [ion-item](http://ionicframework.com/docs/api/directive/ionItem/) ng-repeat:
 ```html
     <ion-list>
-      <ion-item ng-repeat="song in favorites" class="item-avatar" ng-click="openSong(song)">
+      <ion-item ng-repeat="song in favorites" class="item-avatar">
         <img ng-src="{{ song.image_small }}">
         <h2>{{ song.title }}</h2>
         <p>{{ song.artist }}</p>
@@ -454,7 +454,7 @@ Even if you skip songs as fast as you can, the images are almost always preloade
 
 [dont-be-afraid] Remember - don't be afraid to use the unique features web browsers provide to your advantage! With great power comes great responsibility, and your responsibility when building hybrid apps is to create code that native app developers would drool over.
 
-## Playing previews of songs
+# Playing & managing audio
 The key functionality of our app is the ability to quickly sample songs - but getting the proper licensing rights to play song clips is exceptionally difficult. For months we dug around various APIs trying to find a reasonable solution, but to no avail. That was until the summer of 2014, when Spotify made waves by releasing [a new set of APIs](https://developer.spotify.com/web-api/) for interacting with their platform. Their new API provides us with the key bit of functionality for our app: 30 second song previews, as well as album art and other relevant song metadata.
 
 For this course, our node.js server will be handling all of the interactions with the Spotify API, which means that we can just focus on playing the song data that is returned to our Ionic client. All you need to know is that the data being returned to us from the /recommendations endpoint is actually being powered by the amazing people at Spotify, so [show them some love on Twitter!](https://twitter.com/SpotifyPlatform)
@@ -596,7 +596,11 @@ And invoke this method on-deselect in tabs.html:
   <ion-tab title="Favorites" icon-off="ion-music-note" icon-on="ion-music-note" on-select="enteringFavorites()" on-deselect="leavingFavorites()" href="#/tab/favorites">
 ```
 
-Boom, now it works. Now lets get loading loading screens wired up to show progress to users. When we have no songs, we need to show some sort of loading screen. We can use Ionic's fantastic [$ionicLoading](http://ionicframework.com/docs/api/service/$ionicLoading/) extension to do this.
+Boom, now it works.
+
+# Wrapping up the UI and core functionality
+
+Now lets get loading loading screens wired up to show progress to users. When we have no songs, we need to show some sort of loading screen. We can use Ionic's fantastic [$ionicLoading](http://ionicframework.com/docs/api/service/$ionicLoading/) extension to do this.
 
 At top of DiscoverCtrl, create methods for showing and hiding the $ionicLoading overlay, and then fire the showLoading function (this only happens when the controller is first initialized aka the first time the app is loaded). We'll also need to inject $ionicLoading into DiscoverCtrl:
 ```javascript
@@ -734,6 +738,27 @@ And in tabs.html, set our badge type to badge-assertive with the badge content d
 ```
 
 Now when we favorite songs the number of new favorites show up in the tab bar, but disappears when we actually navigate to the favorites page. Cool!
+
+The user will want to open the songs on the favorites page in Spotify, so lets make that work.
+
+In favorites.html, fire a scope method called `openSong` that takes the song as an argument:
+```html
+<ion-item ng-repeat="song in favorites" class="item-avatar" ng-click="openSong(song)">
+```
+
+And create the open song method in our favorites controller (be sure to inject $window into FavoritesCtrl):
+```javascript
+  $scope.openSong = function(song) {
+    $window.open(song.open_url, "_system");
+  }
+```
+open_url is an attribute on every song object to the song's Spotify web URL.
+
+Now we're done! In the next section, we're going to cover authentication & persisting user sessions between app uses.
+
+
+
+
 
 # Creating and persisting user data
 Create login/signup splash
