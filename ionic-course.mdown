@@ -454,7 +454,31 @@ Even if you skip songs as fast as you can, the images are almost always preloade
 
 [dont-be-afraid] Remember - don't be afraid to use the unique features web browsers provide to your advantage! With great power comes great responsibility, and your responsibility when building hybrid apps is to create code that native app developers would drool over.
 
-## Playing the song preview
+## Playing previews of songs
+The key functionality of our app is the ability to quickly sample songs - but getting the proper licensing rights to play song clips is exceptionally difficult. For months we dug around various APIs trying to find a reasonable solution, but to no avail. That was until the summer of 2014, when Spotify made waves by releasing [a new set of APIs](https://developer.spotify.com/web-api/) for interacting with their platform. Their new API provides us with the key bit of functionality for our app: 30 second song previews, as well as album art and other relevant song metadata.
+
+For this course, our node.js server will be handling all of the interactions with the Spotify API, which means that we can just focus on playing the song data that is returned to our Ionic client. All you need to know is that the data being returned to us from the /recommendations endpoint is actually being powered by the amazing people at Spotify, so [show them some love on Twitter!](https://twitter.com/SpotifyPlatform)
+
+ _If you're interested in learning how to use the Spotify API, let me know at eric at thinkster dot io -- I'm thinking of writing a section about this in the future if enough people are interested._
+
+
+Lets figure out how we can play Spotify's 30 second song previews. Every song that is returned to us by the /recommendations endpoint contains the following attributes:
+```javascript
+{
+	"title":"Blood Brothers",
+	"artist":"Luke Bryan",
+	"preview_url":"https://p.scdn.co/mp3-preview/b92a1dc3c0420d8c6fe1bab6ae15c181bf63926d",
+	"image_small":"https://i.scdn.co/image/082645c420a3ea4fb58a2b325c191df1a19cc8c7",
+	"image_medium":"https://i.scdn.co/image/beac04c66c73fdb1765ba645bcad6a73e5e9ba90",
+	"image_large":"https://i.scdn.co/image/ca93252350b8819ac51252783e1431af9dabd59f",
+	"open_url":"https://open.spotify.com/track/4ggPIxXwOWReIBfyCVW8QI",
+	"song_id":"54d3f75eb9fd644f061b3c40"
+}
+```
+The attribute `preview_url` contains the URL for this song's mp3 preview clip. You can verify this by visiting the URL in your browser and playing the media clip.
+
+Since modern browsers can play mp3 files without installing any extra stuff, we can simply use the [HTMLAudioElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement) for our music playback purposes.
+
 
 Add media playback to svc/ctrl
 Pause/play when going between tabs
