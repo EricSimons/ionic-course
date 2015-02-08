@@ -596,11 +596,144 @@ And invoke this method on-deselect in tabs.html:
   <ion-tab title="Favorites" icon-off="ion-music-note" icon-on="ion-music-note" on-select="enteringFavorites()" on-deselect="leavingFavorites()" href="#/tab/favorites">
 ```
 
-Boom, now it works.
+Boom, now it works. Now lets get loading loading screens wired up to show progress to users. When we have no songs, we need to show some sort of loading screen. We can use Ionic's fantastic [$ionicLoading](http://ionicframework.com/docs/api/service/$ionicLoading/) extension to do this.
 
+At top of DiscoverCtrl, create methods for showing and hiding the $ionicLoading overlay, and then fire the showLoading function (this only happens when the controller is first initialized aka the first time the app is loaded). We'll also need to inject $ionicLoading into DiscoverCtrl:
+```javascript
+.controller('DiscoverCtrl', function($scope, $ionicLoading, $timeout, User, Recommendations) {
+  // helper functions for loading
+  var showLoading = function() {
+    $ionicLoading.show({
+      template: '<i class="ion-loading-c"></i>',
+      noBackdrop: true
+    });
+  }
 
+  var hideLoading = function() {
+    $ionicLoading.hide();
+  }
 
-Show # of new favorites in tab bar
+  // set loading to true first time while we retrieve songs from server.
+  showLoading();
+```
+
+And now it works!
+_If you're running the server locally, you probably won't see the $ionicLoading overlay due to how fast the init promised is resolved. If you shut down your server and refresh the songhop app, you can see the $ionicLoading overlay._
+
+But wait a second -- we should let the user know when the song's MP3 has finished loading too. We'll have another loading indicator on the song next to the title for this.
+
+In discover.html, add the ion-loading-c [ionicon](http://ionicons.com/) next to the title:
+```html
+      <div class="item">
+        <h2>{{ currentSong.title }} <span ng-hide="currentSong.loaded"><i class="ion-loading-c"></i></span></h2>
+        <p>{{ currentSong.artist }}</p>
+      </div>
+```
+
+Now modify our init resolve:
+```javascript
+  Recommendations.init()
+    .then(function(){
+
+      $scope.currentSong = Recommendations.queue[0];
+
+      return Recommendations.playCurrentSong();
+
+    })
+    .then(function(){
+      // turn loading off
+      hideLoading();
+      $scope.currentSong.loaded = true;
+    });
+```
+
+Then modify sendFeedback:
+```javascript
+  // fired when we favorite / skip a song.
+  $scope.sendFeedback = function (bool) {
+
+    // first, add to favorites if they favorited
+    if (bool) User.addSongToFavorites($scope.currentSong);
+
+    // set variable for the correct animation sequence
+    $scope.currentSong.rated = bool;
+    $scope.currentSong.hide = true;
+
+    // prepare the next song
+    Recommendations.nextSong();
+
+    // update current song in scope, timeout to allow animation to complete
+    $timeout(function() {
+      $scope.currentSong = Recommendations.queue[0];
+      $scope.currentSong.loaded = false;
+
+    }, 250);
+
+    Recommendations.playCurrentSong().then(function() {
+      $scope.currentSong.loaded = true;
+
+    });
+
+  }
+```
+
+Sick, now loading indicators work!
+
+As we add songs to our favorites, it would be really nice if there was some sort of visual indicator of how many new favorites we've added. This will also encourage our users to visit their favorites and review their songs.
+
+You may have noticed in the [documentation for ion-tab](http://ionicframework.com/docs/api/directive/ionTab/) that you can display badges on a given tab. This is exactly what we need!
+
+First, we need to modify our user service to keep track of how many new favorites we have.
+
+Attach new variable newFavorites to return object:
+```javascript
+  var o = {
+    favorites: [],
+    newFavorites: 0
+  }
+```
+
+Then increase the newFavorite count when we add a song to our favorites:
+```javascript
+  o.addSongToFavorites = function(song) {
+    // make sure there's a song to add
+    if (!song) return false;
+
+    // add to favorites array
+    o.favorites.unshift(song);
+    o.newFavorites++;
+  }
+```
+
+Finally, create a new method that returns the number of new favorites a user has:
+```javascript
+  o.favoriteCount = function() {
+    return o.newFavorites;
+  }
+```
+
+In TabsCtrl, inject the User service and expose a scope variable for User.favoriteCount:
+```javascript
+.controller('TabsCtrl', function($scope, User, Recommendations) {
+  // expose the number of new favorites to the scope
+  $scope.favCount = User.favoriteCount;
+```
+
+Update our enteringFavorites method to set the count to zero, since the user will be on the favorites page:
+```javascript
+  // method to reset new favorites to 0 when we click the fav tab
+  $scope.enteringFavorites = function() {
+    User.newFavorites = 0;
+    Recommendations.haltAudio();
+  }
+```
+
+And in tabs.html, set our badge type to badge-assertive with the badge content displaying favCount():
+```html
+<ion-tab title="Favorites" icon-off="ion-music-note" icon-on="ion-music-note" badge="favCount()" badge-style="badge-assertive" on-select="enteringFavorites()" on-deselect="leavingFavorites()" href="#/tab/favorites">
+```
+
+Now when we favorite songs the number of new favorites show up in the tab bar, but disappears when we actually navigate to the favorites page. Cool!
 
 # Creating and persisting user data
 Create login/signup splash
