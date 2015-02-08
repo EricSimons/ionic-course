@@ -1,7 +1,7 @@
 # Introduction
 Web development technologies have evolved at an incredible clip over the past few years. We've gone from rudimentary DOM manipulation with libraries like jQuery to supercharged web applications organized & powered by elegant MV* based frameworks like AngularJS. Pair this with significant increases in browser rendering speeds, and it is now easier than ever before to build production quality applications on top of Javascript, HTML5 and CSS3.
 
-While these advances have been incredible, they are only just starting to affect the clear platform of the future: mobile. For years, mobile rendering speeds were atrocious and the MVC frameworks & UI libraries provided by iOS and Android were far superior to writing mobile apps using web technologies. There were also some very public failures -- Facebook famously wrote their first iOS app in 2011 using HTML5, but ended up scrapping it due to terrible performance. (mention react native here perhaps)
+While these advances have been incredible, they are only just starting to affect the clear platform of the future: mobile. For years, mobile rendering speeds were atrocious and the MVC frameworks & UI libraries provided by iOS and Android were far superior to writing mobile apps using web technologies. There were also some very public failures -- Facebook famously wrote their first iOS app in 2011 using HTML5, but ended up scrapping it due to terrible performance.
 
 For years now, hybrid apps have been mocked and jeered by native app developers for being clunky and ugly, subpar performance, and having no advantages over native apps. While these may have been valid reasons in 2011, they are now virtually baseless thanks to a collection of new technologies that have emerged over the past two years. With these technologies, you can design, build and deploy robust mobile apps faster than you could with native technologies while incurring little to no app performance penalties, with thanks in large part to super fast mobile browser rendering speeds. This course is designed to teach you how to effectively use these new technologies to build insanely great mobile apps.
 
@@ -12,20 +12,20 @@ Before, building hybrid apps was a chore -- not because it was hard to build web
 
 [where-ionic-fits] For a more in depth view of where Ionic fits into our hybrid app stack, [read this blog post](http://ionicframework.com/blog/where-does-the-ionic-framework-fit-in/) from one of Ionic's core developers and [read the "Overview" section](http://ionicframework.com/docs/overview/) on their about page.
 
-[ Maybe mention that if were building mobile web ionic is enough, but if we want an app, we have to package ]
-
-With our frontend technologies taken care of, we'll now need a way to package our app and run it on mobile devices. For this, Cordova is a fantastic solution. For those unfamiliar with Cordova, Adobe describes it via analogy: Cordova is to PhoneGap as Blink is to Chrome. Basically, PhoneGap is Cordova plus a whole bunch of other Adobe stuff.
+Ionic is a great solution for creating both mobile web apps and native apps alike. The first sections of this course will go over structuring Ionic apps that can run on the web, and then we will cover packaging that same exact code into a native app. We will be using a build tool called Cordova for packaging our app. For those unfamiliar with Cordova, Adobe describes it via analogy: Cordova is to PhoneGap as Blink is to Chrome. Basically, PhoneGap is Cordova plus a whole bunch of other Adobe stuff.
 
 [cordova-vs-phonegap] [Read this post for a more in depth understanding of the differences between Cordova and PhoneGap](http://ionicframework.com/blog/what-is-cordova-phonegap/)
 
-The folks at Ionic have done a fantastic job of making Cordova super easy to use by directly wrapping it in their 'ionic' command line tool (don't worry, we'll cover this later). Just remember that Cordova is something that is running under the hood of your app that you will rarely need to worry about, but we will cover some common interactions with it in this course.
+The folks at Ionic have done a fantastic job of making Cordova super easy to use by directly wrapping it in their 'ionic' command line tool (don't worry, we'll cover this later). Just remember that Cordova is something that is running under the hood of native app that you will rarely need to worry about, but we will cover some common interactions with it in this course.
 
 ## What we're going to build
-We will be building an app called Songhop -- a "Tinder for music" app that allows you to listen to 30 second song samples and favorite the ones you like. This is based on a real Ionic/Cordova powered app we built that exists on the iOS App Store -- feel free to download it to get a feeling for what you're about to build (and rate it 5 stars :). It's also worth noting that it only took us a month to build the Songhop app that's on the App Store, so that should give you an idea of how fast you can build & iterate using Ionic / Cordova.
+We will be building an app called Songhop -- a "Tinder for music" app that allows you to listen to 30 second song samples and favorite the ones you like. This is based on a real Ionic/Cordova powered app we built that exists on the iOS App Store -- feel free to download it to get a feeling for what Ionic is capable of (and rate it 5 stars :). It's also worth noting that it only took us a month to build the Songhop app that's on the App Store, so that should give you an idea of how fast you can build & iterate using Ionic / Cordova.
+
+You can see a live demo of the completed application we'll be building here: [LINK]
 
 We'll be covering a wide variety of topics in this course: scaffolding a new application, testing it in the emulator, installing native plugins for manipulating audio & more, swipe gestures for our interface, installing the app on your own device, deploying to the iOS & Android app stores, and so much more.
 
-[ Talk about course structure here -- first X chapters are on ionic, remaining 3 chapters cover building & deploying to phones/app stores etc ]
+We have structured this course to accommodate folks who are interested in Ionic for building mobile websites as well as those who are interested in building hybrid apps. The first chapters of this course will exclusively cover the JS & CSS portions of the Ionic framework (the only knowledge necessary for building mobile websites), and in the [Xth] chapter we will package our application natively for iOS and/or Android.
 
 
 ## Prerequisites
@@ -36,9 +36,7 @@ We'll be covering a wide variety of topics in this course: scaffolding a new app
 
 In addition, you should be comfortable with basic web application concepts including REST and CRUD.
 
-It's best to have either a Linux based OS or Mac to complete this tutorial. While it's certainly possible to develop on Windows, we won't be covering the specifics of running, debugging and troubleshooting Cordova on Windows. If you need to use Windows, we recommend reading this article which will help.
-
-// Maybe look into phonegap build as an option here?
+It's best to have either a Linux based OS or Mac to complete this tutorial. While it's certainly possible to develop on Windows, we won't be covering the specifics of running, debugging and troubleshooting for Windows based systems.
 
 [install-node]  __Install Node.js__. Since you will need to install various packages for Node.js, we recommend that you follow these installation instructions which use npm.
 
@@ -396,14 +394,20 @@ When our app first loads up, we'll want to have a method that's fired to initial
     });
 ```
 
-Our favorite and skip buttons no longer work, as our sendFeedback method isn't wired up to our Recommendations service. We need to create a method in our Recommendations service that allows us to remove the current song from the queue and proceed to the next one.
+Our favorite and skip buttons no longer work, as our sendFeedback method isn't wired up to our Recommendations service. We need to create a method in our Recommendations service that allows us to remove the current song from the queue and proceed to the next one. At the same time we'll check to see if the queue is low on songs, and if it is we'll fire `getNextSongs()`. This ensures our users will never run out of songs to sample.
 
-[rec-nxtsong] Create a `nextSong` method that pops the first array element off of our `queue`:
+[rec-nxtsong] Create a `nextSong` method that pops the first array element off of our `queue` and fires `getNextSongs` if necessary:
 
 ```javascript
   o.nextSong = function() {
     // pop the index 0 off
     o.queue.shift();
+
+    // low on the queue? lets fill it up
+    if (o.queue.length <= 3) {
+      o.getNextSongs();
+    }
+
   }
 ```
 
@@ -439,7 +443,7 @@ Now imagine if we had an image tag with an [ng-src](https://docs.angularjs.org/a
   }
 ```
 
-[nextimg-tag] Then in our discover.html template, add the img-lookahead div with the image tag inside it:
+[nextimg-tag] Then in the discover.html template, add a div with the class "img-lookahead" that contains our image tag:
 ```html
     <div class="img-lookahead">
       <img ng-src="{{ nextAlbumImg() }}" />
@@ -450,16 +454,7 @@ Even if you skip songs as fast as you can, the images are almost always preloade
 
 [dont-be-afraid] Remember - don't be afraid to use the unique features web browsers provide to your advantage! With great power comes great responsibility, and your responsibility when building hybrid apps is to create code that native app developers would drool over.
 
-
-
-
-
-
-
-
-
-
-
+## Playing the song preview
 
 Add media playback to svc/ctrl
 Pause/play when going between tabs
