@@ -477,11 +477,129 @@ Lets figure out how we can play Spotify's 30 second song previews. Every song th
 ```
 The attribute `preview_url` contains the URL for this song's mp3 preview clip. You can verify this by visiting the URL in your browser and playing the media clip.
 
-Since modern browsers can play mp3 files without installing any extra stuff, we can simply use the [HTMLAudioElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement) for our music playback purposes.
+Since modern browsers can play mp3 files without installing any extra stuff, for our app we can simply use the [HTMLAudioElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement) for playing 30 second song previews.
+
+At top of Rec svc, initialize an empty variable called `media` that we'll use for our HTMLAudioElement
+```javascript
+var media;
+```
+
+Add play and halt functions for current song
+
+```javascript
+  o.playCurrentSong = function() {
+    var defer = $q.defer();
+
+    // play the current song's preview
+    media = new Audio(o.queue[0].preview_url);
+
+    // when song loaded, resolve the promise to let controller know.
+    media.addEventListener("loadeddata", function() {
+      defer.resolve();
+    });
+
+    media.play();
+
+    return defer.promise;
+  }
+
+  // used when switching to favorites tab
+  o.haltAudio = function() {
+    if (media) media.pause();
+  }
+```
+
+modify nextSong function to play song
+
+```javascript
+  o.nextSong = function() {
+    // pop the index 0 off
+    o.queue.shift();
+
+    // end the song
+    o.haltAudio();
+
+    // low on the queue? lets fill it up
+    if (o.queue.length <= 3) {
+      o.getNextSongs();
+    }
+  }
+```
+
+Finally, in our DiscoverCtrl play the current song when Rec service promise returns:
+```javascript
+  Recommendations.getNextSongs()
+    .then(function(){
+      $scope.currentSong = Recommendations.queue[0];
+      Recommendations.playCurrentSong();
+    });
+```
+
+Now audio should play. However, when you go to the favorites page, the song being previewed is still playing. We need to ensure that it pauses before this happens.
+
+If you look at the documentation for [ion-tab](http://ionicframework.com/docs/api/directive/ionTab/), you'll see that there are API events for when a tab is being selected (`on-select`) and when it is being deselected (`on-deselect`). For our favorites tab, we will pause audio when it is being selected, and we will play audio when it's being deselected (which means we're going to the Discover page).
+
+Create enteringFavorites method in TabsCtrl:
+```javascript
+Controller for our tab bar
+*/
+.controller('TabsCtrl', function($scope, Recommendations) {
+  // method to reset new favorites to 0 when we click the fav tab
+  $scope.enteringFavorites = function() {
+    Recommendations.haltAudio();
+  }
+
+});
+```
+
+Open tabs.html and fire enteringFavorites in on-select:
+```html
+<ion-tab title="Favorites" icon-off="ion-music-note" icon-on="ion-music-note" on-select="enteringFavorites()" href="#/tab/favorites">
+```
+
+Now when you tap on the favorites page, the current song will pause. But when you go back to the discover page, the song doesn't resume.
+
+First we need to create init. This will intelligently retrieve songs or play the current song, depending if there are any songs in the queue.
+
+```javascript
+  o.init = function() {
+    if (o.queue.length === 0) {
+      // if there's nothing in the queue, fill it.
+      // this also means that this is the first call of init.
+      return o.getNextSongs();
+
+    } else {
+      // otherwise, play the current song
+      return o.playCurrentSong();
+    }
+  }
+```
+
+Change discover ctrl getNextSongs to init:
+```javascript
+  Recommendations.init()
+    .then(function(){
+      $scope.currentSong = Recommendations.queue[0];
+      Recommendations.playCurrentSong();
+    });
+```
+
+Now create a `leavingFavorites` method in our TabCtrl:
+```javascript
+  $scope.leavingFavorites = function() {
+    Recommendations.init();
+  }
+```
+
+And invoke this method on-deselect in tabs.html:
+```html
+  <ion-tab title="Favorites" icon-off="ion-music-note" icon-on="ion-music-note" on-select="enteringFavorites()" on-deselect="leavingFavorites()" href="#/tab/favorites">
+```
+
+Boom, now it works.
 
 
-Add media playback to svc/ctrl
-Pause/play when going between tabs
+
 Show # of new favorites in tab bar
 
 # Creating and persisting user data
