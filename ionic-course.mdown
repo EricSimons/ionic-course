@@ -465,7 +465,7 @@ The key functionality of our app is the ability to quickly sample songs - but ge
 
 For this course, our node.js server will be handling all of the interactions with the Spotify API, which means that we can just focus on playing the song data that is returned to our Ionic client. All you need to know is that the data being returned to us from the /recommendations endpoint is actually being powered by the amazing people at Spotify, so [show them some love on Twitter!](https://twitter.com/SpotifyPlatform)
 
- _If you're interested in learning how to use the Spotify API, please tweet me [@ericsimons40](https://twitter.com/ericsimons40) or email me at eric@thinkster.io -- I'm thinking of writing a section about this in the future if enough people are interested._
+ _If you're interested in learning how to use the Spotify API, tweet me [@ericsimons40](https://twitter.com/ericsimons40) or email me at eric@thinkster.io -- I'm thinking of writing a section about this in the future if enough people are interested._
 
 
 Lets figure out how we can play Spotify's 30 second song previews. Every song that is returned to us by the /recommendations endpoint contains the following attributes:
