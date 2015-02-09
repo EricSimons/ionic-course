@@ -91,7 +91,6 @@ As we navigate through our app, Ionic uses the [AngularUI Router](https://github
 You may have noticed that our tab.discover and tab.favorites states specify views to be displayed in (in this case, tab.discover is asking to be displayed in a view titled 'tab-discover'):
 
 ```javascript
-...
   .state('tab.discover', {
     url: '/discover',
     views: {
@@ -541,12 +540,12 @@ Epic, each song's preview now plays as we skip/favorite the songs in the queue. 
 
 If you look at the documentation for [ion-tab](http://ionicframework.com/docs/api/directive/ionTab/), you'll see that there are API events for when a tab is being selected (`on-select`) and when it is being deselected (`on-deselect`). For our favorites tab, we want to pause audio when it is being selected, and we want to play audio when it's being deselected (which means we're going back to the Discover page).
 
-Create enteringFavorites method in TabsCtrl:
+[create-enteringFavorites] Create an enteringFavorites method in TabsCtrl that halts the current song's audio:
 ```javascript
 Controller for our tab bar
 */
 .controller('TabsCtrl', function($scope, Recommendations) {
-  // method to reset new favorites to 0 when we click the fav tab
+  // stop audio when going to favorites page
   $scope.enteringFavorites = function() {
     Recommendations.haltAudio();
   }
@@ -554,15 +553,16 @@ Controller for our tab bar
 });
 ```
 
-Open tabs.html and fire enteringFavorites in on-select:
+[enteringFavorites-onselect] Open tabs.html and set `enteringFavorites` as the expression that on-select will evaluate:
 ```html
 <ion-tab title="Favorites" icon-off="ion-music-note" icon-on="ion-music-note" on-select="enteringFavorites()" href="#/tab/favorites">
 ```
 
-Now when you tap on the favorites page, the current song will pause. But when you go back to the discover page, the song doesn't resume.
+When you tap on the favorites page, the current song will now pause. But when you go back to the discover page, the song won't resume. We could just fire `Recommendations.playCurrentSong` for on-deselect, but that method assumes that there is at least one song in our queue, which is not a good assumption. For example, what if the user is on the favorites page, refreshes, and then goes to the Discover page? playCurrentSong would throw an error trying to call play() on a nonexistent audio object.
 
-First we need to create init. This will intelligently retrieve songs or play the current song, depending if there are any songs in the queue.
+We'll need to refactor some code to make this work. Specifically, we need to create an init function that will either retrieve songs (if there aren't any in the queue) or play the current song (if there's at least one song in the queue).
 
+[create-init-recs] Create an init method in the Recommendations service that will either get the next songs or play the current song:
 ```javascript
   o.init = function() {
     if (o.queue.length === 0) {
@@ -577,7 +577,8 @@ First we need to create init. This will intelligently retrieve songs or play the
   }
 ```
 
-Change discover ctrl getNextSongs to init:
+[discoverctrl-use-init] In DiscoverCtrl, change `getNextSongs` to `init`:
+
 ```javascript
   Recommendations.init()
     .then(function(){
@@ -586,25 +587,27 @@ Change discover ctrl getNextSongs to init:
     });
 ```
 
-Now create a `leavingFavorites` method in our TabCtrl:
+[leavingFavorites-use-init] Now create a scope method in TabsCtrl that will fire `Recommendations.init()` when called by on-deselect:
 ```javascript
   $scope.leavingFavorites = function() {
     Recommendations.init();
   }
 ```
 
-And invoke this method on-deselect in tabs.html:
+[ondeselect-leavefavorites] Finally, invoke the `leavingFavorites` method on-deselect in tabs.html:
 ```html
   <ion-tab title="Favorites" icon-off="ion-music-note" icon-on="ion-music-note" on-select="enteringFavorites()" on-deselect="leavingFavorites()" href="#/tab/favorites">
 ```
 
-Boom, now it works.
+You should now be able to switch between the discover and favorites pages with automatic playing & pausing of audio. Pretty neat!
 
 # Wrapping up the UI and core functionality
 
-Now lets get loading loading screens wired up to show progress to users. When we have no songs, we need to show some sort of loading screen. We can use Ionic's fantastic [$ionicLoading](http://ionicframework.com/docs/api/service/$ionicLoading/) extension to do this.
+When our app is retrieving data from a server, it's important that we give the user some sort of visual indicator while the app is waiting for the server's response. This especially relevant for the music sampling experience, so lets set up some loading indicators on the Discover page.
 
-At top of DiscoverCtrl, create methods for showing and hiding the $ionicLoading overlay, and then fire the showLoading function (this only happens when the controller is first initialized aka the first time the app is loaded). We'll also need to inject $ionicLoading into DiscoverCtrl:
+When the application first boots up and requests the first set of song recommendations, we'll want to display a large loading indicator that ideally will block further user input until the loading completes. Ionic just happens to have a fantastic [$ionicLoading](http://ionicframework.com/docs/api/service/$ionicLoading/) extension that does exactly this, so lets use it!
+
+[ionicloading-wrapper-funcs] At the top of DiscoverCtrl, create methods for showing and hiding the $ionicLoading overlay, and then fire the showLoading function (this only happens when the controller is first initialized aka the first time the app is loaded). We'll also need to inject $ionicLoading into DiscoverCtrl:
 ```javascript
 .controller('DiscoverCtrl', function($scope, $ionicLoading, $timeout, User, Recommendations) {
   // helper functions for loading
@@ -623,12 +626,13 @@ At top of DiscoverCtrl, create methods for showing and hiding the $ionicLoading 
   showLoading();
 ```
 
-And now it works!
-_If you're running the server locally, you probably won't see the $ionicLoading overlay due to how fast the init promised is resolved. If you shut down your server and refresh the songhop app, you can see the $ionicLoading overlay._
+[add-hideloading] Add `hideLoading();` to the `Recommendations.init` success function in DiscoverCtrl, as we want to hide the loading indicator once the songs have been retrieved.
 
-But wait a second -- we should let the user know when the song's MP3 has finished loading too. We'll have another loading indicator on the song next to the title for this.
+_If you're running the server locally, you probably won't see the $ionicLoading overlay due to how fast the init promise is resolved. If you shut down your server and refresh the songhop app, you should be able to see the $ionicLoading overlay._
 
-In discover.html, add the ion-loading-c [ionicon](http://ionicons.com/) next to the title:
+Our loading indicator works really well! But wait a second - we should let the user know when the song's MP3 has finished loading when we skip/favorite through songs. Instead of having a blocking loading indicator like $ionicLoading, this time we'll have a loading icon next to the title of the song.
+
+[add-ionloadingc-icon] In discover.html, add an ion-loading-c [ionicon](http://ionicons.com/) next to the title that will ng-hide when `$scope.currentSong` has an attribute called `loaded` that is == `true`:
 ```html
       <div class="item">
         <h2>{{ currentSong.title }} <span ng-hide="currentSong.loaded"><i class="ion-loading-c"></i></span></h2>
@@ -636,7 +640,7 @@ In discover.html, add the ion-loading-c [ionicon](http://ionicons.com/) next to 
       </div>
 ```
 
-Now modify our init resolve:
+[modify-init-songloaded] We'll want to modify the init resolve to set `$scope.currentSong.loaded` to `true` when `Recommendations.playCurrentSong` resolves successfully:
 ```javascript
   Recommendations.init()
     .then(function(){
@@ -653,7 +657,7 @@ Now modify our init resolve:
     });
 ```
 
-Then modify sendFeedback:
+[modify-sendfeedback-songloaded] Then modify `sendFeedback` to set the new song's loading status to `false`, but will set it to `true` after `Recommendations.playCurrentSong` resolves successfully:
 ```javascript
   // fired when we favorite / skip a song.
   $scope.sendFeedback = function (bool) {
@@ -691,7 +695,7 @@ You may have noticed in the [documentation for ion-tab](http://ionicframework.co
 
 First, we need to modify our user service to keep track of how many new favorites we have.
 
-Attach new variable newFavorites to return object:
+[create-newFavorites] Attach a new variable `newFavorites` to the User return object:
 ```javascript
   var o = {
     favorites: [],
@@ -699,7 +703,7 @@ Attach new variable newFavorites to return object:
   }
 ```
 
-Then increase the newFavorite count when we add a song to our favorites:
+[increase-newFavorites] When a user favorites a song via `addSongToFavorites`, increase the `newFavorites` count:
 ```javascript
   o.addSongToFavorites = function(song) {
     // make sure there's a song to add
@@ -711,21 +715,21 @@ Then increase the newFavorite count when we add a song to our favorites:
   }
 ```
 
-Finally, create a new method that returns the number of new favorites a user has:
+[create-favoriteCount] Create a new method that returns the total number of new favorites the user has:
 ```javascript
   o.favoriteCount = function() {
     return o.newFavorites;
   }
 ```
 
-In TabsCtrl, inject the User service and expose a scope variable for User.favoriteCount:
+[favCount-scope-var] Expose the `User.favoriteCount` method to the TabsCtrl scope (don't forget to inject the User service):
 ```javascript
 .controller('TabsCtrl', function($scope, User, Recommendations) {
   // expose the number of new favorites to the scope
   $scope.favCount = User.favoriteCount;
 ```
 
-Update our enteringFavorites method to set the count to zero, since the user will be on the favorites page:
+[zero-out-newFavorites] When the user taps on the favorites tab, we want to zero out `User.newFavorites`. Lets update our `enteringFavorites` method to do this:
 ```javascript
   // method to reset new favorites to 0 when we click the fav tab
   $scope.enteringFavorites = function() {
@@ -734,27 +738,26 @@ Update our enteringFavorites method to set the count to zero, since the user wil
   }
 ```
 
-And in tabs.html, set our badge type to badge-assertive with the badge content displaying favCount():
+[create-badge] The final step is to set up our badge in tabs.html. Set the badge type to badge-assertive with the badge content displaying `favCount()`:
 ```html
 <ion-tab title="Favorites" icon-off="ion-music-note" icon-on="ion-music-note" badge="favCount()" badge-style="badge-assertive" on-select="enteringFavorites()" on-deselect="leavingFavorites()" href="#/tab/favorites">
 ```
 
-Now when we favorite songs the number of new favorites show up in the tab bar, but disappears when we actually navigate to the favorites page. Cool!
+Now when we favorite songs the number of new favorites show up in the tab bar, but disappears when we navigate to the favorites page. Cool!
 
-The user will want to open the songs on the favorites page in Spotify, so lets make that work.
+The last piece of core functionality missing from our app is the ability to access our favorite songs directly on Spotify website/app. Since Spotify gives us a web URL for every song, we can just open a new browser window pointed at the song's `open_url` attribute.
 
-In favorites.html, fire a scope method called `openSong` that takes the song as an argument:
+[opensong-favoriteshtml] In favorites.html, fire a scope method called `openSong` on ng-click that takes the song as an argument:
 ```html
 <ion-item ng-repeat="song in favorites" class="item-avatar" ng-click="openSong(song)">
 ```
 
-And create the open song method in our favorites controller (be sure to inject $window into FavoritesCtrl):
+[opensong-favoritesctrl] Then create the open song method in our favorites controller (be sure to inject $window into FavoritesCtrl):
 ```javascript
   $scope.openSong = function(song) {
     $window.open(song.open_url, "_system");
   }
 ```
-open_url is an attribute on every song object to the song's Spotify web URL.
 
 Now we're done! In the next section, we're going to cover authentication & persisting user sessions between app uses.
 
