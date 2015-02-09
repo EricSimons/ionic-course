@@ -101,7 +101,6 @@ You may have noticed that our tab.discover and tab.favorites states specify view
       }
     }
   })
- ..
 ```
 
 If you open up templates/tabs.html, you'll see that there are two ion-nav-view elements wrapped inside their respective [ion-tab](http://ionicframework.com/docs/api/directive/ionTabs/). This allows us to programmatically display our templates into a specified tab, with the added benefit of each tab having its own navigation history.
@@ -757,15 +756,330 @@ open_url is an attribute on every song object to the song's Spotify web URL.
 Now we're done! In the next section, we're going to cover authentication & persisting user sessions between app uses.
 
 
-
-
-
 # Creating and persisting user data
-Create login/signup splash
-Create User service for managing/creating user sessions
-Create $localstorage plugin
-Retrieve user data from server on boot
-Save songs to server
+We're using username only auth to keep things simple. We're also loosely following token based session management. [Include links to that one ionic project w/ session tokens, etc]
+
+The first thing we need to do is create a splash page. This is where users will be prompted to signup or login.
+
+In app.js, create a state for the splash page on the root route
+```javascript
+  // splash page
+  .state('splash', {
+    url: '/',
+    templateUrl: 'templates/splash.html',
+    controller: 'SplashCtrl'
+  })
+```
+And set the otherwise function to route to the root URL
+```javascript
+$urlRouterProvider.otherwise('/');
+```
+
+Create an empty controller in controllers.js called 'SplashCtrl':
+```javascript
+.controller('SplashCtrl', function($scope) {
+});
+```
+
+Finally, create a new files in the templates/ directory called splash.html and paste the following HTML into it:
+```html
+<ion-view view-title="Songhop" hide-nav-bar="true" class="splash-page">
+  <ion-content scroll="false">
+
+    <div class="padding logo">
+      <h1>songhop</h1>
+    </div>
+
+
+    <div class="login-form">  
+      <div class="card">
+        <div class="list">
+          <label class="item item-input">
+            <input type="text" ng-model="form.username" placeholder="Enter your {{ form.signingUp ? 'desired' : 'songhop' }} username">
+          </label>
+        </div>
+      </div>
+
+      <div class="padding-left padding-right">
+        <button class="button button-block action-button" ng-class="{'button-positive': !form.signingUp, 'button-balanced': form.signingUp}" ng-click="submitForm(form.username, form.signingUp)">
+          {{ form.signingUp ? 'Sign up' : 'Sign in' }}
+        </button>
+      </div>
+    </div>
+
+
+    <div class="padding signup-opt" ng-click="form.signingUp = !form.signingUp">
+      {{ form.signingUp ? 'Have an account? Sign in!' : 'Need an account? Sign up!' }}
+    </div>
+
+  </ion-content>
+</ion-view>
+```
+
+Notice in our ion-view we request to hide the nav bar with `hide-nav-bar="true"`. Basically we have a form that is submitting the username, along with whether this is a signup or login attempt.
+
+We'll store the active session information in the User service. We'll be storing username and session_id, so lets define them in our return object.:
+
+```javascript
+  var o = {
+    username: false,
+    session_id: false,
+    favorites: [],
+    newFavorites: 0
+  }
+```
+
+We'll need to create a method in our User service for authentication.
+
+First, inject $http and SERVER into the User service, as we'll need them for communicating with the server:
+```javascript
+.factory('User', function($http, SERVER) {
+```
+
+Then create the auth method that return a $http promise. The routes for login and signup are /login and /signup, respectively.
+
+```javascript
+  // attempt login or signup
+  o.auth = function(username, signingUp) {
+
+    var authRoute;
+
+    if (signingUp) {
+      authRoute = 'signup';
+    } else {
+      authRoute = 'login'
+    }
+
+    return $http.post(SERVER.url + '/' + authRoute, {username: username});
+  }
+```
+
+In our SplashCtrl, create the method `submitForm` that calls the `User.auth` method (be sure to inject the User and $state service):
+```javascript
+.controller('SplashCtrl', function($scope, $state, User) {
+
+  // attempt to signup/login via User.auth
+  $scope.submitForm = function(username, signingUp) {
+    User.auth(username, signingUp).then(function(){
+      // session is now set, so lets redirect to discover page
+      $state.go('tab.discover');
+
+    }, function() {
+      // error handling here
+      alert('Hmm... try another username.');
+
+    });
+  }
+
+});
+```
+
+Lets wire up the favorites functions.
+
+Save new favorites to server:
+```javascript
+  o.addSongToFavorites = function(song) {
+    // make sure there's a song to add
+    if (!song) return false;
+
+    // add to favorites array
+    o.favorites.unshift(song);
+    o.newFavorites++;
+    
+    // persist this to the server
+    return $http.post(SERVER.url + '/favorites', {session_id: o.session_id, song_id:song.song_id });
+  }
+```
+
+Delete favorites from server:
+```javascript
+  o.removeSongFromFavorites = function(song, index) {
+    // make sure there's a song to add
+    if (!song) return false;
+
+    // add to favorites array
+    o.favorites.splice(index, 1);
+
+    // persist this to the server
+    return $http({
+      method: 'DELETE',
+      url: SERVER.url + '/favorites',
+      params: { session_id: o.session_id, song_id:song.song_id }
+    });
+
+  }
+```
+
+Finally, we'll need to request our list of favorites from the server on load. Lets create a method called populateFavorites that will do this:
+```javascript
+  // gets the entire list of this user's favs from server
+  o.populateFavorites = function() {
+    return $http({
+      method: 'GET',
+      url: SERVER.url + '/favorites',
+      params: { session_id: o.session_id }
+    }).success(function(data){
+      // merge data into the queue
+      o.favorites = data;
+    });
+  }
+```
+
+Now if you login, add favorites, refresh the app to / and log in again, your favorites will appear there. Sweet!
+
+If you signup it will redirect you, and if you go back to / and login with that same username, you will also login. But we want signup/login to persist on page refresh.
+
+For this, we will use localstorage. In js/utils.js, you can see a service called $localstorage that wraps the native browser local storage. This was actually taken from an [Ionic formula](http://learn.ionicframework.com/formulas/localstorage/).
+
+Require 'ionic.utils' in our services module:
+```javascript
+angular.module('songhop.services', ['ionic.utils'])
+```
+
+And require $localstorage and $q in the User service:
+```javascript
+.factory('User', function($http, $q, $localstorage, SERVER) {
+```
+
+Lets create a method for setting our session into localStorage and our User return object:
+```javascript
+  // set session data
+  o.setSession = function(username, session_id, favorites) {
+    if (username) o.username = username;
+    if (session_id) o.session_id = session_id;
+    if (favorites) o.favorites = favorites;
+
+    // set data in localstorage object
+    $localstorage.setObject('user', { username: username, session_id: session_id });
+  }
+```
+
+Now, update the return promise in the auth method to fire the setSession method on success:
+```javascript
+    return $http.post(SERVER.url + '/' + authRoute, {username: username})
+      .success(function(data){
+        o.setSession(data.username, data.session_id, data.favorites);
+      });
+```
+
+In various parts of our app, we'll need to check if there is currently a user session. Create a `checkSession` method to determine this:
+```javascript
+  // check if there's a user session present
+  o.checkSession = function() {
+    var defer = $q.defer();
+
+    if (o.session_id) {
+      // if this session is already initialized in the service
+      defer.resolve(true);
+
+    } else {
+      // detect if there's a session in localstorage from previous use.
+      // if it is, pull into our service
+      var user = $localstorage.getObject('user');
+
+      if (user.username) {
+        // if there's a user, lets grab their favorites from the server
+        o.setSession(user.username, user.session_id);
+        o.populateFavorites().then(function() {
+          defer.resolve(true);
+        });
+
+      } else {
+        // no user info in localstorage, reject
+        defer.resolve(false);
+      }
+
+    }
+
+    return defer.promise;
+  }
+```
+
+Finally, if a user wants to log out, we need a destroySession method:
+
+```javascript
+  // wipe out our session data
+  o.destroySession = function() {
+    $localstorage.setObject('user', {});
+    o.username = false;
+    o.session_id = false;
+    o.favorites = [];
+    o.newFavorites = 0;
+  }
+```
+
+If we're logged in, the user should be redirected from the splash page to the discover page. Vice versa, if a user isn't logged in but trying to access the discover page or favorites page, they should be redirected to the splash page.
+
+In app.js, update the splash state to check auth onEnter:
+```javascript
+  // splash page
+  .state('splash', {
+    url: '/',
+    templateUrl: 'templates/splash.html',
+    controller: 'SplashCtrl',
+    onEnter: function($state, User){
+      User.checkSession().then(function(hasSession) {
+        if (hasSession) $state.go('tab.discover');
+      });
+    }
+  })
+```
+
+And on the tab abstract state, perform the same check, but we need to resolve the checkSession method first:
+
+```javascript
+  // setup an abstract state for the tabs directive
+  .state('tab', {
+    url: '/tab',
+    abstract: true,
+    templateUrl: 'templates/tabs.html',
+    controller: 'TabsCtrl',
+    // don't load the state until we've populated our User, if necessary.
+    resolve: {
+      populateSession: function(User) {
+        return User.checkSession();
+      }
+    },
+    onEnter: function($state, User){
+      User.checkSession().then(function(hasSession) {
+        if (!hasSession) $state.go('splash');
+      });
+    }
+  })
+```
+
+Lets show our username and a logout button the favorites page.
+
+In FavoritesCtrl, expose the User.username string to the scope:
+```javascript
+$scope.username = User.username;
+```
+
+We may want the logout button somewhere else in our app in the future, so we'll put that login in TabsCtrl.
+
+In TabCtrl, add a logout method (and inject $window):
+```javascript
+  $scope.logout = function() {
+    User.destroySession();
+
+    // instead of using $state.go, we're going to redirect.
+    // reason: we need to ensure views aren't cached.
+    $window.location.href = '/';
+  }
+```
+
+Finally, in favorites.html, update the ion-view title attribute to include our username and then add an ion-nav-button for logging out:
+```javascript
+<ion-view view-title="Favorites | {{ username }}" class="favorites-page">
+  <ion-nav-buttons side="right">
+    <button class="button" ng-click="logout()">
+      Log out
+    </button>
+  </ion-nav-buttons>
+  <ion-content>
+```
+
+And now the entire app is done!
 
 # Cordova: Your bridge to native functionality
 Everything you need to know about Cordova.
@@ -774,7 +1088,8 @@ Switch from html5 audio tag to cordova media/file
 	-Install media plugin
 	-Install file plugin
 Emulating iOS/Android
-## Deploying Songhop into production
+
+# Deploying the app into production
 Get the app running on your own device
 Deploying to the iOS app store
 Deploying to the Android app store
