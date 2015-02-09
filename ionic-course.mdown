@@ -239,9 +239,9 @@ Having the song information change is cool, but it would be _super_ cool if the 
 
 Now our sexy skip and favorite animations should work!
 
-## Adding, removing and accessing favorited songs
+## Adding, removing and retrieving favorited songs
 
-Right now, nothing happens when we favorite a song, but what we want to happen is for it to appear in our favorites tab. To do that, we need to create a service that will add, remove and retrieve the songs we've favorited.
+Right now, nothing happens when we favorite a song - but it should actually appear over in our favorites tab. To do that, we need to create a service that will add, remove and retrieve the songs we've favorited.
 
 [create-user-svc] Lets create a User [factory](https://docs.angularjs.org/guide/providers) in services.js where we'll store an array of our favorite songs:
 
@@ -257,7 +257,7 @@ angular.module('songhop.services', [])
 });
 ```
 
-[add-fav-svc] Now create a method for adding songs to our favorites array:
+[add-fav-svc] Now create a method for adding songs to the `favorites` array:
 
 ```javascript
   o.addSongToFavorites = function(song) {
@@ -299,7 +299,7 @@ Finally, lets add songs to our favorites when the user hits the favorite button.
     if (bool) User.addSongToFavorites($scope.currentSong);
 ```
 
-Go ahead and favorite a couple of songs, and then go to the favorites page -- all of our songs now show up!
+Go ahead and favorite a couple of songs, then go to the favorites page -- all of our songs now show up!
 
 But what if we want to remove a song from our favorites?
 
@@ -429,7 +429,7 @@ In the `sendFeedback` method, fire `Recommendations.nextSong()` and update `$sco
 
 Cool, now favoriting and skipping works again. Skip a few songs quickly though and you might notice that the images are taking a long time to load, especially if you're on a slow internet connection (which is often the case on mobile). The way to solve this is by caching the image for the next song in the queue - but what's the best way of doing that in a hybrid app?
 
-# "You have to learn the rules of the game. And then you have to play better than anyone else." - _Albert Einstein_
+## "You have to learn the rules of the game. And then you have to play better than anyone else." - _Albert Einstein_
 
 When we were building the original Songhop app, we originally planned to download the next image to the device and then provide a link to the local file in cache. This would've required us to use native plugins and would've added a good amount of code to our app. This would also be the only solution to use if you were developing this app in a native language, like Swift/Obj-C or Java. However, we have a killer advantage over native apps: we can lean on the web browser for common tasks, like caching. Just by creating `<img src="hello.jpg" />`, we can place an image in the web browser's cache.
 
