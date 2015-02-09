@@ -341,7 +341,7 @@ Our base interface functionality is complete. In the next section, we'll start w
 Either use our server, or run your own locally
 [need to get this running on heroku]
 
-You'll notice in app.'s that we've defined a constant called "SERVER' that has a url attribute:
+You'll notice in app.js that we've defined a constant called "SERVER' that has a url attribute:
 ```javascript
 .constant('SERVER', {
   url: 'http://localhost:3000'
@@ -474,16 +474,18 @@ Lets figure out how we can play Spotify's 30 second song previews. Every song th
 	"song_id":"54d3f75eb9fd644f061b3c40"
 }
 ```
-The attribute `preview_url` contains the URL for this song's mp3 preview clip. You can verify this by visiting the URL in your browser and playing the media clip.
+The attribute `preview_url` contains the URL for this song's mp3 preview clip. You can verify this by visiting the URL in your browser and it will start playing an mp3 stream.
 
-Since modern browsers can play mp3 files without installing any extra stuff, for our app we can simply use the [HTMLAudioElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement) for playing 30 second song previews.
+Since modern browsers can play mp3 files without installing any extra stuff, for our app we can simply use the [HTMLAudioElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement) for playing 30 second song previews. Instead of cluttering our discover controller with the logic to play & pause songs, lets create methods in our Recommendations service that will allow us to easily invoke these actions from any controller.
 
-At top of Rec svc, initialize an empty variable called `media` that we'll use for our HTMLAudioElement
+[init-media-var] At the top of the Recommendations factory, initialize an empty variable called `media` that we'll use for our HTMLAudioElement:
 ```javascript
 var media;
 ```
 
-Add play and halt functions for current song
+We don't allow the user to manipulate audio playback other than playing, as well as pausing when navigating to our favorites page.
+
+[play+halt-methods] Create methods for playing and halting the current song preview:
 
 ```javascript
   o.playCurrentSong = function() {
@@ -508,7 +510,8 @@ Add play and halt functions for current song
   }
 ```
 
-modify nextSong function to play song
+
+[haltaudio-nextsong] Next, lets modify the nextSong method halt the current audio clip:
 
 ```javascript
   o.nextSong = function() {
@@ -525,7 +528,7 @@ modify nextSong function to play song
   }
 ```
 
-Finally, in our DiscoverCtrl play the current song when Rec service promise returns:
+[playCurrentSong-discoverctrl] Finally, in our DiscoverCtrl, play the fire `Recommendations.playCurrentSong` when the promise returned from `Recommendations.getNextSongs` resolves successfully:
 ```javascript
   Recommendations.getNextSongs()
     .then(function(){
@@ -534,9 +537,9 @@ Finally, in our DiscoverCtrl play the current song when Rec service promise retu
     });
 ```
 
-Now audio should play. However, when you go to the favorites page, the song being previewed is still playing. We need to ensure that it pauses before this happens.
+Epic, each song's preview now plays as we skip/favorite the songs in the queue. There's only one problem: if you go to the favorites page, the song being previewed continues to play. We'll need to somehow fire the `haltAudio` method in our Recommendations service when we're navigating to the favorites page, and resume playback of the song when navigating back to the discover page.
 
-If you look at the documentation for [ion-tab](http://ionicframework.com/docs/api/directive/ionTab/), you'll see that there are API events for when a tab is being selected (`on-select`) and when it is being deselected (`on-deselect`). For our favorites tab, we will pause audio when it is being selected, and we will play audio when it's being deselected (which means we're going to the Discover page).
+If you look at the documentation for [ion-tab](http://ionicframework.com/docs/api/directive/ionTab/), you'll see that there are API events for when a tab is being selected (`on-select`) and when it is being deselected (`on-deselect`). For our favorites tab, we want to pause audio when it is being selected, and we want to play audio when it's being deselected (which means we're going back to the Discover page).
 
 Create enteringFavorites method in TabsCtrl:
 ```javascript
@@ -1081,18 +1084,28 @@ Finally, in favorites.html, update the ion-view title attribute to include our u
 
 And now the entire app is done!
 
-# Cordova: Your bridge to native functionality
-Everything you need to know about Cordova.
-	- We recommend using native plugins whenever possible for performance/reliability
+[Close out Ionic]
+
+Challenges: Tinder-for-x
+
+
+# Cordova: Your bridge to native
+
+What is cordova in depth
+	-packaging apps
+	-bridge to native plugins
+
+[note that we recommend using native plugins whenever possible for performance/reliability]
+
 Switch from html5 audio tag to cordova media/file
 	-Install media plugin
 	-Install file plugin
 Emulating iOS/Android
+Debugging iOS/Android
 
-# Deploying the app into production
-Get the app running on your own device
+# Deploying to devices and App Stores
+Getting the app running on your own device
 Deploying to the iOS app store
 Deploying to the Android app store
 
 # Where to go next
-Tinder-for-x
