@@ -8,7 +8,7 @@ For years now, hybrid apps have been mocked and jeered by native app developers 
 Without further ado, we'd like to welcome you to the future of mobile app development freed from the shackles of native languages & frameworks. Lets learn what the new mobile stack consists of and how it works.
 
 ## Introducing Ionic.
-Before, building hybrid apps was a chore -- not because it was hard to build web pages, but because it was hard to build fully fledged web applications. With AngularJS that has now changed, and as a result, Angular became the core innovation that made hybrid apps possible. The bright folks at Drifty were some of the first to realize this and subsequently created the Ionic Framework to bridge the gap between AngularJS web apps and hybrid mobile apps. Since launching a little over a year ago, the Ionic Framework has [quickly grown in popularity amongst developers](http://www.google.com/trends/explore?hl=en-US&q=ionic+framework&cmpt=q&tz&tz&content=1) and their [main Github repo](https://github.com/driftyco/ionic) has over 13K stars as of this writing.
+Before, building hybrid apps was a chore -- not because it was hard to build web pages, but because it was hard to build fully fledged web applications. With AngularJS that has now changed, and as a result, Angular became the core innovation that made hybrid apps possible. The bright folks at Drifty were some of the first to realize this and subsequently created the [Ionic Framework](http://ionicframework.com/) to bridge the gap between AngularJS web apps and hybrid mobile apps. Since launching a little over a year ago, the Ionic Framework has [quickly grown in popularity amongst developers](http://www.google.com/trends/explore?hl=en-US&q=ionic+framework&cmpt=q&tz&tz&content=1) and their [main Github repo](https://github.com/driftyco/ionic) has over 13K stars as of this writing.
 
 [where-ionic-fits] For a more in depth view of where Ionic fits into our hybrid app stack, [read this blog post](http://ionicframework.com/blog/where-does-the-ionic-framework-fit-in/) from one of Ionic's core developers and [read the "Overview" section](http://ionicframework.com/docs/overview/) on their about page.
 
@@ -24,8 +24,6 @@ We will be building an app called Songhop -- a "Tinder for music" app that allow
 You can see a live demo of the completed application we'll be building here: [LINK]
 
 We'll be covering a wide variety of topics in this course: scaffolding a new application, testing it in the emulator, installing native plugins for manipulating audio & more, swipe gestures for our interface, installing the app on your own device, deploying to the iOS & Android app stores, and so much more.
-
-We have structured this course to accommodate folks who are interested in Ionic for building mobile websites as well as those who are interested in building hybrid apps. The first chapters of this course will exclusively cover the JS & CSS portions of the Ionic framework (the only knowledge necessary for building mobile websites), and in the [Xth] chapter we will package our application natively for iOS and/or Android.
 
 
 ## Prerequisites
@@ -44,7 +42,11 @@ It's best to have either a Linux based OS or Mac to complete this tutorial. Whil
 
 
 ## Recommendations for completing this course
-Throughout this course, links to additional concepts and information will be included. You can use these links as supplementary material which can help you gain insight into the stack and its various components. As always, if you have any questions Google and Stackoverflow are your best bet. If you're unsure about something specific to this tutorial, feel free to drop me a line at eric@thinkster.io
+We have structured this course to accommodate folks who are interested in Ionic for building mobile websites as well as those who are interested in building hybrid apps. The first chapters of this course will exclusively cover the JS & CSS portions of the Ionic framework (the only knowledge necessary for building mobile websites), and in the [Xth] chapter we will package our application natively for iOS and/or Android.
+
+Throughout this course, links to additional concepts and information will be included. You can use these links as supplementary material which can help you gain insight into the stack and its various components. As always, if you have any questions Google and Stackoverflow are your best bet.
+
+If you're unsure about something specific to this course, __feel free to tweet me [@ericsimons40](https://twitter.com/ericsimons40)__ or drop me a line at eric@thinkster.io.
 
 We're firm believers in actually writing code while learning a new language or framework. Therefore, we strongly encourage you to type out all the code instead of copy+pasting it.
 
@@ -237,7 +239,7 @@ Having the song information change is cool, but it would be _super_ cool if the 
 
 Now our sexy skip and favorite animations should work!
 
-## Adding, removing and storing favorited songs
+## Adding, removing and accessing favorited songs
 
 Right now, nothing happens when we favorite a song, but what we want to happen is for it to appear in our favorites tab. To do that, we need to create a service that will add, remove and retrieve the songs we've favorited.
 
@@ -463,7 +465,7 @@ The key functionality of our app is the ability to quickly sample songs - but ge
 
 For this course, our node.js server will be handling all of the interactions with the Spotify API, which means that we can just focus on playing the song data that is returned to our Ionic client. All you need to know is that the data being returned to us from the /recommendations endpoint is actually being powered by the amazing people at Spotify, so [show them some love on Twitter!](https://twitter.com/SpotifyPlatform)
 
- _If you're interested in learning how to use the Spotify API, let me know at eric at thinkster dot io -- I'm thinking of writing a section about this in the future if enough people are interested._
+ _If you're interested in learning how to use the Spotify API, please tweet me [@ericsimons40](https://twitter.com/ericsimons40) or email me at eric@thinkster.io -- I'm thinking of writing a section about this in the future if enough people are interested._
 
 
 Lets figure out how we can play Spotify's 30 second song previews. Every song that is returned to us by the /recommendations endpoint contains the following attributes:
@@ -694,6 +696,8 @@ Our loading indicator works really well! But wait a second - we should let the u
 ```
 
 Sick, now loading indicators work!
+
+## Adding badges to the tab bar
 
 As we add songs to our favorites, it would be really nice if there was some sort of visual indicator of how many new favorites we've added. This will also encourage our users to visit their favorites and review their songs.
 
