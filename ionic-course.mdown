@@ -10,6 +10,8 @@ Without further ado, we'd like to welcome you to the future of mobile app develo
 ## Introducing Ionic.
 Before, building hybrid apps was a chore -- not because it was hard to build web pages, but because it was hard to build fully fledged web applications. With AngularJS that has now changed, and as a result, Angular became the core innovation that made hybrid apps possible. The bright folks at Drifty were some of the first to realize this and subsequently created the [Ionic Framework](http://ionicframework.com/) to bridge the gap between AngularJS web apps and hybrid mobile apps. Since launching a little over a year ago, the Ionic Framework has [quickly grown in popularity amongst developers](http://www.google.com/trends/explore?hl=en-US&q=ionic+framework&cmpt=q&tz&tz&content=1) and their [main Github repo](https://github.com/driftyco/ionic) has over 13K stars as of this writing.
 
+Explain the ionic is like the obj-c helpers for iOS, etc. modals, tabs, etc.
+
 [where-ionic-fits] For a more in depth view of where Ionic fits into our hybrid app stack, [read this blog post](http://ionicframework.com/blog/where-does-the-ionic-framework-fit-in/) from one of Ionic's core developers and [read the "Overview" section](http://ionicframework.com/docs/overview/) on their about page.
 
 Ionic is a great solution for creating both mobile web apps and native apps alike. The first sections of this course will go over structuring Ionic apps that can run on the web, and then we will cover packaging that same exact code into a native app. We will be using a build tool called Cordova for packaging our app. For those unfamiliar with Cordova, Adobe describes it via analogy: Cordova is to PhoneGap as Blink is to Chrome. Basically, PhoneGap is Cordova plus a whole bunch of other Adobe stuff.
@@ -46,7 +48,7 @@ We have structured this course to accommodate folks who are interested in Ionic 
 
 Throughout this course, links to additional concepts and information will be included. You can use these links as supplementary material which can help you gain insight into the stack and its various components. As always, if you have any questions Google and Stackoverflow are your best bet.
 
-If you're unsure about something specific to this course, __feel free to tweet me [@ericsimons40](https://twitter.com/ericsimons40)__ or drop me a line at eric@thinkster.io.
+If you're unsure about something specific to this course, __feel free to tweet me [@ericsimons40](https://twitter.com/ericsimons40)__.
 
 We're firm believers in actually writing code while learning a new language or framework. Therefore, we strongly encourage you to type out all the code instead of copy+pasting it.
 
@@ -465,7 +467,7 @@ The key functionality of our app is the ability to quickly sample songs - but ge
 
 For this course, our node.js server will be handling all of the interactions with the Spotify API, which means that we can just focus on playing the song data that is returned to our Ionic client. All you need to know is that the data being returned to us from the /recommendations endpoint is actually being powered by the amazing people at Spotify, so [show them some love on Twitter!](https://twitter.com/SpotifyPlatform)
 
- _If you're interested in learning how to use the Spotify API, tweet me [@ericsimons40](https://twitter.com/ericsimons40) or email me at eric@thinkster.io -- I'm thinking of writing a section about this in the future if enough people are interested._
+ _If you're interested in learning how to use the Spotify API, tweet me [@ericsimons40](https://twitter.com/ericsimons40) -- I'm thinking of writing a section about this in the future if enough people are interested._
 
 
 Lets figure out how we can play Spotify's 30 second song previews. Every song that is returned to us by the /recommendations endpoint contains the following attributes:
@@ -773,11 +775,12 @@ Now we're done! In the next section, we're going to cover authentication & persi
 
 
 # Creating and persisting user data
-We're using username only auth to keep things simple. We're also loosely following token based session management. [Include links to that one ionic project w/ session tokens, etc]
 
-The first thing we need to do is create a splash page. This is where users will be prompted to signup or login.
+When an Ionic application needs to authenticate with a server, it's usually done with token based session management instead of cookies. It's easier to store an access token on the device than to ensure a browser cookie persists across app usages. For this course, we're going to use an insanely simple implementation of token based authentication. If you're planning on implementing token based authentication in a real app, we recommend [reading this post](https://auth0.com/blog/2014/01/07/angularjs-authentication-with-cookies-vs-token/) on the topic as well as taking a look at [this Github repo](https://github.com/sean-hill/ionic-user-auth-express) of an Ionic app that performs user authentication using bearer tokens, as specified by [RFC 6750](http://tools.ietf.org/html/rfc6750).
 
-In app.js, create a state for the splash page on the root route
+Before we jump into authentication with our server, first we will need to create a page for users to sign in/sign up. For this app, we will only require a username to sign up and sign in (in the real world you'd normally require a password along with the username, but since this isn't the real world, we're keeping it simple).
+
+[create-splash-state] In app.js, create a new state called 'splash' at the route '/'. Being the root route means that it will be the first page loaded when the app initializes. We also want to update `$urlRouterProvider.otherwise` to point at '/' from now on instead the discover page.
 ```javascript
   // splash page
   .state('splash', {
@@ -786,18 +789,18 @@ In app.js, create a state for the splash page on the root route
     controller: 'SplashCtrl'
   })
 ```
-And set the otherwise function to route to the root URL
+
 ```javascript
 $urlRouterProvider.otherwise('/');
 ```
 
-Create an empty controller in controllers.js called 'SplashCtrl':
+[create-SplashCtrl] We told UI-Router that the 'splash' state will use a controller called 'SplashCtrl', so lets create it in controllers.js:
 ```javascript
 .controller('SplashCtrl', function($scope) {
 });
 ```
 
-Finally, create a new files in the templates/ directory called splash.html and paste the following HTML into it:
+[create-splash.html] Create the splash.html file defined in the 'splash' state inside the templates/ directory, and paste the following HTML into it:
 ```html
 <ion-view view-title="Songhop" hide-nav-bar="true" class="splash-page">
   <ion-content scroll="false">
@@ -1118,6 +1121,8 @@ Debugging iOS/Android
 
 # Deploying to devices and App Stores
 Getting the app running on your own device
+	http://www.bignerdranch.com/we-teach/how-to-prepare/ios-device-provisioning.html#loc-provisioning-hard
+
 Deploying to the iOS app store
 Deploying to the Android app store
 
