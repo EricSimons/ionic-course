@@ -835,9 +835,11 @@ $urlRouterProvider.otherwise('/');
 </ion-view>
 ```
 
-Notice in our ion-view we request to hide the nav bar with `hide-nav-bar="true"`. Basically we have a form that is submitting the username, along with whether this is a signup or login attempt.
+Take a quick glance at what's in our template, as there are a few things worth noting. First, our form is submitted through a scope method: `submitForm(form.username, form.signingUp)`. We pass along the username from the input field, along with a boolean if we're signing up (false means we're logging in). Also note that in our ion-view we request to hide the nav bar with `hide-nav-bar="true"` (since there's no places to navigate to/from on this page).
 
-We'll store the active session information in the User service. We'll be storing username and session_id, so lets define them in our return object.:
+We need a place to store the session token ID and other data we receive back from the server. Since this is information is related to our user, it seems a natural choice to store this in the User service.
+
+[session-in-user-return-obj] We'll be storing username and session_id in the User service, so lets define them in our return object:
 
 ```javascript
   var o = {
@@ -848,14 +850,13 @@ We'll store the active session information in the User service. We'll be storing
   }
 ```
 
-We'll need to create a method in our User service for authentication.
+In our User service, we need a method that will send a username to the server for attempting login or signup and handling the result properly.
 
-First, inject $http and SERVER into the User service, as we'll need them for communicating with the server:
+[create-user-svc-auth] First, inject $http and SERVER into the User service, as we'll need them for communicating with the server. Then create the auth method that return a $http promise. Note that the routes for login and signup are /login and /signup and require a 'username' field in the post request:
+
 ```javascript
 .factory('User', function($http, SERVER) {
 ```
-
-Then create the auth method that return a $http promise. The routes for login and signup are /login and /signup, respectively.
 
 ```javascript
   // attempt login or signup
@@ -873,7 +874,7 @@ Then create the auth method that return a $http promise. The routes for login an
   }
 ```
 
-In our SplashCtrl, create the method `submitForm` that calls the `User.auth` method (be sure to inject the User and $state service):
+[create-submitForm] In SplashCtrl, create the method `submitForm` that calls the `User.auth` method (be sure to inject the User and $state service):
 ```javascript
 .controller('SplashCtrl', function($scope, $state, User) {
 
@@ -893,9 +894,11 @@ In our SplashCtrl, create the method `submitForm` that calls the `User.auth` met
 });
 ```
 
-Lets wire up the favorites functions.
+Part of the data we need to retrieve on authentication success is our list of favorite songs. The only problem is that our methods for adding, removing and retrieving favorites aren't wired up to the server...yet! Lets quickly take care of that.
 
-Save new favorites to server:
+Adding, removing and retrieving favorites are actions that are tied to a specific user account. This means that we need to pass along our session_id with all of these requests in order to attach the desired request with the correct user.
+
+[add-server-addSongToFavorites] Have `addSongToFavorites` return an $http POST request to /favorites with the ID of the song we favorited, along with our user's session_id:
 ```javascript
   o.addSongToFavorites = function(song) {
     // make sure there's a song to add
@@ -910,7 +913,7 @@ Save new favorites to server:
   }
 ```
 
-Delete favorites from server:
+[add-server-removeSongFromFavorites] Have `removeSongFromFavorites` return an $http DELETE request to /favorites with the ID of the song we favorited, along with our user's session_id:
 ```javascript
   o.removeSongFromFavorites = function(song, index) {
     // make sure there's a song to add
@@ -929,7 +932,7 @@ Delete favorites from server:
   }
 ```
 
-Finally, we'll need to request our list of favorites from the server on load. Lets create a method called populateFavorites that will do this:
+[create-populateFavorites] Finally, we'll need to request our list of favorites from the server on load. Lets create a method called populateFavorites that will do this by sending an $http GET request to /favorites:
 ```javascript
   // gets the entire list of this user's favs from server
   o.populateFavorites = function() {
@@ -946,21 +949,20 @@ Finally, we'll need to request our list of favorites from the server on load. Le
 
 Now if you login, add favorites, refresh the app to / and log in again, your favorites will appear there. Sweet!
 
-If you signup it will redirect you, and if you go back to / and login with that same username, you will also login. But we want signup/login to persist on page refresh.
+Right now, our sessions only persist if the browser doesn't reload. This isn't expected functionality, especially if we want to deploy this app natively. We need some way of storing a user's session ID and username across app uses that won't be cleared from cache automatically.
 
-For this, we will use localstorage. In js/utils.js, you can see a service called $localstorage that wraps the native browser local storage. This was actually taken from an [Ionic formula](http://learn.ionicframework.com/formulas/localstorage/).
+To solve this problem, [local storage](http://diveintohtml5.info/storage.html) is an ideal solution. In js/utils.js, you can see a service called $localstorage that wraps the native browser's local storage API for our convenience. This was actually taken from an [Ionic formula](http://learn.ionicframework.com/formulas/localstorage/) created by [Max Lynch](https://twitter.com/maxlynch), a cofounder of the company behind the Ionic Framework.
 
-Require 'ionic.utils' in our services module:
+[require-utils] First, we need to require 'ionic.utils' in our services module. Then, require $localstorage and $q in the User service:
 ```javascript
 angular.module('songhop.services', ['ionic.utils'])
 ```
 
-And require $localstorage and $q in the User service:
 ```javascript
 .factory('User', function($http, $q, $localstorage, SERVER) {
 ```
 
-Lets create a method for setting our session into localStorage and our User return object:
+[create-setSession] Lets create a method for storing our session data into localStorage (for persisting user info between app uses) as well as the User return object (for accessing by our running application):
 ```javascript
   // set session data
   o.setSession = function(username, session_id, favorites) {
@@ -973,7 +975,7 @@ Lets create a method for setting our session into localStorage and our User retu
   }
 ```
 
-Now, update the return promise in the auth method to fire the setSession method on success:
+[update-auth-setSession] Now, update the return promise in the `auth` method to fire the `setSession` method on success with the data returned from the server:
 ```javascript
     return $http.post(SERVER.url + '/' + authRoute, {username: username})
       .success(function(data){
@@ -981,7 +983,9 @@ Now, update the return promise in the auth method to fire the setSession method 
       });
 ```
 
-In various parts of our app, we'll need to check if there is currently a user session. Create a `checkSession` method to determine this:
+In various parts of our app, we'll need to check if there is currently a user session. For example, if a non-authenticated used tries to access the Discover page, we need to detect this and redirect them accordingly.
+
+[create-checkSession] Create a `checkSession` method to determine if a user is currently logged in:
 ```javascript
   // check if there's a user session present
   o.checkSession = function() {
@@ -1014,7 +1018,7 @@ In various parts of our app, we'll need to check if there is currently a user se
   }
 ```
 
-Finally, if a user wants to log out, we need a destroySession method:
+[create-destroySession] If a user wants to log out, we need a destroySession method that clears the User service variables along with our local storage object:
 
 ```javascript
   // wipe out our session data
