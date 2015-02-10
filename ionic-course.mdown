@@ -1115,7 +1115,7 @@ With the Ionic section of this course completed, lets start learning how to...wh
 
 [tinder-for-x] Wouldn't it be great if we could swipe the song previews left and right, like on Tinder? Well, with Ionic's [Tinder-for-X](http://ionicframework.com/blog/tinder-for-x/) directive, we can do just that. Take a crack at implementing it on the Discover page!
 
-[dream-your-own] Get creative! Think of something cool to enhance the experience of using the app, build it, and then [tweet us what cool thing you made :)](https://twitter.com/intent/tweet?text=@EricSimons40%20@GoThinkster%20I%20created...)
+[dream-your-own] Get creative! Think of something cool to enhance the experience of using the app, build it, and then [tweet us about what you made :)](https://twitter.com/intent/tweet?text=@EricSimons40%20@GoThinkster%20I%20created...)
 
 With the Ionic section of this course _actually_ completed, lets start learning how to build this app for use on native devices.
 
@@ -1126,9 +1126,11 @@ Sometimes, mobile websites just won't cut it. Maybe you need to allow users to d
 [read-cordova-about] Learn exactly what Cordova provides us out of the box on the [about section](http://cordova.apache.org/#about) of their website.
 
 ## Cordova? Phonegap?!
-We mentioned this at the beginning of the course, but we'll explain it again for those of you who skimmed over it: Cordova is to PhoneGap as Blink is to Chrome. Basically, PhoneGap is Cordova plus a whole bunch of other Adobe stuff. [Seriously, read this post that the Ionic folks wrote about the matter.](http://ionicframework.com/blog/what-is-cordova-phonegap/) - it's super good, I promise. There's also a [great post by Tommy Williams](http://blog.devgeeks.org/post/73789983750/cordova-vs-phonegap-an-update) that should clear up any remaining questions you have about the history and differences between Cordova, Phonegap, and Phonegap build.
+We mentioned this at the beginning of the course, but we'll explain it again for those of you who skimmed over it: Cordova is to PhoneGap as Blink is to Chrome. Basically, PhoneGap is Cordova plus a whole bunch of other Adobe stuff. [Seriously, read this post that the Ionic folks wrote about the matter](http://ionicframework.com/blog/what-is-cordova-phonegap/) - it's super good, I promise. There's also a [great post by Tommy Williams](http://blog.devgeeks.org/post/73789983750/cordova-vs-phonegap-an-update) that should clear up any remaining questions you have about the history and differences between Cordova, Phonegap, and Phonegap build.
 
-This is a common point of confusion when first building hybrid apps, so don't feel bad if you're still a little confused. In fact, the Ionic team wrapped common Cordova functions under their CLI tool to ensure the experience of using Cordova was seamless and intuitive.
+This is a common point of confusion when first building hybrid apps, so don't feel bad if you're still a little confused. In fact, the Ionic team wrapped common Cordova functions under their CLI tool to ensure the experience of using Cordova was seamless and intuitive. Having used Cordova extensively without the Ionic CLI, I recommend that you don't. The Ionic CLI provides some handy extensions that make the experience better, like automatically livereloading apps that are in the emulator (amongst many other things).
+
+Lets use the (Cordova powered) Ionic CLI to run own application in the emulator.
 
 ## Running applications in the emulator
 
