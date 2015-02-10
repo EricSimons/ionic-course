@@ -1,3 +1,5 @@
+# Mastering the Ionic Framework: Learn to Build & Deploy Native Speed HTML5 Based Apps
+
 # A Phoenix Arises
 Web development technologies have evolved at an incredible clip over the past few years. We've gone from rudimentary DOM manipulation with libraries like jQuery to supercharged web applications organized & powered by elegant MV* based frameworks like AngularJS. Pair this with significant increases in browser rendering speeds, and it is now easier than ever before to build production quality applications on top of Javascript, HTML5 and CSS3.
 
@@ -25,7 +27,7 @@ We will be building an app called Songhop -- a "Tinder for music" app that allow
 
 You can see a live demo of the completed application we'll be building here: [LINK]
 
-We'll be covering a wide variety of topics in this course: scaffolding a new application, testing it in the emulator, installing native plugins for manipulating audio & more, swipe gestures for our interface, installing the app on your own device, deploying to the iOS & Android app stores, and so much more.
+We'll be covering a wide variety of topics in this course: scaffolding a new application, testing it in the emulator, installing native plugins for manipulating audio & files, swipe gestures for our interface, installing the app on your own device, deploying to the iOS & Android app stores, and so much more.
 
 
 ## Prerequisites
@@ -46,9 +48,7 @@ It's best to have either a Linux based OS or Mac to complete this tutorial. Whil
 ## Recommendations for completing this course
 We have structured this course to accommodate folks who are interested in Ionic for building mobile websites as well as those who are interested in building hybrid apps. The first chapters of this course will exclusively cover the JS & CSS portions of the Ionic framework (the only knowledge necessary for building mobile websites), and in the [Xth] chapter we will package our application natively for iOS and/or Android.
 
-Throughout this course, links to additional concepts and information will be included. You can use these links as supplementary material which can help you gain insight into the stack and its various components. As always, if you have any questions Google and Stackoverflow are your best bet.
-
-If you're unsure about something specific to this course, __feel free to tweet me [@ericsimons40](https://twitter.com/ericsimons40)__.
+Throughout this course, links to additional concepts and information will be included. You can use these links as supplementary material which can help you gain insight into the stack and its various components. As always, if you have any questions Google and Stackoverflow are your best bet, but if you're unsure about something specific to this course, __feel free to tweet me [@ericsimons40](https://twitter.com/ericsimons40)__.
 
 We're firm believers in actually writing code while learning a new language or framework. Therefore, we strongly encourage you to type out all the code instead of copy+pasting it.
 
@@ -467,7 +467,7 @@ The key functionality of our app is the ability to quickly sample songs - but ge
 
 For this course, our node.js server will be handling all of the interactions with the Spotify API, which means that we can just focus on playing the song data that is returned to our Ionic client. All you need to know is that the data being returned to us from the /recommendations endpoint is actually being powered by the amazing people at Spotify, so [show them some love on Twitter!](https://twitter.com/SpotifyPlatform)
 
- _If you're interested in learning how to use the Spotify API, tweet me [@ericsimons40](https://twitter.com/ericsimons40) -- I'm thinking of writing a section about this in the future if enough people are interested._
+ _If you're interested in learning how to use the Spotify API, tweet me [@ericsimons40](https://twitter.com/ericsimons40) -- I'd love to write a section about this in the future if enough people are interested._
 
 
 Lets figure out how we can play Spotify's 30 second song previews. Every song that is returned to us by the /recommendations endpoint contains the following attributes:
@@ -1117,10 +1117,7 @@ With the Ionic section of this course completed, lets start learning how to...wh
 
 [dream-your-own] Get creative! Think of something cool to enhance the experience of using the app, build it, and then [tweet us what cool thing you made :)](https://twitter.com/intent/tweet?text=@EricSimons40%20@GoThinkster%20I%20created...)
 
-
 With the Ionic section of this course _actually_ completed, lets start learning how to build this app for use on native devices.
-
-
 
 
 # Cordova: Your bridge to native
@@ -1140,6 +1137,8 @@ Debugging iOS/Android
 # Deploying to devices and App Stores
 Getting the app running on your own device
 	http://www.bignerdranch.com/we-teach/how-to-prepare/ios-device-provisioning.html#loc-provisioning-hard
+
+https://iphonedevlog.wordpress.com/2013/12/19/using-phonegap-3-3-cli-on-mac-os-x-mavericks-to-build-ios-projects/
 
 Deploying to the iOS app store
 Deploying to the Android app store
