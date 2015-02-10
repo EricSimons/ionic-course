@@ -1031,9 +1031,9 @@ In various parts of our app, we'll need to check if there is currently a user se
   }
 ```
 
-If we're logged in, the user should be redirected from the splash page to the discover page. Vice versa, if a user isn't logged in but trying to access the discover page or favorites page, they should be redirected to the splash page.
+We now have all of the methods necessary to ensure non-authenticated users can't access the core parts of the app (and vice versa, if a user is logged in and visits the Splash page, they should be redirected to the Discover page).
 
-In app.js, update the splash state to check auth onEnter:
+[splash-onenter] In app.js, update the splash state to check if there is a session [onEnter](https://github.com/angular-ui/ui-router/wiki#onenter-and-onexit-callbacks):
 ```javascript
   // splash page
   .state('splash', {
@@ -1048,7 +1048,7 @@ In app.js, update the splash state to check auth onEnter:
   })
 ```
 
-And on the tab abstract state, perform the same check, but we need to resolve the checkSession method first:
+[tab-onenter-resolve] Perform the same check on the tab abstract state (which covers both the discover and favorites states, since it's their parent state), but we need to resolve the checkSession method first. If there is a user session in local storage, we need to retrieve the user's favorites from the server, and we don't want to display our app until that data is returned successfully:
 
 ```javascript
   // setup an abstract state for the tabs directive
@@ -1071,14 +1071,14 @@ And on the tab abstract state, perform the same check, but we need to resolve th
   })
 ```
 
-Lets show our username and a logout button the favorites page.
+Now users can only access our core app's functionality if they're logged in. But what if a user wants to log out? Lets provide a logout button the favorites page. While we're at it, lets display their username at the top of the favorites page too.
 
-In FavoritesCtrl, expose the User.username string to the scope:
+[scope.username-favoritesctrl] In FavoritesCtrl, expose the `User.username` string to the scope:
 ```javascript
 $scope.username = User.username;
 ```
 
-We may want the logout button somewhere else in our app in the future, so we'll put that login in TabsCtrl.
+[tabsctrl-logout] We may want the logout button somewhere else in our app in the future, so we'll put the logic for logging out in TabsCtrl:
 
 In TabCtrl, add a logout method (and inject $window):
 ```javascript
@@ -1091,7 +1091,7 @@ In TabCtrl, add a logout method (and inject $window):
   }
 ```
 
-Finally, in favorites.html, update the ion-view title attribute to include our username and then add an ion-nav-button for logging out:
+[favorites.html-logout] Finally, in favorites.html, update the ion-view title attribute to include our username and then add an [ion-nav-button](http://ionicframework.com/docs/api/directive/ionNavButtons/) for logging out:
 ```javascript
 <ion-view view-title="Favorites | {{ username }}" class="favorites-page">
   <ion-nav-buttons side="right">
@@ -1102,11 +1102,25 @@ Finally, in favorites.html, update the ion-view title attribute to include our u
   <ion-content>
 ```
 
-And now the entire app is done!
+And with that, our app is now 100% complete. We've covered a tremendous amount of knowledge about the Ionic Framework, but there is still much more to learn. Like we mentioned at the beginning of the course, we highly recommending exploring the [CSS Components](http://ionicframework.com/docs/components/) and [AngularJS Extensions](http://ionicframework.com/docs/api/) that Ionic provides out of the box. The documentation on Ionic's website is hands down some of the best docs I've ever seen, so don't be afraid to peruse it when you have questions or are just curious.
 
-[Close out Ionic]
+The folks behind Ionic are also building some amazing tools that make your experience working with the Ionic Framework even better. For example, the [Ionic Creator](http://creator.ionic.io/) is a drag and drop tool that allows you to quickly mock up applications and have it export the working code (crazy, right?). It gets even better than that though: they're starting to roll out a new service called [ionic.io](http://ionic.io/) that comes with a handful of killer features, like the ability update the HTML/CSS/JS of your hybrid app over the air, thus sidestepping Apple's lengthy app review process. Most recently, they announced a [push notification service](https://apps.ionic.io/landing/push) that will make sending push notifications across platforms super simple.
 
-Challenges: Tinder-for-x
+The next few years will be an exciting time for hybrid app developers using Ionic, so keep yourself in the loop and follow [@IonicFramework](https://twitter.com/Ionicframework). I'll be updating this course with every new release, so follow me [@ericsimons40](https://twitter.com/ericsimons40) to keep your magical Ionic skills up to date.
+
+With the Ionic section of this course completed, lets start learning how to...what's that you say? Encore? Alrighty then...
+
+## Some Ionic challenges for those hungry for more
+[implement-sharing] On the favorites page, include a share [button on each ion-item](http://ionicframework.com/docs/components/#item-buttons) that will open an [$ionicActionSheet](http://ionicframework.com/docs/api/service/$ionicActionSheet/) with the option to share the song's Spotify URL on Twitter and Facebook.
+
+[tinder-for-x] Wouldn't it be great if we could swipe the song previews left and right, like on Tinder? Well, with Ionic's [Tinder-for-X](http://ionicframework.com/blog/tinder-for-x/) directive, we can do just that. Take a crack at implementing it on the Discover page!
+
+[dream-your-own] Get creative! Think of something cool to enhance the experience of using the app, build it, and then [tweet us what cool thing you made :)](https://twitter.com/intent/tweet?text=@EricSimons40%20@GoThinkster%20I%20created...)
+
+
+With the Ionic section of this course _actually_ completed, lets start learning how to build this app for use on native devices.
+
+
 
 
 # Cordova: Your bridge to native
