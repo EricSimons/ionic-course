@@ -20,7 +20,7 @@ Ionic is a great solution for creating both mobile web apps and native apps alik
 
 [cordova-vs-phonegap] [Read this post for a more in depth understanding of the differences between Cordova and PhoneGap](http://ionicframework.com/blog/what-is-cordova-phonegap/)
 
-The folks at Ionic have done a fantastic job of making Cordova super easy to use by directly wrapping it in their 'ionic' command line tool (don't worry, we'll cover this later). Just remember that Cordova is something that is running under the hood of native app that you will rarely need to worry about, but we will cover some common interactions with it in this course.
+The folks at Ionic have done a fantastic job of making Cordova super easy to use by directly wrapping it in their 'ionic' command line tool (don't worry, we'll cover this later). Just remember that Cordova is something that is running under the hood of your hybrid app that you will rarely need to worry about, but we will cover some common interactions with it in this course.
 
 ## What we're going to build
 We will be building an app called Songhop -- a "Tinder for music" app that allows you to listen to 30 second song samples and favorite the ones you like. This is based on a real Ionic/Cordova powered app we built that exists on the iOS App Store -- feel free to download it to get a feeling for what Ionic is capable of (and rate it 5 stars :). It's also worth noting that it only took us a month to build the Songhop app that's on the App Store, so that should give you an idea of how fast you can build & iterate using Ionic / Cordova.
@@ -487,12 +487,12 @@ The attribute `preview_url` contains the URL for this song's mp3 preview clip. Y
 
 Since modern browsers can play mp3 files without installing any extra stuff, for our app we can simply use the [HTMLAudioElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement) for playing 30 second song previews. Instead of cluttering our discover controller with the logic to play & pause songs, lets create methods in our Recommendations service that will allow us to easily invoke these actions from any controller.
 
-[init-media-var] At the top of the Recommendations factory, initialize an empty variable called `media` that we'll use for our HTMLAudioElement:
+[init-media-var] At the top of the Recommendations factory, initialize a variable called `media` that we'll use for our HTMLAudioElement:
 ```javascript
 var media;
 ```
 
-We don't allow the user to manipulate audio playback other than playing, as well as pausing when navigating to our favorites page.
+We don't allow the user to manipulate audio playback other than playing and pausing (when navigating to our favorites page).
 
 [play+halt-methods] Create methods for playing and halting the current song preview:
 
@@ -537,7 +537,7 @@ We don't allow the user to manipulate audio playback other than playing, as well
   }
 ```
 
-[playCurrentSong-discoverctrl] Finally, in our DiscoverCtrl, play the fire `Recommendations.playCurrentSong` when the promise returned from `Recommendations.getNextSongs` resolves successfully:
+[playCurrentSong-discoverctrl] Finally, in our DiscoverCtrl, fire `Recommendations.playCurrentSong` when the promise returned from `Recommendations.getNextSongs` resolves successfully:
 ```javascript
   Recommendations.getNextSongs()
     .then(function(){
@@ -1121,10 +1121,18 @@ With the Ionic section of this course _actually_ completed, lets start learning 
 
 
 # Cordova: Your bridge to native
+Sometimes, mobile websites just won't cut it. Maybe you need to allow users to download your app from their respective app store, or maybe you need to access native device features that there are no web APIs for (like the device's accelerometer, for example). Cordova is the solution that hits these two birds with one stone.
 
-What is cordova in depth
-	-packaging apps
-	-bridge to native plugins
+[read-cordova-about] Learn exactly what Cordova provides us out of the box on the [about section](http://cordova.apache.org/#about) of their website.
+
+## Cordova? Phonegap?!
+We mentioned this at the beginning of the course, but we'll explain it again for those of you who skimmed over it: Cordova is to PhoneGap as Blink is to Chrome. Basically, PhoneGap is Cordova plus a whole bunch of other Adobe stuff. [Seriously, read this post that the Ionic folks wrote about the matter.](http://ionicframework.com/blog/what-is-cordova-phonegap/) - it's super good, I promise. There's also a [great post by Tommy Williams](http://blog.devgeeks.org/post/73789983750/cordova-vs-phonegap-an-update) that should clear up any remaining questions you have about the history and differences between Cordova, Phonegap, and Phonegap build.
+
+This is a common point of confusion when first building hybrid apps, so don't feel bad if you're still a little confused. In fact, the Ionic team wrapped common Cordova functions under their CLI tool to ensure the experience of using Cordova was seamless and intuitive.
+
+## Running applications in the emulator
+
+
 
 [note that we recommend using native plugins whenever possible for performance/reliability]
 
