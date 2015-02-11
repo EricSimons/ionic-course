@@ -1120,37 +1120,93 @@ With the Ionic section of this course completed, lets start learning how to...wh
 With the Ionic section of this course _actually_ completed, lets start learning how to build this app for use on native devices.
 
 
-# Cordova: Your bridge to native
+# Deploying to the emulator, devices and App Stores
 Sometimes, mobile websites just won't cut it. Maybe you need to allow users to download your app from their respective app store, or maybe you need to access native device features that there are no web APIs for (like the device's accelerometer, for example). Cordova is the solution that hits these two birds with one stone.
 
 [read-cordova-about] Learn exactly what Cordova provides us out of the box on the [about section](http://cordova.apache.org/#about) of their website.
 
-## Cordova? Phonegap?!
 We mentioned this at the beginning of the course, but we'll explain it again for those of you who skimmed over it: Cordova is to PhoneGap as Blink is to Chrome. Basically, PhoneGap is Cordova plus a whole bunch of other Adobe stuff. [Seriously, read this post that the Ionic folks wrote about the matter](http://ionicframework.com/blog/what-is-cordova-phonegap/) - it's super good, I promise. There's also a [great post by Tommy Williams](http://blog.devgeeks.org/post/73789983750/cordova-vs-phonegap-an-update) that should clear up any remaining questions you have about the history and differences between Cordova, Phonegap, and Phonegap build.
 
 This is a common point of confusion when first building hybrid apps, so don't feel bad if you're still a little confused. In fact, the Ionic team wrapped common Cordova functions under their CLI tool to ensure the experience of using Cordova was seamless and intuitive. Having used Cordova extensively without the Ionic CLI, I recommend that you don't. The Ionic CLI provides some handy extensions that make the experience better, like automatically livereloading apps that are in the emulator (amongst many other things).
 
-Lets use the (Cordova powered) Ionic CLI to run own application in the emulator.
+## Setting up our project for Cordova
 
-## Running applications in the emulator
+We need to let Cordova know what platforms we intend to deploy our app to. This can be done via the Ionic CLI like so:
+
+```
+$ ionic platform ios android
+```
+
+While we're at it, lets install the amazing [Cordova keyboard plugin](https://github.com/driftyco/ionic-plugins-keyboard) that the Ionic team built, as it uses a custom implementation of the native keyboard instead of the web browser version:
+
+```
+$ ionic plugin add com.ionic.keyboard
+```
+
+The syntax for adding and removing plugins is `ionic plugin add [plugin]` and `ionic plugin rm [plugin]`, respectively. This same syntax also applies to adding and removing platforms (`ionic platform rm ios`, etc).
+
+## Running apps in the emulator
+Simply run the emulate command to open your app in the emulator, where platform is either 'ios' or 'android' (the `-l` flag enables live reloading of the app):
+
+```
+$ ionic emulate [platform] -l
+```
+
+**IMPORTANT NOTE**: There is currently a bug in Cordova that, after adding a plugin and then attempting to build/emulate/run the project, the build will fail. The way you fix this is by removing the target platform (`ionic platform rm [platform]`) and then adding it again (`ionic platform add ios`). This should be fixed soon, but until then, this is the easiest solution.
+
+[learn-running-cli] [Read this](http://ionicframework.com/docs/cli/run.html) to learn about all of the options available in the Ionic CLI for running & emulating.
+
+At this point you should see the Songhop app running in the emulator. There's one bug though - if you favorite a couple of songs, go the favorites page, and tap a song to open it in Spotify, it doesn't open a new browser window. Instead, it opens it in our app's web view. To get around this, we need to install another plugin from Cordova called [inappbrowser](https://github.com/apache/cordova-plugin-inappbrowser/blob/master/doc/index.md) that will allow the link to open in the device's native browser.
+
+[install-inappbrowser] Install the Cordova inappbrowser via the Ionic CLI:
+```
+ionic plugin add org.apache.cordova.inappbrowser
+```
+
+Now if you emulate the app again and tap a song in our favorites, it will open in the device's native web browser!
+
+### Challenge
+[implement-cordova-media] We're currently using the HTMLAudioElement to playback audio, but Cordova has a [media plugin](https://github.com/apache/cordova-plugin-media/blob/master/doc/index.md) that we could use instead. In general, using plugins instead of browser implementations can help ensure your app stays speedy and stable. It often helps with troubleshooting, as Cordova plugins are open source and can therefore be troubleshooted and modified. Try modifying the audio playback features of our app to use the Cordova media plugin instead of HTMLAudioElement!
+
+## Running the application on your device
+
+To run your app on a device connected to your computer, the command `$ ionic run [platform]` will automatically package and install the app. However, your development environment & device have to be set up properly to make this work. The requirements here have nothing to do with Ionic and Cordova (as they were set by Apple and Google), and as such, the requirements are different for both iOS and Android.
+
+### Android
+For Android, the process is super simple: [enable developer mode](http://www.syncios.com/blog/enable-developer-optionsusb-debugging-mode-on-devices-with-android-4-2-jelly-bean/) on your device, plug it into your computer, and `$ ionic run android`. Super easy right? Compare that to...
+
+### iOS
+For iOS, you'll need to setup a development provisioning profile before you can successfully run `$ ionic run ios`. Setting up provisioning profiles first requires an [Apple Developer account](https://developer.apple.com/register/index.action), which costs $99/yr. If you think that price is a bit steep, I hear that Apple will also trade you their development tools for your left kidney, should you have one to spare.
+
+Lets dive into what many iOS developers refer to as "Provisioning Profile Hell" -- [buckle up kids, because we're going for a ride.](https://www.youtube.com/watch?v=l482T0yNkeo)
+
+#### Highway to (Provisioning Profile) Hell
+[understand-provprofiles] If you're unfamiliar with iOS certificates and provisioning profiles, [read this post](http://escoz.com/blog/demystifying-ios-certificates-and-provisioning-files/). It will help you understand how Apple has structured this process.
+
+[learn-to-provision] Learn how to spin up a provisioning profile for your device by going through [this guide](http://www.bignerdranch.com/we-teach/how-to-prepare/ios-device-provisioning.html).
+
+In your project's config.xml file, look for this line: `<widget id="com.ionicframework.songhop616624"`. The ID attribute needs to match the app ID in your provisioning profile, otherwise the application will not be able to run on your device.
+
+If you've set up everything properly, you can now run  `$ ionic run ios` and your app will be packaged and installed on your device.
 
 
+## Debugging on iOS/Android
+You can use remote debugging tools from Chrome and Safari to debug your running Android and iOS applications, respectively. They're the same inspector debugging tools that you use for normal web development. From the [Cordova docs on debugging](https://github.com/phonegap/phonegap/wiki/Debugging-in-PhoneGap):
 
-[note that we recommend using native plugins whenever possible for performance/reliability]
+__Chrome Remote Debugging__
+If you are doing Android PhoneGap debugging and have an Android 4.4 device and Chrome 30+, you can use the new WebView Debugging tools added in Android 4.4. If you are using Cordova 3.3 or higher, this is already supported, and only requires the Debuggable flag in your AndroidManifest.xml. For Cordova 3.2, you will need to enable WebView debugging using some code, or by use of a plugin.
 
-Switch from html5 audio tag to cordova media/file
-	-Install media plugin
-	-Install file plugin
-Emulating iOS/Android
-Debugging iOS/Android
+__Safari Remote Debugging__
+If you are doing iOS PhoneGap debugging and have the Safari Develop Menu enabled, you can access the currently active session through the built-in Safari Web Inspector. To activate, go to Develop -> (iPad || iPhone) Simulator (normally, the third menu item) and click the active session you want to connect to. Voila!
 
-# Deploying to devices and App Stores
-Getting the app running on your own device
-	http://www.bignerdranch.com/we-teach/how-to-prepare/ios-device-provisioning.html#loc-provisioning-hard
+## Deploying to App Stores
+### Android Play Store
+The Ionic team has a fantastic guide on how to prepare and submit your app to the Google Play Store; [you can go through it here](http://ionicframework.com/docs/guide/publishing.html).
 
-https://iphonedevlog.wordpress.com/2013/12/19/using-phonegap-3-3-cli-on-mac-os-x-mavericks-to-build-ios-projects/
+### iOS App Store
+[You will need to create a 'Distribution' provisioning profile to submit apps to the App Store](https://developer.apple.com/library/ios/documentation/IDEs/Conceptual/AppDistributionGuide/SubmittingYourApp/SubmittingYourApp.html). Once you have that done, [follow this guide](https://iphonedevlog.wordpress.com/2013/12/19/using-phonegap-3-3-cli-on-mac-os-x-mavericks-to-build-ios-projects/) on how to prepare & upload your app for App Store submission.
 
-Deploying to the iOS app store
-Deploying to the Android app store
+# App development is a journey, not a destination
+While this course is a very comprehensive overview of how to build amazing hybrid apps, it really is just an overview. The world of hybrid app development is changing at a rapid pace and there is so much more to learn. To stay up to date on the latest and greatest, I highly recommend following [@IonicFramework](https://twitter.com/Ionicframework) and signing up for their newsletter on [their website](http://ionicframework.com/). This course will be updated frequently, so if you're interested in keeping your skills up to date with Ionic and other hybrid app technologies, feel free to follow me [@ericsimons40](https://twitter.com/ericsimons40). I also tweet about other cool things besides programming stuff, like [Aaron Levie's socks](https://twitter.com/ericsimons40/status/448960308132859904) for example.
 
-# Where to go next
+With that said, welcome to the bleeding edge of mobile app development! You did an amazing job completing this course, [and I'd love to hear your feedback on it.](https://twitter.com/intent/tweet?text=@EricSimons40%20I%20love%20you)
