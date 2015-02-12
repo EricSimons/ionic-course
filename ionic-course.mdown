@@ -66,7 +66,7 @@ If all went well, you should be seeing this in your browser window (be sure to r
 ![The boilerplate songhop template](images/0.png)
 
 ## The guts of an Ionic application
-When you scaffold a new application using the Ionic CLI, it automatically creates a handful of files to be used as the baseboard for your hybrid app development. [This post](/ionic-app-structure) walks through all of these files and what purposes they serve. The www folder is where you'll be spending most of your time, as that's where you will be writing your JavaScript, HTML and CSS for the Songhop app. Lets explore the different files in /www and see how they're connected to each other.
+When you scaffold a new application using the Ionic CLI, it automatically creates a handful of files to be used as the baseboard for your hybrid app development. [This post](/ionic-framework-tutorial/ionic-app-structure) walks through all of these files and what purposes they serve. The www folder is where you'll be spending most of your time, as that's where you will be writing your JavaScript, HTML and CSS for the Songhop app. Lets explore the different files in /www and see how they're connected to each other.
 
 The www/index.html file is where your application starts: it loads the JavaScript & CSS files you write (from www/js and www/css), the JavaScript & CSS files that your application depends on, and sets up HTML elements for your AngularJS app to bind to.
 

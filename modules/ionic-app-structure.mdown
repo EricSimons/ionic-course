@@ -1,3 +1,7 @@
+---
+title: Ionic Application Structure
+---
+
 After running the `ionic start` command, the Ionic CLI will generate a handful of files & folders for your new app. They span across a couple of different aspects of your hybrid app development and are worth being aware of.
 
 Lets break them down one by one:
