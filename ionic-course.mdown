@@ -26,28 +26,28 @@ The folks at Ionic have done a fantastic job of making Cordova super easy to use
 @todo link to the appstore page?
 We will be building an app called Songhop -- a "Tinder for music" app that allows you to listen to 30 second song samples and favorite the ones you like. This is based on a real Ionic/Cordova powered app we built that exists on the iOS App Store -- feel free to download it to get a feeling for what Ionic is capable of (and rate it 5 stars :). It's also worth noting that it only took us a month to build the Songhop app that's on the App Store, so that should give you an idea of how fast you can build & iterate using Ionic / Cordova.
 
-You can see a live demo of the completed application we'll be building here: [LINK]
+__You can see a [live demo of the completed application we'll be building here](https://ionic-songhop.herokuapp.com) (resize your browser window to the size of a phone for the best experience).__
 
 We'll be covering a wide variety of topics in this course: scaffolding a new application, testing it in the emulator, installing native plugins for manipulating audio & files, swipe gestures for our interface, installing the app on your own device, deploying to the iOS & Android app stores, and so much more.
 
 
 ## Prerequisites
 
-[javascript-prereq] __Basic programming / JavaScript knowledge.__ If you don't know JavaScript, this guide is a good place to start. @todo link
+[javascript-prereq] __Basic programming / JavaScript knowledge.__ If you don't know JavaScript, [this guide is a good place to start](http://sivers.org/learn-js).
 
-[angular-prereq] __Familiarity with AngularJS.__ We will be using AngularJS for much of our app logic. If you aren't familiar with AngularJS, we highly recommend going through the course "A Better Way to Learn AngularJS". @todo link
+[angular-prereq] __Familiarity with AngularJS.__ We will be using AngularJS for much of our app logic. If you aren't familiar with AngularJS, we highly recommend going through the course ["A Better Way to Learn AngularJS"](https://thinkster.io/a-better-way-to-learn-angularjs/).
 
-In addition, you should be comfortable with basic web application concepts including REST and CRUD.
+In addition, you should be comfortable with basic web application concepts including [REST](http://www.restapitutorial.com/lessons/whatisrest.html) and [CRUD](http://en.wikipedia.org/wiki/Create,_read,_update_and_delete).
 
 It's best to have either a Linux based OS or Mac to complete this tutorial. While it's certainly possible to develop on Windows, we won't be covering the specifics of running, debugging and troubleshooting for Windows based systems.
 
-[install-node]  __Install Node.js__. Since you will need to install various packages for Node.js, we recommend that you follow these installation instructions which use npm. @todo link
+[install-node]  __Install Node.js__. Since you will need to install various packages for Node.js, we recommend that you follow [these installation instructions](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager) which use [npm](https://www.npmjs.com/).
 
 [install-ionic-cli]  __Install the [Ionic CLI](http://ionicframework.com/docs/cli/install.html)__ through npm by running `npm install -g ionic`. We'll be using it to develop and test our app in a web browser, and later for packaging our app into native binaries for mobile devices.
 
 
 ## Recommendations for completing this course
-We have structured this course to accommodate folks who are interested in Ionic for building mobile websites as well as those who are interested in building hybrid apps. The first chapters of this course will exclusively cover the JS & CSS portions of the Ionic framework (the only knowledge necessary for building mobile websites), and in the [@todo Xth] chapter we will package our application natively for iOS and/or Android.
+We have structured this course to accommodate folks who are interested in Ionic for building mobile websites as well as those who are interested in building hybrid apps. The first chapters of this course will exclusively cover the JS & CSS portions of the Ionic framework (the only knowledge necessary for building mobile websites), and in the last few chapters we will  learn how to package & deploy our application natively for iOS and/or Android.
 
 Throughout this course, links to additional concepts and information will be included. You can use these links as supplementary material which can help you gain insight into the stack and its various components. As always, if you have any questions Google and Stackoverflow are your best bet, but if you're unsure about something specific to this course, __feel free to tweet me [@ericsimons40](https://twitter.com/ericsimons40)__.
 
@@ -367,6 +367,7 @@ Our base interface functionality is complete. In the next section, we'll start w
 
 Either use our server, or run your own locally
 [@todo need to get this running on heroku]
+https://ionic-songhop.herokuapp.com
 
 You'll notice in app.js that we've defined a constant called `SERVER` that has a url attribute:
 
