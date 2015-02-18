@@ -5,6 +5,7 @@
   "twitter": "EricSimons40",
   "coverImage": "images/cover.jpg",
   "description": "In this tutorial you'll learn how to use AngularJS and the Ionic Framework to build robust, silky smooth hybrid mobile apps.",
+  "git": "https://github.com/EricSimons/ionic-course",
 
   "author": {
     "github": "ericsimons"
