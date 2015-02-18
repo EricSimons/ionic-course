@@ -1,0 +1,22 @@
+---
+title: Ionic Application Structure
+---
+
+After running the `ionic start` command, the Ionic CLI will generate a handful of files & folders for your new app. They span across a couple of different aspects of your hybrid app development and are worth being aware of.
+
+Lets break them down one by one:
+
+`bower.json`: Used for managing your app's dependencies via the [bower](http://bower.io/) package management tool. By default, the Ionic Framework is the only dependency, but you can add more as needed.
+`config.xml`: This is the [configuration file for Cordova](http://cordova.apache.org/docs/en/4.0.0/config_ref_index.md.html). It's used for Cordova plugin management and app settings.
+- `gulpfile.js`: This file is used for compiling SASS and other Ionic Framework specific tasks via the [gulp](http://gulpjs.com/) task runner.
+- `ionic.project`: This is used for the configuration of the ionic CLI tool. You can learn about some of the configuration options available [here](https://github.com/driftyco/ionic-cli).
+- `package.json`: All of your [npm](https://www.npmjs.com/) dependencies are stored in this file.
+- `/hooks`: This directory stores any [Cordova Hooks](https://github.com/apache/cordova-lib/blob/master/cordova-lib/templates/hooks-README.md) that you may have.
+- `/plugins`: Any [Cordova Plugins](http://cordova.apache.org/docs/en/4.0.0/cordova_plugins_pluginapis.md.html) that you install will be saved in this folder.
+- `/scss`: Stores Ionic's SCSS file, but you can (optionally) put your own SCSS files in there too.
+- `/www`: This contains the meat of our Ionic application; you'll be spending most of your time in here.
+	- `/css`: Where you should store your CSS files.
+	- `/img`: Where you should store any image assets.
+	- `/js`: All of your Javascript files will be place in here. It typically is scaffolded with an `app.'s` file, and sometimes will have `controllers.js` for your app's controllers and a `services.js` for any services you have.
+	- `/lib`: Any external libraries will be placed in here. To start, only Ionic shows up in this folder.
+	- `index.html`: This is the starting point for our application. It will load up all of the necessary JS, HTML and CSS files. Whenever you create a new Javascript or CSS file, you will need to ensure you are linking to it from the index.html file.
