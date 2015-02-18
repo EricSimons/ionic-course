@@ -1,25 +1,25 @@
 # A Phoenix Arises
 
-Web development technologies have evolved at an incredible clip over the past few years. We've gone from rudimentary DOM manipulation with libraries like jQuery to supercharged web applications organized & powered by elegant MV* based frameworks like AngularJS. Pair this with significant increases in browser rendering speeds, and it is now easier than ever before to build production quality applications on top of Javascript, HTML5 and CSS3.
+Web development technologies have evolved at an incredible clip over the past few years. We've gone from rudimentary DOM manipulation with libraries like jQuery to supercharged web applications organized & powered by elegant MV* based frameworks like AngularJS. Pair this with significant increases in browser rendering speeds, and it is now easier than ever before to build production quality applications on top of Javascript, HTML5, and CSS3.
 
-While these advances have been incredible, they are only just starting to affect the clear platform of the future: mobile. For years, mobile rendering speeds were atrocious and the MVC frameworks & UI libraries provided by iOS and Android were far superior to writing mobile apps using web technologies. There were also some very public failures -- Facebook famously wrote their first iOS app in 2011 using HTML5, but ended up scrapping it due to terrible performance.
+While these advances have been incredible, they are only just starting to affect the clear platform of the future: mobile. For years, mobile rendering speeds were atrocious, and the MVC frameworks & UI libraries provided by iOS and Android were far superior to writing mobile apps using web technologies. There were also some very public failures -- Facebook famously wrote their first iOS app in 2011 using HTML5 but ended up scrapping it due to terrible performance.
 
-For years now, hybrid apps have been mocked and jeered by native app developers for being clunky and ugly, subpar performance, and having no advantages over native apps. While these may have been valid reasons in 2011, they are now virtually baseless thanks to a collection of new technologies that have emerged over the past two years. With these technologies you can design, build, and deploy robust mobile apps faster than you could with native technologies, all while incurring little to no app performance penalties. This is thanks in large part to super fast mobile browser rendering speeds and better JavaScript performance. This course is designed to teach you how to effectively use these new technologies to build insanely great mobile apps.
+For years now, hybrid apps have been mocked and jeered by native app developers for being clunky and ugly, having subpar performance, and having no advantages over native apps. While these may have been valid reasons in 2011, they are now virtually baseless, thanks to a collection of new technologies that have emerged over the past two years. With these technologies, you can design, build, and deploy robust mobile apps faster than you could with native technologies, all while incurring little to no app performance penalties. This is thanks in large part to super fast mobile browser rendering speeds and better JavaScript performance. This course is designed to teach you how to effectively use these new technologies to build insanely great mobile apps.
 
-Without further ado, we'd like to welcome you to the future of mobile app development freed from the shackles of native languages & frameworks. Lets learn what the new mobile stack consists of and how it works.
+Without further ado, we'd like to welcome you to the future of mobile app development, freed from the shackles of native languages & frameworks. Let's learn what the new mobile stack consists of and how it works.
 
 ## Introducing Ionic.
 
 {intro-video: completed-songhop-demo} 
 
-Before, building hybrid apps was a chore -- not because it was hard to build web pages, but because it was hard to build full-fledged web applications. With AngularJS that has now changed. As a result, Angular became the core innovation that made hybrid apps possible. The bright folks at Drifty were some of the first to realize this and subsequently created the [Ionic Framework](http://ionicframework.com/) to bridge the gap between AngularJS web apps and hybrid mobile apps. Since launching a little over a year ago, the Ionic Framework has [quickly grown in popularity amongst developers](http://www.google.com/trends/explore?hl=en-US&q=ionic+framework&cmpt=q&tz&tz&content=1) and their [main Github repo](https://github.com/driftyco/ionic) has over 13K stars as of this writing.
+Before, building hybrid apps was a chore -- not because it was hard to build web pages, but because it was hard to build full-fledged web applications. With AngularJS, that has changed. As a result, Angular became the core innovation that made hybrid apps possible. The bright folks at Drifty were some of the first to realize this and subsequently created the [Ionic Framework](http://ionicframework.com/) to bridge the gap between AngularJS web apps and hybrid mobile apps. Since launching a little over a year ago, the Ionic Framework has [quickly grown in popularity amongst developers](http://www.google.com/trends/explore?hl=en-US&q=ionic+framework&cmpt=q&tz&tz&content=1) and their [main Github repo](https://github.com/driftyco/ionic) has over 13K stars as of this writing.
 
-Ionic provides similar functionality for AngularJS that [iOS UIKit](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIKit_Framework/) provides for Obj-C/Swift, and that [Android UI elements](http://developer.android.com/guide/topics/ui/overview.html) provides for Java. Core mobile UI paradigms are available to developers out of the box, which means that developers can focus on building apps instead of common user interface elements. Some examples of these include [list views](http://ionicframework.com/docs/api/directive/ionList/), [stateful navigation](http://ionicframework.com/docs/api/directive/ionNavView/), [tab bars](http://ionicframework.com/docs/nightly/api/directive/ionTabs/), [action sheets](http://ionicframework.com/docs/api/service/$ionicActionSheet/), and [so much more](http://ionicframework.com/docs/nightly/api/).
+Ionic provides similar functionality for AngularJS that [iOS UIKit](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIKit_Framework/) provides for Obj-C/Swift, and that [Android UI elements](http://developer.android.com/guide/topics/ui/overview.html) provides for Java. Core mobile UI paradigms are available to developers out of the box, which means that developers can focus on building apps, instead of common user interface elements. Some examples of these include [list views](http://ionicframework.com/docs/api/directive/ionList/), [stateful navigation](http://ionicframework.com/docs/api/directive/ionNavView/), [tab bars](http://ionicframework.com/docs/nightly/api/directive/ionTabs/), [action sheets](http://ionicframework.com/docs/api/service/$ionicActionSheet/), and [so much more](http://ionicframework.com/docs/nightly/api/).
 
 {x: where-ionic-fits}
-For a more in depth view of where Ionic fits into our hybrid app stack, [read this blog post](http://ionicframework.com/blog/where-does-the-ionic-framework-fit-in/) from one of Ionic's core developers and [read the "Overview" section](http://ionicframework.com/docs/overview/) on their about page.
+For a more in-depth view of where Ionic fits into our hybrid app stack, [read this blog post](http://ionicframework.com/blog/where-does-the-ionic-framework-fit-in/) from one of Ionic's core developers and [read the "Overview" section](http://ionicframework.com/docs/overview/) on their About page.
 
-Ionic is a great solution for creating both mobile web apps and native apps alike. The first sections of this course will go over structuring Ionic apps that can run on the web. Then we will cover packaging that same exact code into a native app. We will be using a build tool called Cordova for packaging our app. For those unfamiliar with Cordova, it is the open source core of Adobe's proprietary PhoneGap build system. Adobe describes it with this analogy: Cordova is to PhoneGap as Blink is to Chrome. Basically, PhoneGap is Cordova plus a whole bunch of other Adobe stuff.
+Ionic is a great solution for creating both mobile web apps and native apps. The first sections of this course will go over structuring Ionic apps that can run on the web. Then we will cover packaging that same exact code into a native app. We will be using a build tool called Cordova for packaging our app. For those unfamiliar with Cordova, it is the open source core of Adobe's proprietary PhoneGap build system. Adobe describes it with this analogy: Cordova is to PhoneGap as Blink is to Chrome. Basically, PhoneGap is Cordova plus a whole bunch of other Adobe stuff.
 
 {x: cordova-vs-phonegap}
 [Read this post for a more in depth understanding of the differences between Cordova and PhoneGap](http://ionicframework.com/blog/what-is-cordova-phonegap/)
@@ -27,7 +27,7 @@ Ionic is a great solution for creating both mobile web apps and native apps alik
 The folks at Ionic have done a fantastic job of making Cordova super easy to use by directly wrapping it in their 'ionic' command line tool (don't worry, we'll cover this later). Just remember that Cordova is something that is running under the hood of your hybrid app that you will rarely need to worry about, but we will cover some common interactions with it in this course.
 
 ## What we're going to build
-We will be building an app called Songhop, a "Tinder for music" app that allows you to listen to 30 second song samples and favorite the ones you like. This is based on a real Ionic/Cordova powered app we built that exists on the [iOS App Store](https://itunes.apple.com/us/app/songhop/id899245239?mt=8) -- feel free to download it to get a feeling for what Ionic is capable of (and rate it 5 stars :). It's also worth noting that it only took us a month to build the Songhop app that's on the App Store, so that should give you an idea of how fast you can build & iterate using Ionic / Cordova.
+We will be building an app called Songhop, a "Tinder for music" app that allows you to listen to 30-second song samples and favorite the ones you like. This is based on a real Ionic/Cordova powered app we built that exists on the [iOS App Store](https://itunes.apple.com/us/app/songhop/id899245239?mt=8) -- feel free to download it to get a feeling for what Ionic is capable of (and rate it 5 stars :). It's also worth noting that it only took us a month to build the Songhop app that's on the App Store, so that should give you an idea of how fast you can build & iterate using Ionic / Cordova.
 
 __You can also see a [live demo of the completed application we'll be building here](https://ionic-songhop.herokuapp.com) (resize your browser window to the size of a phone for the best experience).__
 
@@ -44,7 +44,7 @@ __Familiarity with AngularJS.__ We will be using AngularJS for much of our app l
 
 In addition, you should be comfortable with basic web application concepts including [REST](http://www.restapitutorial.com/lessons/whatisrest.html) and [CRUD](http://en.wikipedia.org/wiki/Create,_read,_update_and_delete).
 
-It's best to have either a Linux based OS or Mac to complete this tutorial. While it's certainly possible to develop on Windows, we won't be covering the specifics of running, debugging and troubleshooting for Windows based systems.
+It's best to have either a Linux based OS or Mac to complete this tutorial. While it's certainly possible to develop on Windows, we won't be covering the specifics of running, debugging, and troubleshooting for Windows based systems.
 
 {x: install-node}
  __Install Node.js__. Since you will need to install various packages for Node.js, we recommend that you follow [these installation instructions](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager) which use [npm](https://www.npmjs.com/).
@@ -55,24 +55,24 @@ __Install the [Ionic CLI](http://ionicframework.com/docs/cli/install.html)__ thr
 
 ## Recommendations for completing this course
 
-We have structured this course to accommodate folks who are interested in Ionic for building mobile websites as well as those who are interested in building hybrid apps. The first chapters of this course will exclusively cover the JS & CSS portions of the Ionic framework (the only knowledge necessary for building mobile websites), and in the last few chapters we will  learn how to package & deploy our application natively for iOS and/or Android.
+We have structured this course to accommodate folks who are interested in Ionic for building mobile websites as well as those who are interested in building hybrid apps. The first chapters of this course will exclusively cover the JS & CSS portions of the Ionic framework (the only knowledge necessary for building mobile websites), and in the last few chapters we will learn how to package & deploy our application natively for iOS and/or Android.
 
-Throughout this course, links to additional concepts and information will be included. You can use these links as supplementary material which can help you gain insight into the stack and its various components. As always, if you have any questions Google and Stackoverflow are your best bet, but if you're unsure about something specific to this course, __feel free to tweet me [@ericsimons40](https://twitter.com/ericsimons40)__.
+Throughout this course, links to additional concepts and information will be included. You can use these links as supplementary material that can help you gain insight into the stack and its various components. As always, if you have any questions, Google and Stackoverflow are your best bet, but if you're unsure about something specific to this course, __feel free to tweet me [@ericsimons40](https://twitter.com/ericsimons40)__.
 
 We're firm believers in actually writing code while learning a new language or framework. Therefore, we strongly encourage you to type out all the code instead of copy+pasting it.
 
 
 # Starting our project
 
-When you want to [start a new Ionic project](http://ionicframework.com/docs/cli/start.html), typically all you need to do is run `ionic start myApp blank` and it will scaffold a new application for you. However, for simplicity's sake, we've created a starter project specifically for this course that includes all the base HTML/CSS/JS files we'll be using.
+When you want to [start a new Ionic project](http://ionicframework.com/docs/cli/start.html), typically all you need to do is run `ionic start myApp blank`, and it will scaffold a new application for you. However, for simplicity's sake, we've created a starter project specifically for this course that includes all the base HTML/CSS/JS files we'll be using.
 
 {x: fork-app-from-gh}
 [Clone the repo for this course](https://github.com/EricSimons/ionic-course), navigate to the /code/base-application folder, and then run the command `npm install`.
 
-Now that we have the Songhop project downloaded to our computer, lets get it running in our browser! To do this, we will use the Ionic CLI's command 'serve'. This command starts a local web server with live reload enabled, and then opens your browser directly to your application. As you develop your app, it will automatically refresh your web browser every time you save a file. _You can learn more about how the ionic serve command works & various configuration options available [here](http://ionicframework.com/docs/cli/test.html)._
+Now that we have the Songhop project downloaded to our computer, let's get it running in our browser! To do this, we will use the Ionic CLI's command 'serve'. This command starts a local web server with live reload enabled, then opens your browser directly to your application. As you develop your app, it will automatically refresh your web browser every time you save a file. _You can learn more about how the ionic serve command works & various configuration options available [here](http://ionicframework.com/docs/cli/test.html)._
 
 {x: run-ionic-serve}
-In your terminal, head into the ionic-songhop-app folder and run `ionic serve`
+In your terminal, head into the ionic-songhop-app folder and run `ionic serve`.
 
 If all went well, you should be seeing this in your browser window (be sure to resize your browser to be about the size of a phone, or use your browser's phone emulation tools):
 ![The boilerplate songhop template](images/0.png)
@@ -103,7 +103,7 @@ Open up app/index.html in your code editor and look over its structure. Notice t
   </body>
 ```
 
-As we navigate through our app, Ionic uses the [AngularUI Router](https://github.com/angular-ui/ui-router) to populate ion-nav-view's with necessary templates and controllers. At this point you might be wondering, how do we tell an ion-nav-view which templates to display? If you open up /www/js/app.js, in the config block it defines the states of our application. There are three states currently defined for our app: an [abstract state](https://github.com/angular-ui/ui-router/wiki/Nested-States-%26-Nested-Views#abstract-states) called 'tab' that displays templates/tabs.html, and two tab states ('tab.discover', 'tab.favorites') for our Discover and Favorites pages respectively.
+As we navigate through our app, Ionic uses the [AngularUI Router](https://github.com/angular-ui/ui-router) to populate ion-nav-view's with necessary templates and controllers. At this point, you might be wondering, how do we tell an ion-nav-view which templates to display? If you open up /www/js/app.js, in the config block, it defines the states of our application. There are three states currently defined for our app: an [abstract state](https://github.com/angular-ui/ui-router/wiki/Nested-States-%26-Nested-Views#abstract-states) called 'tab' that displays templates/tabs.html, and two tab states ('tab.discover', 'tab.favorites') for our Discover and Favorites pages, respectively.
 
 You may have noticed that our `tab.discover` and `tab.favorites` states specify views to be displayed in (in this case, tab.discover is asking to be displayed in a view titled 'tab-discover'):
 
@@ -121,7 +121,7 @@ You may have noticed that our `tab.discover` and `tab.favorites` states specify 
 
 If you open up templates/tabs.html, you'll see that there are two ion-nav-view elements wrapped inside their respective [ion-tab](http://ionicframework.com/docs/api/directive/ionTabs/). This allows us to programmatically display our templates into a specified tab, with the added benefit of each tab having its own navigation history.
 
-Finally, lets take a look at the templates of our Discover and Favorites pages. Our templates/discover.html file contains an Ionic [Card Image](http://ionicframework.com/docs/components/#card-showcase) containing the song information along with favorite/skip buttons, and templates/favorites.html contains an [ion-list](http://ionicframework.com/docs/api/directive/ionList/) of our favorite songs. You'll notice that both pages are wrapped in an [ion-view](http://ionicframework.com/docs/api/directive/ionView/) for navigation and header bar purposes, and then an [ion-content](http://ionicframework.com/docs/api/directive/ionContent/) where we place all of our content.
+Finally, let's take a look at the templates of our Discover and Favorites pages. Our templates/discover.html file contains an Ionic [Card Image](http://ionicframework.com/docs/components/#card-showcase) containing the song information along with favorite/skip buttons, and templates/favorites.html contains an [ion-list](http://ionicframework.com/docs/api/directive/ionList/) of our favorite songs. You'll notice that both pages are wrapped in an [ion-view](http://ionicframework.com/docs/api/directive/ionView/) for navigation and header bar purposes, and then an [ion-content](http://ionicframework.com/docs/api/directive/ionContent/) where we place all of our content.
 
 We've used a couple of Ionic's [CSS Components](http://ionicframework.com/docs/components/) and [AngularJS Extensions](http://ionicframework.com/docs/api/) in this base application, and we strongly recommend checking out other components and extensions that Ionic can do out of the box. Knowing what Ionic can do for you will allow you to build applications quickly, as you can lean on Ionic's pre-built components & extensions instead of writing your own hand-rolled solutions.
 
@@ -169,7 +169,7 @@ When we first initialize the discover controller, lets set `currentSong` to the 
   // initialize the current song
   $scope.currentSong = angular.copy($scope.songs[0]);
 ```
-You'll notice that we used [angular.copy()](https://docs.angularjs.org/api/ng/function/angular.copy), which makes a deep copy of the object instead of creating a reference to the object in our songs array. If you're unfamiliar with how `angular.copy()` works, you can learn more by [watching this video](https://thinkster.io/egghead/angular-copy).
+You'll notice that we used [angular.copy()](https://docs.angularjs.org/api/ng/function/angular.copy), which makes a deep copy of the object, instead of creating a reference to the object in our songs array. If you're unfamiliar with how `angular.copy()` works, you can learn more by [watching this video](https://thinkster.io/egghead/angular-copy).
 
 Now that the current song is being exposed to the scope, we can wire up our template to the `currentSong` object.
 
@@ -187,9 +187,9 @@ Update our discover.html template to show the current song:
       </div>
 ```
 
-At this point you should be seeing the album art, artist name, and title of the first song: "Stealing Cinderella" by Chuck Wicks. If you're feeling unmotivated right now, go listen to this song on Spotify, because it totally sucks and you'll want to hit the skip button out of sheer spite. So for everyone's sanity, lets make that skip button work (as well as the favorite button).
+At this point you should be seeing the album art, artist name, and title of the first song: "Stealing Cinderella" by Chuck Wicks. If you're feeling unmotivated right now, go listen to this song on Spotify, because it totally sucks, and you'll want to hit the skip button out of sheer spite. So for everyone's sanity, let's make that skip button work (as well as the favorite button).
 
-In our discover controller, lets create a scope method calledl `sendFeedback()` that is fired when the skip and favorite buttons are pressed. This method will accept one argument: a boolean where true = the song was favorited, and false = the song was skipped.
+In our discover controller, let's create a scope method calledl `sendFeedback()` that is fired when the skip and favorite buttons are pressed. This method will accept one argument: a boolean where true = the song was favorited, and false = the song was skipped.
 
 {x: create-sendfeedback-method}
 Create the `sendFeedback()` method, which (for now) just changes the `currentSong` to a random song in our `songs` array. (For those wondering about the unused `bool` argument, don't worry - we'll be using it very soon).
@@ -209,7 +209,7 @@ Create the `sendFeedback()` method, which (for now) just changes the `currentSon
 
 
 {x: wireup-feedback-btns}
-Now wire up the skip & feedback buttons to fire the `sendFeedback()` method, with `false` and `true` as the argument respectively:
+Now, wire up the skip & feedback buttons to fire the `sendFeedback()` method, with `false` and `true` as the argument respectively:
 
 ```html
       <div class="item tabs tabs-secondary tabs-icon-left">
@@ -224,7 +224,7 @@ Now wire up the skip & feedback buttons to fire the `sendFeedback()` method, wit
       </div>
 ```
 
-And now when you hit skip or favorite, you will proceed to a new song!
+Now, when you hit skip or favorite, you will proceed to a new song!
 
 
 ## Using animations
@@ -234,7 +234,7 @@ And now when you hit skip or favorite, you will proceed to a new song!
 Having the song information change is cool, but it would be _super_ cool if the entire card animated left or right if the user skipped or favorited, respectively. We can do this by using [angular animations](https://docs.angularjs.org/guide/animations); open up css/style.css and you can see the `ng-hide` styles associated with `.discover-page .current-song`. We've also defined separate animations for `.current-song.skipped.ng-hide` and `.current-song.favorited.ng-hide` - this means we will have to add the CSS class `.skipped` or `.favorited` to our current song div, depending if the user skips or favorites.
 
 {x: sendFeedback-method-animations}
-First lets update our `sendFeedback()` method to enable animations. `currentSong.rated` will tell the scope whether the current song was favorited (true) or skipped (false). We will also tell the current card to hide itself with `currentSong.hide()`.
+First, let's update our `sendFeedback()` method to enable animations. `currentSong.rated` will tell the scope whether the current song was favorited (true) or skipped (false). We will also tell the current card to hide itself with `currentSong.hide()`.
 
 ```javascript
   $scope.sendFeedback = function (bool) {
@@ -272,7 +272,7 @@ Now open up discover.html and wire these two variables up to our CSS animation c
           ng-show="currentSong && !currentSong.hide">
 ```
 
-Now our sexy skip and favorite animations should work!
+Now, our sexy skip and favorite animations should work!
 
 
 ## Adding, Removing and Retrieving Favorited Songs
@@ -282,7 +282,7 @@ Right now, nothing happens when we favorite a song - but it should actually appe
 {video: favorites-crud-service}
 
 {x: create-user-svc}
-Lets create a User [factory](https://docs.angularjs.org/guide/providers) in services.js, which we'll use to store an array of our favorite songs:
+Let's create a User [factory](https://docs.angularjs.org/guide/providers) in services.js, which we'll use to store an array of our favorite songs:
 
 ```javascript
 angular.module('songhop.services', [])
@@ -297,7 +297,7 @@ angular.module('songhop.services', [])
 ```
 
 {x: add-fav-svc}
-Now create a method for adding songs to the `favorites` array:
+Now, create a method for adding songs to the `favorites` array:
 
 ```javascript
   o.addSongToFavorites = function(song) {
@@ -320,7 +320,7 @@ We'll need to be able to display this on our favorites page, so crack open our f
 ```
 
 {x: ngrepeat-favs}
-Now open up favorites.html and have our `<ion-list>` repeat through our list of favorites:
+Now, open up favorites.html and have our `<ion-list>` repeat through our list of favorites:
 
 ```html
       <ion-item ng-repeat="song in favorites" class="item-avatar">
@@ -330,7 +330,7 @@ Now open up favorites.html and have our `<ion-list>` repeat through our list of 
       </ion-item>
 ```
 
-Finally, lets add songs to our favorites when the user hits the favorite button.
+Finally, let's add songs to our favorites when the user hits the favorite button.
 
 {x: discover-inject-user}
 In our discover controller, inject User as a dependency:
@@ -352,7 +352,7 @@ Go ahead and favorite a couple of songs, then go to the favorites page -- all of
 But what if we want to remove a song from our favorites?
 
 {x: remove-song-svc}
-Lets add a method in our User service to do that:
+Let's add a method in our User service to do that:
 
 ```javascript
   o.removeSongFromFavorites = function(song, index) {
@@ -377,7 +377,7 @@ In our favorites controller, expose a method that will fire the `removeSongFromF
 You could just write `$scope.removeSong = User.removeSongFromFavorites`, but if we ever want to have a success message or perform other scope related activities when a song is removed, we need to do it this way.
 
 {x: add-ion-option-btn}
-Finally, lets add an [<ion-option-button>](http://ionicframework.com/docs/api/directive/ionOptionButton/) for deleting the song from the [<ion-item>](http://ionicframework.com/docs/api/directive/ionItem/) `ng-repeat` in favorites.html:
+Finally, let's add an [<ion-option-button>](http://ionicframework.com/docs/api/directive/ionOptionButton/) for deleting the song from the [<ion-item>](http://ionicframework.com/docs/api/directive/ionItem/) `ng-repeat` in favorites.html:
 
 ```html
     <ion-list>
@@ -394,14 +394,14 @@ Finally, lets add an [<ion-option-button>](http://ionicframework.com/docs/api/di
     </ion-list>
 ```
 
-Now you can swipe a song to the right, hit the delete button, and the song will disappear - pretty neat!
+Now, you can swipe a song to the right, hit the delete button, and the song will disappear - pretty neat!
 
 Our base interface functionality is complete. In the next section, we'll start wiring our app up to data retrieved from a server.
 
 
 # Wiring Up to A Server
 
-For this course, we've created a node.js server that our app will be interacting with. There is a publicly accessible version of this server available on Heroku at `https://ionic-songhop.herokuapp.com`. Very soon we will be releasing a version of this server that you can run locally, but until then you can just use the Heroku server.
+For this course, we've created a node.js server with which our app will be interacting. There is a publicly accessible version of this server available on Heroku at `https://ionic-songhop.herokuapp.com`. Very soon, we will be releasing a version of this server that you can run locally, but until then, you can just use the Heroku server.
 
 You'll notice in app.js that we've defined a constant called `SERVER` that has a url attribute:
 
@@ -415,9 +415,9 @@ You'll notice in app.js that we've defined a constant called `SERVER` that has a
 });
 ```
 
-This allows us to easily swap our backend out with just one line of code. For now, you'll be using the hosted version we're providing for you over at `https://ionic-songhop.herokuapp.com`, but in the future it will be trivial use a local server instead.
+This allows us to easily swap our backend out with just one line of code. For now, you'll be using the hosted version we're providing for you over at `https://ionic-songhop.herokuapp.com`, but in the future, it will be trivial use a local server instead.
 
-The first thing we'll wire up is actual song recommendations instead of using the mock data. To do this, lets create a "Recommendations" service that will handle retrieving, storing, and manipulating our queue of song recommendations.
+The first thing we'll wire up is actual song recommendations instead of using the mock data. To do this, let's create a "Recommendations" service that will handle retrieving, storing, and manipulating our queue of song recommendations.
 
 {video: create-recommendations-service}
 
@@ -465,7 +465,7 @@ Inject `Recommendations` into `DiscoverCtrl`, remove `$scope.songs` and `$scope.
     });
 ```
 
-Our favorite and skip buttons no longer work, as our `sendFeedback()` method isn't wired up to our `Recommendations` service. We need to create a method in our `Recommendations` service that allows us to remove the current song from the queue and proceed to the next one. At the same time we'll check to see if the queue is low on songs, and if it is we'll fire `getNextSongs()`. This ensures our users will never run out of songs to sample.
+Our favorite and skip buttons no longer work, as our `sendFeedback()` method isn't wired up to our `Recommendations` service. We need to create a method in our `Recommendations` service that allows us to remove the current song from the queue and proceed to the next one. At the same time we'll check to see if the queue is low on songs, and if it is, we'll fire `getNextSongs()`. This ensures our users will never run out of songs to sample.
 
 {x: rec-nxtsong}
 Create a `nextSong()` method that pops the first array element off of our `queue` and fires `getNextSongs()` if necessary:
@@ -503,7 +503,7 @@ Cool, now favoriting and skipping works again. Skip a few songs quickly though a
 
 When we were building the original Songhop app, we originally planned to download the next image to the device and then provide a link to the local file in cache. This would've required us to use native plugins as well as added a good amount of code to our app. This would also be the only solution to use if you were developing this app in a native language, like Swift/Obj-C or Java. However, we have a killer advantage over native apps: we can lean on the web browser for common tasks, like caching. Just by creating `<img src="hello.jpg" />`, we can place an image in the web browser's cache.
 
-Now imagine if we had an image tag with an [ng-src](https://docs.angularjs.org/api/ng/directive/ngSrc) always pointed at the image url for `Recommendations.queue[1]` (aka the next song in the queue). We can make this image nearly invisible with CSS: 1px tall and 1px wide, with an opacity of 0.01 - yet the browser will still download it and place it in cache. Perfect!
+Now, imagine if we had an image tag with an [ng-src](https://docs.angularjs.org/api/ng/directive/ngSrc) always pointed at the image url for `Recommendations.queue[1]` (aka the next song in the queue). We can make this image nearly invisible with CSS: 1px tall and 1px wide, with an opacity of 0.01 - yet the browser will still download it and place it in cache. Perfect!
 
 {x: nextalbumimg-method}
 In our Discover controller, create a method called `nextAlbumImg()` that will return the next album's image:
@@ -537,7 +537,7 @@ Remember - don't be afraid to use the unique features web browsers provide to yo
 
 # Playing & managing audio
 
-The key functionality of our app is the ability to quickly sample songs - but getting the proper licensing rights to play song clips is exceptionally difficult. For months we dug around various APIs trying to find a reasonable solution, but to no avail. That was until the summer of 2014, when Spotify made waves by releasing [a new set of APIs](https://developer.spotify.com/web-api/) for interacting with their platform. Their new API provides us with the key bit of functionality for our app: 30 second song previews, as well as album art and other relevant song metadata.
+The key functionality of our app is the ability to quickly sample songs, but getting the proper licensing rights to play song clips is exceptionally difficult. For months we dug around various APIs trying to find a reasonable solution, but to no avail. That was until the summer of 2014, when Spotify made waves by releasing [a new set of APIs](https://developer.spotify.com/web-api/) for interacting with their platform. Their new API provides us with the key bit of functionality for our app: 30 second song previews, as well as album art and other relevant song metadata.
 
 For this course, our node.js server will be handling all of the interactions with the Spotify API, which means that we can just focus on playing the song data that is returned to our Ionic client. All you need to know is that the data being returned to us from the /recommendations endpoint is actually being powered by the amazing people at Spotify, so [show them some love on Twitter!](https://twitter.com/SpotifyPlatform)
 
@@ -545,7 +545,7 @@ For this course, our node.js server will be handling all of the interactions wit
  If you're interested in learning how to use the Spotify API, tweet me [@ericsimons40](https://twitter.com/ericsimons40) -- I'd love to write a section about this in the future if enough people are interested.
 
 
-Lets figure out how we can play Spotify's 30 second song previews. Every song that is returned to us by the /recommendations endpoint contains the following attributes:
+Let's figure out how we can play Spotify's 30 second song previews. Every song that is returned to us by the /recommendations endpoint contains the following attributes:
 
 ```javascript
 {
@@ -562,7 +562,7 @@ Lets figure out how we can play Spotify's 30 second song previews. Every song th
 
 The attribute `preview_url` contains the URL for this song's mp3 preview clip. You can verify this by visiting the URL in your browser and it will start playing an mp3 stream.
 
-Since modern browsers can play mp3 files without installing any extra stuff, for our app we can simply use the [HTMLAudioElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement) for playing 30 second song previews. Instead of cluttering our discover controller with the logic to play & pause songs, lets create methods in our `Recommendations` service that will allow us to easily invoke these actions from any controller.
+Since modern browsers can play mp3 files without installing any extra stuff, for our app we can simply use the [HTMLAudioElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement) for playing 30 second song previews. Instead of cluttering our discover controller with the logic to play & pause songs, let's create methods in our `Recommendations` service that will allow us to easily invoke these actions from any controller.
 
 {video: enable-audio-playback}
 
@@ -605,7 +605,7 @@ Create methods for playing and halting the current song preview:
 This code uses promises so don't forget to inject the [$q](https://docs.angularjs.org/api/ng/service/$q) service into the `Recommendations` service!
 
 {x: haltaudio-nextsong}
-Next, lets modify the `nextSong()` method to halt the current audio clip:
+Next, let's modify the `nextSong()` method to halt the current audio clip:
 
 ```javascript
   o.nextSong = function() {
@@ -615,7 +615,7 @@ Next, lets modify the `nextSong()` method to halt the current audio clip:
     // end the song
     o.haltAudio();
 
-    // low on the queue? lets fill it up
+    // low on the queue? let's fill it up
     if (o.queue.length <= 3) {
       o.getNextSongs();
     }
@@ -706,7 +706,7 @@ In DiscoverCtrl, change `getNextSongs()` to `init()`:
 ```
 
 {x: leavingFavorites-use-init}
-Now create a scope method in TabsCtrl that will fire `Recommendations.init()` when called by on-deselect:
+Now, create a scope method in TabsCtrl that will fire `Recommendations.init()` when called by on-deselect:
 
 ```javascript
   $scope.leavingFavorites = function() {
@@ -726,11 +726,11 @@ You should now be able to switch between the discover and favorites pages with a
 
 # Wrapping up the UI and core functionality
 
-When our app is retrieving data from a server, it's important that we give the user some sort of visual indicator while the app is waiting for the server's response. This especially relevant for the music sampling experience, so lets set up some loading indicators on the Discover page.
+When our app is retrieving data from a server, it's important that we give the user some sort of visual indicator while the app is waiting for the server's response. This especially relevant for the music sampling experience, so let's set up some loading indicators on the Discover page.
 
 {video: adding-loading-indicators}
 
-When the application first boots up and requests the first set of song recommendations, we'll want to display a large loading indicator that ideally will block further user input until the loading completes. Ionic just happens to have a fantastic [$ionicLoading](http://ionicframework.com/docs/api/service/$ionicLoading/) extension that does exactly this, so lets use it!
+When the application first boots up and requests the first set of song recommendations, we'll want to display a large loading indicator that ideally will block further user input until the loading completes. Ionic just happens to have a fantastic [$ionicLoading](http://ionicframework.com/docs/api/service/$ionicLoading/) extension that does exactly this, so let's use it!
 
 {x: ionicloading-wrapper-funcs}
 At the top of `DiscoverCtrl`, create methods for showing and hiding the `$ionicLoading` overlay, and then fire the `showLoading()` function (this only happens when the controller is first initialized aka the first time the app is loaded). We'll also need to inject `$ionicLoading` into `DiscoverCtrl`:
@@ -757,7 +757,7 @@ At the top of `DiscoverCtrl`, create methods for showing and hiding the `$ionicL
 Add `hideLoading()` to the `Recommendations.init()` success function in `DiscoverCtrl`, as we want to hide the loading indicator once the songs have been retrieved.
 
 {info}
-If you're running the server locally, you probably won't see the $ionicLoading overlay due to how fast the init promise is resolved. If you shut down your server and refresh the songhop app, you should be able to see the $ionicLoading overlay.
+If you're running the server locally, you probably won't see the $ionicLoading overlay due to how fast the init promise is resolved. If you shut down your server and refresh the Songhop app, you should be able to see the $ionicLoading overlay.
 
 Our loading indicator works really well! But wait a second - we should let the user know when the song's MP3 has finished loading when we skip/favorite through songs. Instead of having a blocking loading indicator like $ionicLoading, this time we'll have a loading icon next to the title of the song.
 
@@ -923,7 +923,7 @@ Now we're done! In the next section, we're going to cover authentication & persi
 
 When an Ionic application needs to authenticate with a server, it's usually done with token based session management instead of cookies. It's easier to store an access token on the device than to ensure a browser cookie persists across app usages. For this course, we're going to use an insanely simple implementation of token based authentication. If you're planning on implementing token based authentication in a real app, we recommend [reading this post](https://auth0.com/blog/2014/01/07/angularjs-authentication-with-cookies-vs-token/) on the topic as well as taking a look at [this Github repo](https://github.com/sean-hill/ionic-user-auth-express) of an Ionic app that performs user authentication using bearer tokens, as specified by [RFC 6750](http://tools.ietf.org/html/rfc6750).
 
-Before we jump into authentication with our server, first we will need to create a page for users to sign in/sign up. For this app, we will only require a username to sign up and sign in (in the real world you'd normally require a password along with the username, but since this isn't the real world, we're keeping it simple).
+Before we jump into authentication with our server, first, we will need to create a page for users to sign in/sign up. For this app, we will only require a username to sign up and sign in (in the real world you'd normally require a password along with the username, but since this isn't the real world, we're keeping it simple).
 
 {info}
 Because other people will be using the same Heroku server for this course, use _very_ unique usernames to ensure your accounts aren't colliding with others!
@@ -931,7 +931,7 @@ Because other people will be using the same Heroku server for this course, use _
 {video: server-authentication}
 
 {x: create-splash-state}
-In app.js, create a new state called `splash` at the route '/'. Being the root route means that it will be the first page loaded when the app initializes. We also want to update `$urlRouterProvider.otherwise()` to point at '/' from now on instead the discover page.
+In app.js, create a new state called `splash` at the route '/'. Being the root route means that it will be the first page loaded when the app initializes. We also want to update `$urlRouterProvider.otherwise()` to point at '/' from now on, instead of the discover page.
 
 ```javascript
   // splash page
@@ -996,7 +996,7 @@ Take a quick glance at what's in our template, as there are a few things worth n
 We need a place to store the session token ID and other data we receive back from the server. Since this is information is related to our user, it seems a natural choice to store this in the User service.
 
 {x: session-in-user-return-obj}
-We'll be storing `username` and `session_id` in the `User` service, so lets define them in our return object:
+We'll be storing `username` and `session_id` in the `User` service, so let's define them in our return object:
 
 ```javascript
   var o = {
@@ -1054,9 +1054,9 @@ In `SplashCtrl`, create the method `submitForm()` that calls the `User.auth()` m
 });
 ```
 
-Part of the data we need to retrieve on authentication success is our list of favorite songs. The only problem is that our methods for adding, removing and retrieving favorites aren't wired up to the server...yet! Lets quickly take care of that.
+Part of the data we need to retrieve on authentication success is our list of favorite songs. The only problem is that our methods for adding, removing, and retrieving favorites aren't wired up to the server...yet! Let's quickly take care of that.
 
-Adding, removing and retrieving favorites are actions that are tied to a specific user account. This means that we need to pass along our `session_id` with all of these requests in order to attach the desired request with the correct user.
+Adding, removing, and retrieving favorites are actions that are tied to a specific user account. This means that we need to pass along our `session_id` with all of these requests in order to attach the desired request with the correct user.
 
 {x: add-server-addSongToFavorites}
 Have `addSongToFavorites()` return an `$http` POST request to /favorites with the ID of the song we favorited, along with our user's `session_id`:
@@ -1097,7 +1097,7 @@ Have `removeSongFromFavorites()` return an `$http` DELETE request to /favorites 
 ```
 
 {x: create-populateFavorites}
-Finally, we'll need to request our list of favorites from the server on load. Lets create a method called `populateFavorites()` that will do this by sending an `$http` GET request to /favorites:
+Finally, we'll need to request our list of favorites from the server on load. Let's create a method called `populateFavorites()` that will do this by sending an `$http` GET request to /favorites:
 
 ```javascript
   // gets the entire list of this user's favs from server
@@ -1286,13 +1286,13 @@ Finally, in favorites.html update the `<ion-view>` title attribute to include bo
   <ion-content>
 ```
 
-And with that, our app is now 100% complete. We've covered a tremendous amount of knowledge about the Ionic Framework, but there is still much more to learn. Like we mentioned at the beginning of the course, we highly recommending exploring the [CSS Components](http://ionicframework.com/docs/components/) and [AngularJS Extensions](http://ionicframework.com/docs/api/) that Ionic provides out of the box. The documentation on Ionic's website is hands down some of the best docs I've ever seen, so don't be afraid to peruse it when you have questions or are just looking for some inspiration.
+And with that, our app is now 100% complete. We've covered a tremendous amount of knowledge about Ionic, but there is still much more to learn. As we mentioned at the beginning of the course, we highly recommending exploring the [CSS Components](http://ionicframework.com/docs/components/) and [AngularJS Extensions](http://ionicframework.com/docs/api/) that Ionic provides out of the box. The documentation on Ionic's website is hands down some of the best docs I've ever seen, so don't be afraid to peruse it when you have questions or are just looking for some inspiration.
 
-The folks behind Ionic are also building some amazing tools that make your experience working with the Ionic Framework even better. For example, the [Ionic Creator](http://creator.ionic.io/) is a drag and drop tool that allows you to quickly mock up applications and have it export the working code (crazy, right?). It gets even better than that though: they're starting to roll out a new service called [ionic.io](http://ionic.io/) that comes with a handful of killer features, like the ability update the HTML/CSS/JS of your hybrid app over the air, thus sidestepping Apple's lengthy app review process. Most recently, they announced a [push notification service](https://apps.ionic.io/landing/push) that will make sending push notifications across platforms super simple.
+The folks behind Ionic are also building some amazing tools that make your experience working with the Ionic Framework even better. For example, the [Ionic Creator](http://creator.ionic.io/) is a drag and drop tool that allows you to quickly mock up applications and have it export the working code (crazy, right?). It gets even better than that, though: They're starting to roll out a new service called [ionic.io](http://ionic.io/) that comes with a handful of killer features, like the ability to update the HTML/CSS/JS of your hybrid app over the air, thus sidestepping Apple's lengthy app review process. Most recently, they announced a [push notification service](https://apps.ionic.io/landing/push) that will make sending push notifications across platforms super simple.
 
 The next few years will be an exciting time for hybrid app developers using Ionic, so keep yourself in the loop and follow [@IonicFramework](https://twitter.com/Ionicframework). I'll be updating this course with every new release, so follow me [@ericsimons40](https://twitter.com/ericsimons40) to keep your magical Ionic skills up to date.
 
-With the Ionic section of this course completed, lets start learning how to...what's that you say? Encore? Alrighty then...
+With the Ionic section of this course completed, let's start learning how to...what's that you say? Encore? Alrighty then...
 
 ## Some Ionic challenges for those hungry for more
 
@@ -1305,7 +1305,7 @@ Wouldn't it be great if we could swipe the song previews left and right, like on
 {x: dream-your-own}
 Get creative! Think of something cool to enhance the experience of using the app, build it, and then [tweet us about what you made :)](https://twitter.com/intent/tweet?text=@EricSimons40%20@GoThinkster%20I%20created...)
 
-With the Ionic section of this course _actually_ completed, lets start learning how to build this app for use on native devices.
+With the Ionic section of this course _actually_ completed, let's start learning how to build this app for use on native devices.
 
 
 # Deploying to the emulator, devices and App Stores
@@ -1319,18 +1319,18 @@ Learn exactly what Cordova provides us out of the box on the [about section](htt
 
 We mentioned this at the beginning of the course, but we'll explain it again for those of you who skimmed over it: Cordova is to PhoneGap as Blink is to Chrome. Basically, PhoneGap is Cordova plus a whole bunch of other Adobe stuff. [Seriously, read this post that the Ionic folks wrote about the matter](http://ionicframework.com/blog/what-is-cordova-phonegap/) - it's super good, I promise. There's also a [great post by Tommy Williams](http://blog.devgeeks.org/post/73789983750/cordova-vs-phonegap-an-update) that should clear up any remaining questions you have about the history and differences between Cordova, Phonegap, and Phonegap build.
 
-This is a common point of confusion when first building hybrid apps, so don't feel bad if you're still a little confused. In fact, the Ionic team wrapped common Cordova functions under their CLI tool to ensure the experience of using Cordova was seamless and intuitive. Having used Cordova extensively without the Ionic CLI, I recommend that you don't. The Ionic CLI provides some handy extensions that make the experience better, like automatically livereloading apps that are in the emulator (amongst many other things).
+This is a common point of confusion when first building hybrid apps, so don't feel bad if you're still a little confused. In fact, the Ionic team wrapped common Cordova functions under their CLI tool to ensure the experience of using Cordova was seamless and intuitive. I've used Cordova extensively without the Ionic CLI and recommend using the two together. The Ionic CLI provides some handy extensions that make the experience better, like automatically livereloading apps that are in the emulator (amongst many other things).
 
 
 ## Setting up our project for Cordova
 
-We need to let Cordova know what platforms we intend to deploy our app to. This can be done via the Ionic CLI like so:
+We need to let Cordova know what platforms we intend to deploy our app to. This can be done via the Ionic CLI:
 
 ```
 $ ionic platform ios android
 ```
 
-While we're at it, lets install the amazing [Cordova keyboard plugin](https://github.com/driftyco/ionic-plugins-keyboard) that the Ionic team built, as it uses a custom implementation of the native keyboard instead of the web browser version:
+While we're at it, let's install the amazing [Cordova keyboard plugin](https://github.com/driftyco/ionic-plugins-keyboard) that the Ionic team built, as it uses a custom implementation of the native keyboard instead of the web browser version:
 
 ```
 $ ionic plugin add com.ionic.keyboard
@@ -1347,12 +1347,12 @@ $ ionic emulate [platform] -l
 ```
 
 {alert}
-There is currently a bug in Cordova that, after adding a plugin and then attempting to build/emulate/run the project, the build will fail. The way you fix this is by removing the target platform (`ionic platform rm [platform]`) and then adding it again (`ionic platform add ios`). This should be fixed soon, but until then, this is the easiest solution.
+There is currently a bug in Cordova: After adding a plugin and then attempting to build/emulate/run the project, the build will fail. The way you fix this is by removing the target platform (`ionic platform rm [platform]`) and then adding it again (`ionic platform add ios`). This should be fixed soon, but until then, this is the easiest solution.
 
 {x: learn-running-cli}
 [Read this](http://ionicframework.com/docs/cli/run.html) to learn about all of the options available in the Ionic CLI for running & emulating.
 
-At this point you should see the Songhop app running in the emulator. There's one bug though - if you favorite a couple of songs, go the favorites page, and tap a song to open it in Spotify, it doesn't open a new browser window. Instead, it opens it in our app's web view. To get around this, we need to install another plugin from Cordova called [inappbrowser](https://github.com/apache/cordova-plugin-inappbrowser/blob/master/doc/index.md) that will allow the link to open in the device's native browser.
+At this point, you should see the Songhop app running in the emulator. There's one bug, though - if you favorite a couple of songs, go the favorites page, and tap a song to open it in Spotify, it doesn't open a new browser window. Instead, it opens it in our app's web view. To get around this, we need to install another plugin from Cordova called [inappbrowser](https://github.com/apache/cordova-plugin-inappbrowser/blob/master/doc/index.md) that will allow the link to open in the device's native browser.
 
 {x: install-inappbrowser}
 Install the Cordova inappbrowser via the Ionic CLI:
@@ -1361,7 +1361,7 @@ Install the Cordova inappbrowser via the Ionic CLI:
 ionic plugin add org.apache.cordova.inappbrowser
 ```
 
-Now if you emulate the app again and tap a song in our favorites, it will open in the device's native web browser!
+Now, if you emulate the app again and tap a song in our favorites, it will open in the device's native web browser!
 
 
 ### Challenge
@@ -1377,14 +1377,14 @@ To run your app on a device connected to your computer, the command `$ ionic run
 
 ### Android
 
-For Android, the process is super simple: [enable developer mode](http://www.syncios.com/blog/enable-developer-optionsusb-debugging-mode-on-devices-with-android-4-2-jelly-bean/) on your device, plug it into your computer, and `$ ionic run android`. Super easy right? Compare that to...
+For Android, the process is super simple: [enable developer mode](http://www.syncios.com/blog/enable-developer-optionsusb-debugging-mode-on-devices-with-android-4-2-jelly-bean/) on your device, plug it into your computer, and `$ ionic run android`. Super easy, right? Compare that to...
 
 
 ### iOS
 
 For iOS, you'll need to setup a development provisioning profile before you can successfully run `$ ionic run ios`. Setting up provisioning profiles first requires an [Apple Developer account](https://developer.apple.com/register/index.action), which costs $99/yr. If you think that price is a bit steep, I hear that Apple will also trade you their development tools for your left kidney, should you have one to spare.
 
-Lets dive into what many iOS developers refer to as "Provisioning Profile Hell" -- [buckle up kids, because we're going for a ride](https://www.youtube.com/watch?v=l482T0yNkeo).
+Lets dive into what many iOS developers refer to as "Provisioning Profile Hell" -- [buckle up, kids, because we're going for a ride](https://www.youtube.com/watch?v=l482T0yNkeo).
 
 
 #### Highway to (Provisioning Profile) Hell
@@ -1425,6 +1425,6 @@ The Ionic team has a fantastic guide on how to prepare and submit your app to th
 
 # App development is a journey, not a destination
 
-While this course is a very comprehensive overview of how to build amazing hybrid apps, it really is just an overview. The world of hybrid app development is changing at a rapid pace and there is so much more to learn. To stay up to date on the latest and greatest, I highly recommend following [@IonicFramework](https://twitter.com/Ionicframework) and signing up for their newsletter on [their website](http://ionicframework.com/). This course will be updated frequently, so if you're interested in keeping your skills up to date with Ionic and other hybrid app technologies, feel free to follow me [@ericsimons40](https://twitter.com/ericsimons40). I also tweet about other cool things besides programming stuff, like [Aaron Levie's socks](https://twitter.com/ericsimons40/status/448960308132859904) for example.
+While this course is a very comprehensive overview of how to build amazing hybrid apps, it really is just an overview. The world of hybrid app development is changing at a rapid pace, and there is so much more to learn. To stay up to date on the latest and greatest, I highly recommend following [@IonicFramework](https://twitter.com/Ionicframework) and signing up for their newsletter on [their website](http://ionicframework.com/). This course will be updated frequently, so if you're interested in keeping your skills up to date with Ionic and other hybrid app technologies, feel free to follow me [@ericsimons40](https://twitter.com/ericsimons40). I also tweet about other cool things besides programming stuff, like [Aaron Levie's socks](https://twitter.com/ericsimons40/status/448960308132859904).
 
 With that said, welcome to the bleeding edge of mobile app development! You did an amazing job completing this course, [and I'd love to hear your feedback on it.](https://twitter.com/intent/tweet?text=@EricSimons40%20I%20love%20you)
