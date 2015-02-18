@@ -67,7 +67,7 @@ We're firm believers in actually writing code while learning a new language or f
 When you want to [start a new Ionic project](http://ionicframework.com/docs/cli/start.html), typically all you need to do is run `ionic start myApp blank`, and it will scaffold a new application for you. However, for simplicity's sake, we've created a starter project specifically for this course that includes all the base HTML/CSS/JS files we'll be using.
 
 {x: fork-app-from-gh}
-[Clone the repo for this course](https://github.com/EricSimons/ionic-course), navigate to the /code/base-application folder, and then run the command `npm install`.
+[Clone the repo for this course](https://github.com/EricSimons/ionic-course), navigate to the /code/ folder, and then run the command `npm install`.
 
 Now that we have the Songhop project downloaded to our computer, let's get it running in our browser! To do this, we will use the Ionic CLI's command 'serve'. This command starts a local web server with live reload enabled, then opens your browser directly to your application. As you develop your app, it will automatically refresh your web browser every time you save a file. _You can learn more about how the ionic serve command works & various configuration options available [here](http://ionicframework.com/docs/cli/test.html)._
 
@@ -542,7 +542,7 @@ The key functionality of our app is the ability to quickly sample songs, but get
 For this course, our node.js server will be handling all of the interactions with the Spotify API, which means that we can just focus on playing the song data that is returned to our Ionic client. All you need to know is that the data being returned to us from the /recommendations endpoint is actually being powered by the amazing people at Spotify, so [show them some love on Twitter!](https://twitter.com/SpotifyPlatform)
 
 {info}
- If you're interested in learning how to use the Spotify API, tweet me [@ericsimons40](https://twitter.com/ericsimons40) -- I'd love to write a section about this in the future if enough people are interested.
+ If you're interested in learning how to use the Spotify API, make sure you enter your email into the subscription box at the top or bottom of this page or tweet me [@ericsimons40](https://twitter.com/ericsimons40]. We're releasing another tutorial on how we created the node.js server for this course soon!
 
 
 Let's figure out how we can play Spotify's 30 second song previews. Every song that is returned to us by the /recommendations endpoint contains the following attributes:
