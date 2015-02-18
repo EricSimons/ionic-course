@@ -23,14 +23,14 @@ angular.module('songhop', ['ionic', 'songhop.controllers'])
 
 .config(function($stateProvider, $urlRouterProvider) {
 
-  // Ionic uses AngularUI Router which uses the concept of states
-  // Learn more here: https://github.com/angular-ui/ui-router
-  // Set up the various states which the app can be in.
-  // Each state's controller can be found in controllers.js
+  // Ionic uses AngularUI Router, which uses the concept of states.
+  // Learn more here: https://github.com/angular-ui/ui-router.
+  // Set up the various states in which the app can be.
+  // Each state's controller can be found in controllers.js.
   $stateProvider
 
 
-  // setup an abstract state for the tabs directive
+  // Set up an abstract state for the tabs directive:
   .state('tab', {
     url: '/tab',
     abstract: true,
@@ -59,7 +59,7 @@ angular.module('songhop', ['ionic', 'songhop.controllers'])
         }
       }
     })
-  // if none of the above states are matched, use this as the fallback
+  // If none of the above states are matched, use this as the fallback:
   $urlRouterProvider.otherwise('/tab/discover');
 
 })

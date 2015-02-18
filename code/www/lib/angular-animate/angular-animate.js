@@ -38,7 +38,7 @@
  * | {@link module:ngMessages#animations ngMessages}                                                          | add and remove (ng-active & ng-inactive)                                 |
  * | {@link module:ngMessages#animations ngMessage}                                                           | enter and leave                                                          |
  *
- * You can find out more information about animations upon visiting each directive page.
+ * You can find more information about animations upon visiting each directive page.
  *
  * Below is an example of how to apply animations to a directive that supports animation hooks:
  *
@@ -76,21 +76,21 @@
  * </div>
  * ```
  *
- * When the `on` expression value changes and an animation is triggered then each of the elements within
+ * When the `on` expression value changes and an animation is triggered, then each of the elements within
  * will all animate without the block being applied to child elements.
  *
  * ## Are animations run when the application starts?
- * No they are not. When an application is bootstrapped Angular will disable animations from running to avoid
+ * No, they are not. When an application is bootstrapped, Angular will disable animations from running, to avoid
  * a frenzy of animations from being triggered as soon as the browser has rendered the screen. For this to work,
  * Angular will wait for two digest cycles until enabling animations. From there on, any animation-triggering
  * layout changes in the application will trigger animations as normal.
  *
- * In addition, upon bootstrap, if the routing system or any directives or load remote data (via $http) then Angular
+ * In addition, upon bootstrap, if the routing system or any directives or load remote data (via $http), then Angular
  * will automatically extend the wait time to enable animations once **all** of the outbound HTTP requests
  * are complete.
  *
  * ## CSS-defined Animations
- * The animate service will automatically apply two CSS classes to the animated element and these two CSS classes
+ * The animate service will automatically apply two CSS classes to the animated element, and these two CSS classes
  * are designed to contain the start and end CSS styling. Both CSS transitions and keyframe animations are supported
  * and can be used to play along with this naming structure.
  *
@@ -149,13 +149,13 @@
  * </div>
  * ```
  *
- * Both CSS3 animations and transitions can be used together and the animate service will figure out the correct duration and delay timing.
+ * Both CSS3 animations and transitions can be used together, and the animate service will figure out the correct duration and delay timing.
  *
- * Upon DOM mutation, the event class is added first (something like `ng-enter`), then the browser prepares itself to add
- * the active class (in this case `ng-enter-active`) which then triggers the animation. The animation module will automatically
- * detect the CSS code to determine when the animation ends. Once the animation is over then both CSS classes will be
- * removed from the DOM. If a browser does not support CSS transitions or CSS animations then the animation will start and end
- * immediately resulting in a DOM element that is at its final state. This final state is when the DOM element
+ * Upon DOM mutation, the event class is added first (something like `ng-enter`); then, the browser prepares itself to add
+ * the active class (in this case `ng-enter-active`), which triggers the animation. The animation module will automatically
+ * detect the CSS code to determine when the animation ends. Once the animation is over, both CSS classes will be
+ * removed from the DOM. If a browser does not support CSS transitions or CSS animations, the animation will start and end
+ * immediately, resulting in a DOM element that is at its final state. This final state is when the DOM element
  * has no CSS transition/animation classes applied to it.
  *
  * ### Structural transition animations
@@ -163,7 +163,7 @@
  * Structural transitions (such as enter, leave and move) will always apply a `0s none` transition
  * value to force the browser into rendering the styles defined in the setup (`.ng-enter`, `.ng-leave`
  * or `.ng-move`) class. This means that any active transition animations operating on the element
- * will be cut off to make way for the enter, leave or move animation.
+ * will be cut off to make way for the enter, leave, or move animation.
  *
  * ### Class-based transition animations
  *
@@ -222,7 +222,7 @@
  * ```
  *
  * Please keep this in mind when coding the CSS markup that will be used within class-based transitions.
- * Also, try not to mix the two class-based animation flavors together since the CSS code may become
+ * Also, try not to mix the two class-based animation flavors together, since the CSS code may become
  * overly complex.
  *
  *
@@ -251,7 +251,7 @@
  *
  * ### CSS Staggering Animations
  * A Staggering animation is a collection of animations that are issued with a slight delay in between each successive operation resulting in a
- * curtain-like effect. The ngAnimate module (versions >=1.2) supports staggering animations and the stagger effect can be
+ * curtain-like effect. The ngAnimate module (versions >=1.2) supports staggering animations, and the stagger effect can be
  * performed by creating a **ng-EVENT-stagger** CSS class and attaching that class to the base CSS class used for
  * the animation. The style property expected within the stagger class can either be a **transition-delay** or an
  * **animation-delay** property (or both if your animation contains both transitions and keyframe animations).
@@ -279,9 +279,9 @@
  * }
  * ```
  *
- * Staggering animations work by default in ngRepeat (so long as the CSS class is defined). Outside of ngRepeat, to use staggering animations
+ * Staggering animations work by default in ngRepeat (as long as the CSS class is defined). Outside of ngRepeat, to use staggering animations
  * on your own, they can be triggered by firing multiple calls to the same event on $animate. However, the restrictions surrounding this
- * are that each of the elements must have the same CSS className value as well as the same parent element. A stagger operation
+ * are that each of the elements must have the same CSS className value, as well as the same parent element. A stagger operation
  * will also be reset if more than 10ms has passed after the last animation has been fired.
  *
  * The following code will issue the **ng-leave-stagger** event on the element provided:
@@ -305,7 +305,7 @@
  * Stagger animations are currently only supported within CSS-defined animations.
  *
  * ## JavaScript-defined Animations
- * In the event that you do not want to use CSS3 transitions or CSS3 animations or if you wish to offer animations on browsers that do not
+ * In the event that you do not want to use CSS3 transitions or CSS3 animations, or if you wish to offer animations on browsers that do not
  * yet support CSS transitions/animations, then you can make use of JavaScript animations defined inside of your AngularJS module.
  *
  * ```js
@@ -339,8 +339,8 @@
  * });
  * ```
  *
- * JavaScript-defined animations are created with a CSS-like class selector and a collection of events which are set to run
- * a javascript callback function. When an animation is triggered, $animate will look for a matching animation which fits
+ * JavaScript-defined animations are created with a CSS-like class selector and a collection of events that are set to run
+ * a JavaScript callback function. When an animation is triggered, $animate will look for a matching animation that fits
  * the element's CSS class attribute value and then run the matching animation event function (if found).
  * In other words, if the CSS classes present on the animated element match any of the JavaScript animations then the callback function will
  * be executed. It should be also noted that only simple, single class selectors are allowed (compound class selectors are not supported).
@@ -371,7 +371,7 @@
  *
  * Now when the animation runs, and a transition or keyframe animation is picked up, then the animation itself will
  * also include and transition the styling of the `left` and `top` properties into its running animation. If we want
- * to provide some starting animation values then we can do so by placing the starting animations styles into an object
+ * to provide some starting animation values, we can do so by placing the starting animations styles into an object
  * called `from` in the same object as the `to` animations.
  *
  * ```js
@@ -390,8 +390,8 @@
  * });
  * ```
  *
- * Once the animation is complete or cancelled then the union of both the before and after styles are applied to the
- * element. If `ngAnimate` is not present then the styles will be applied immediately.
+ * Once the animation is complete or cancelled, the union of both the before and after styles are applied to the
+ * element. If `ngAnimate` is not present, the styles will be applied immediately.
  *
  */
 
@@ -802,7 +802,7 @@ angular.module('ngAnimate', ['ng'])
        * @description
        * The `$animate` service provides animation detection support while performing DOM operations (enter, leave and move) as well as during addClass and removeClass operations.
        * When any of these operations are run, the $animate service
-       * will examine any JavaScript-defined animations (which are defined by using the $animateProvider provider object)
+       * will examine any JavaScript-defined animations (which are defined by using the $animateProvider provider object),
        * as well as any CSS-defined animations against the CSS classes present on the element once the DOM operation is run.
        *
        * The `$animate` service is used behind the scenes with pre-existing directives and animation with these directives
@@ -813,8 +813,8 @@ angular.module('ngAnimate', ['ng'])
        * Please visit the {@link ngAnimate `ngAnimate`} module overview page learn more about how to use animations in your application.
        * ## Callback Promises
        * With AngularJS 1.3, each of the animation methods, on the `$animate` service, return a promise when called. The
-       * promise itself is then resolved once the animation has completed itself, has been cancelled or has been
-       * skipped due to animations being disabled. (Note that even if the animation is cancelled it will still
+       * promise itself is then resolved once the animation has completed itself, has been cancelled, or has been
+       * skipped due to animations being disabled. (Note that even if the animation is cancelled, it will still
        * call the resolve function of the animation.)
        *
        * ```js
@@ -824,7 +824,7 @@ angular.module('ngAnimate', ['ng'])
        * ```
        *
        * Also note that, due to the nature of the callback promise, if any Angular-specific code (like changing the scope,
-       * location of the page, etc...) is executed within the callback promise then be sure to wrap the code using
+       * location of the page, etc...) is executed within the callback promise, be sure to wrap the code using
        * `$scope.$apply(...)`;
        *
        * ```js
@@ -849,7 +849,7 @@ angular.module('ngAnimate', ['ng'])
        * });
        * ```
        *
-       * (Keep in mind that the promise cancellation is unique to `$animate` since promises in
+       * (Keep in mind that the promise cancellation is unique to `$animate,` since promises in
        * general cannot be cancelled.)
        *
        */
