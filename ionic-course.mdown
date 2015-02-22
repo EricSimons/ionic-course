@@ -1028,7 +1028,7 @@ First, inject `$http` and `SERVER` into the User service, as we'll need them for
       authRoute = 'login'
     }
 
-    return $http.post(SERVER.url + '/' + authRoute, {username: username});
+    return $http.post(SERVER.url + authRoute, {username: username});
   }
 ```
 
