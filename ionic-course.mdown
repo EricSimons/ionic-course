@@ -443,7 +443,7 @@ Create the `getNextSongs()` method that makes a [$http](https://docs.angularjs.o
   o.getNextSongs = function() {
     return $http({
       method: 'GET',
-      url: SERVER.url + '/recommendations'
+      url: SERVER.url + 'recommendations'
     }).success(function(data){
       // merge data into the queue
       o.queue = o.queue.concat(data);
