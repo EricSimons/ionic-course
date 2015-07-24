@@ -52,7 +52,7 @@ It's best to have either a Linux based OS or Mac to complete this tutorial. Whil
 {x: install-ionic-cli}
 __Install the [Ionic CLI](http://ionicframework.com/docs/cli/install.html)__ through npm by running `npm install -g ionic`. We'll be using it to develop and test our app in a web browser, and later for packaging our app into native binaries for mobile devices.
 
-
+ionic-app-structure/
 ## Recommendations for completing this course
 
 We have structured this course to accommodate folks who are interested in Ionic for building mobile websites as well as those who are interested in building hybrid apps. The first chapters of this course will exclusively cover the JS & CSS portions of the Ionic framework (the only knowledge necessary for building mobile websites), and in the last few chapters we will learn how to package & deploy our application natively for iOS and/or Android.
@@ -79,7 +79,7 @@ If all went well, you should be seeing this in your browser window (be sure to r
 
 ## The guts of an Ionic application
 
-When you scaffold a new application using the Ionic CLI, it automatically creates a handful of files to be used as the baseboard for your hybrid app development. [This post](ionic-app-structure/) walks through all of these files and what purposes they serve. The www folder is where you'll be spending most of your time, as that's where you will be writing your JavaScript, HTML and CSS for the Songhop app. Lets explore the different files in /www and see how they're connected to each other.
+When you scaffold a new application using the Ionic CLI, it automatically creates a handful of files to be used as the baseboard for your hybrid app development. [This post](ionic-app-structure) walks through all of these files and what purposes they serve. The www folder is where you'll be spending most of your time, as that's where you will be writing your JavaScript, HTML and CSS for the Songhop app. Lets explore the different files in /www and see how they're connected to each other.
 
 The www/index.html file is where your application starts: it loads the JavaScript & CSS files you write (from www/js and www/css), the JavaScript & CSS files that your application depends on, and sets up HTML elements for your AngularJS app to bind to.
 
