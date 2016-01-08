@@ -80,21 +80,29 @@ Controller for the favorites page
     	User.removeSongFromFavorites(song, index);
   }
 
+  $scope.openSong = function(song) {
+    $window.open(song.open_url, "_system");
+  }
+
 })
 
 
 /*
 Controller for our tab bar
 */
-.controller('TabsCtrl', function($scope, Recommendations) {
+.controller('TabsCtrl', function($scope, User, Recommendations) {
 // stop audio when going to favorites page
 $scope.enteringFavorites = function() {
     Recommendations.haltAudio();
+    User.newFavorites = 0;
   }
 
 $scope.leavingFavorites = function() {
     Recommendations.init();
   } 
+
+  // expose the number of new favorites to the scope
+  $scope.favCount = User.favoriteCount;
 
 
 
