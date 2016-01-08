@@ -106,7 +106,7 @@ $scope.leavingFavorites = function() {
 
 })
 
-.controller('SplashCtrl', function($scope, $state, x	User) {
+.controller('SplashCtrl', function($scope, $state, User) {
 	// attempt to signup/login via User.auth
   $scope.submitForm = function(username, signingUp) {
     User.auth(username, signingUp).then(function() {
