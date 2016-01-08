@@ -52,9 +52,21 @@ angular.module('songhop.services', [])
     });	    
   }
 
+	// gets the entire list of this user's favs from server
+	o.populateFavorites = function() {
+		return $http({
+		  method: 'GET',
+		  url: SERVER.url + '/favorites',
+		  params: { session_id: o.session_id }
+		}).success(function(data){
+		  // merge data into the queue
+		  o.favorites = data;
+		});
+	}
+
 	o.favoriteCount = function() {
-    	return o.newFavorites;
-  	}
+		return o.newFavorites;
+		}
 
 		return o;
 })
