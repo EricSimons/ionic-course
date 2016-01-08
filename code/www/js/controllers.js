@@ -75,6 +75,7 @@ Controller for the favorites page
 .controller('FavoritesCtrl', function($scope, User) {
 	// get the list of our favorites from the user service
 	$scope.favorites = User.favorites;
+	$scope.username = User.username;
 
 	$scope.removeSong = function(song, index) {
     	User.removeSongFromFavorites(song, index);
@@ -90,7 +91,7 @@ Controller for the favorites page
 /*
 Controller for our tab bar
 */
-.controller('TabsCtrl', function($scope, User, Recommendations) {
+.controller('TabsCtrl', function($scope, $window, User, Recommendations) {
 // stop audio when going to favorites page
 $scope.enteringFavorites = function() {
     Recommendations.haltAudio();
@@ -99,6 +100,16 @@ $scope.enteringFavorites = function() {
 
 $scope.leavingFavorites = function() {
     Recommendations.init();
+  }
+
+  $scope.logout = function() {
+  	User.destroySession();
+
+  	// instead of using $state.go, we're going to redirect.
+    // reason: we need to ensure views aren't cached.
+    $window.location.href = 'index.html';
+
+
   } 
 
   // expose the number of new favorites to the scope
