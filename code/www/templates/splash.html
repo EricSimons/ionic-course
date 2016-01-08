@@ -1,0 +1,31 @@
+<ion-view view-title="Songhop" hide-nav-bar="true" class="splash-page">
+  <ion-content scroll="false">
+
+    <div class="padding logo">
+      <h1>songhop</h1>
+    </div>
+
+
+    <div class="login-form">
+      <div class="card">
+        <div class="list">
+          <label class="item item-input">
+            <input type="text" ng-model="form.username" placeholder="Enter your {{ form.signingUp ? 'desired' : 'songhop' }} username">
+          </label>
+        </div>
+      </div>
+
+      <div class="padding-left padding-right">
+        <button class="button button-block action-button" ng-class="{'button-positive': !form.signingUp, 'button-balanced': form.signingUp}" ng-click="submitForm(form.username, form.signingUp)">
+          {{ form.signingUp ? 'Sign up' : 'Sign in' }}
+        </button>
+      </div>
+    </div>
+
+
+    <div class="padding signup-opt" ng-click="form.signingUp = !form.signingUp">
+      {{ form.signingUp ? 'Have an account? Sign in!' : 'Need an account? Sign up!' }}
+    </div>
+
+  </ion-content>
+</ion-view>
