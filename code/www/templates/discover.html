@@ -2,23 +2,26 @@
   <ion-content scroll="false">
 
 
-    <div class="list card current-song">
+    <div class="list card current-song"
+      ng-class="{skipped: currentSong.rated == false,
+                favorited: currentSong.rated == true}"
+      ng-show="currentSong && !currentSong.hide">
 
       <div class="item item-image">
-        <img ng-src="/img/ionic.png">
+        <img ng-src="{{ currentSong.image_large }}">
       </div>
 
       <div class="item">
-        <h2>It's so cold in Wisconsin</h2>
-        <p>Max Lynch</p>
+        <h2>{{ currentSong.title }}</h2>
+        <p>{{ currentSong.artist }}</p>
       </div>
 
       <div class="item tabs tabs-secondary tabs-icon-left">
-        <a class="tab-item">
+        <a class="tab-item" ng-click="sendFeedback(false)">
           <i class="icon ion-close"></i>
           Skip
         </a>
-        <a class="tab-item">
+        <a class="tab-item" ng-click="sendFeedback(true)">
           <i class="icon ion-heart"></i>
           Favorite
         </a>
