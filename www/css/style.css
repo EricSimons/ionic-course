@@ -1,0 +1,93 @@
+/* Splash page stylings */
+.splash-page {
+  background:url(/img/splash-bkg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.splash-page .card {
+  margin-top:40px;
+}
+
+.splash-page .logo h1 {
+  margin-top:30px;
+  text-align:center;
+  color:#fff !important;
+  font-family: Verdana, Geneva, sans-serif;
+  font-weight:bold;
+  letter-spacing: -3px;
+  font-size:42px;
+}
+
+.splash-page .signup-opt {
+  color:#fff;
+  padding:15px;
+  margin-top:20px;
+  font-weight: bold;
+  cursor:pointer;
+}
+
+.splash-page .action-button {
+  font-weight: bolder;
+}
+
+/* Discover page stylings */
+.discover-page {
+
+}
+
+.discover-page .current-song {
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+  opacity: 1;
+
+  -webkit-transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.1s;
+  transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.1s;
+}
+
+.discover-page .current-song .item-image {
+  max-height:300px;
+  overflow:hidden;
+}
+
+@media screen and (max-height: 600px) {
+  .discover-page .current-song .item-image {
+    max-height:200px;
+    overflow:hidden;
+  }
+}
+
+.discover-page .current-song.favorited.ng-hide {
+  -webkit-transform: translateX(1000px) rotate(50deg);
+  -ms-transform: translateX(1000px) rotate(50deg);
+  transform: translateX(1000px) rotate(50deg);
+  opacity:0;
+}
+
+.discover-page .current-song.skipped.ng-hide {
+  -webkit-transform: translateX(-1000px) rotate(-50deg);
+  -ms-transform: translateX(-1000px) rotate(-50deg);
+  transform: translateX(-1000px) rotate(-50deg);
+  opacity:0;
+}
+
+.discover-page .current-song.ng-hide-add {
+  -webkit-transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.3s;
+  transition:all cubic-bezier(0.420, 0.000, 1.000, 1.000) 0.3s;
+  display:block!important;
+}
+
+.discover-page .current-song.ng-hide-remove {
+  -webkit-transform: scale(0.7) translateX(0px) rotate(0deg);
+  -ms-transform: scale(0.7) translateX(0px) rotate(0deg);
+  transform: scale(0.7) translateX(0px) rotate(0deg);
+  opacity: 0;
+}
+
+
+.discover-page .img-lookahead img {
+  height:1px;
+  width:1px;
+  opacity:0.01;
+}
